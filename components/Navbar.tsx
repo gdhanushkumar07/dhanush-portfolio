@@ -16,8 +16,8 @@ export default function Navbar() {
 
   const navItems: NavItem[] = [
     { id: 'about', label: 'About', href: '#about' },
-    { id: 'skills', label: 'Skills', href: '#skills' },
     { id: 'projects', label: 'Projects', href: '#projects' },
+    { id: 'skills', label: 'Skills', href: '#skills' },
     { id: 'achievements', label: 'Achievements', href: '#achievements' },
     { id: 'contact', label: 'Contact', href: '#contact' },
   ];
@@ -28,7 +28,7 @@ export default function Navbar() {
 
       // Simple intersection tracker
       const scrollPosition = window.scrollY + 200;
-      const sections = ['hero', 'about', 'skills', 'projects', 'achievements', 'contact'];
+      const sections = ['hero', 'about', 'projects', 'skills', 'achievements', 'contact'];
       
       for (const section of sections) {
         const el = document.getElementById(section);

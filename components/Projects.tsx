@@ -1,115 +1,57 @@
 "use client";
 
 import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
 import { Github, ExternalLink, Compass } from 'lucide-react';
 
-// Real Project Data
+// Real Project Data (Simplified details to fit in 8-10 lines)
 const projects = [
   {
     id: 1,
     title: "ContentIQ",
-    treasureName: "Ancient Knowledge Vault",
-    theme: "AI Media Creation & Distribution",
-    nodeColor: "#D4AF37", // Gold
-    level: "Lv. 01",
-    tag: "C", // ContentIQ
-    description: "Flagship AI media generation and distribution platform built during the AI For Bharat Hackathon, designed to automate complex scene-level analysis, script writing, and multilingual dubbing.",
+    subtitle: "AI Media Creation Platform",
     highlights: [
-      "Advanced scene-level video and audio intelligence analysis.",
-      "Automated script generation and engagement predictability.",
-      "Multilingual dubbing with automated AI voice cloning.",
-      "Smart background music recommendations.",
-      "Automated multi-channel social distribution pipelines."
+      "Scene-level intelligence",
+      "Multilingual dubbing",
+      "Automated distribution"
     ],
-    tech: ["React", "TypeScript", "AWS (S3, Lambda, Bedrock, Transcribe)"],
-    achievement: "AI For Bharat Hackathon Winner",
+    tech: ["AWS", "React", "TypeScript"],
+    nodeColor: "#D4AF37", // Gold
+    tag: 'C',
     github: "https://github.com/",
-    demo: "https://contentiq.demo/",
-    stamp: "VAULT SECURED"
+    demo: "https://contentiq.demo/"
   },
   {
     id: 2,
     title: "Arogya Sarathi",
-    treasureName: "Healing Temple",
-    theme: "Rural healthcare expedition",
-    nodeColor: "#2E7D20", // Forest Green
-    level: "Lv. 02",
-    tag: "A", // Arogya Sarathi
-    description: "An AI-powered rural healthcare platform designed to establish vital diagnostic support and doctor-patient routing in low-connectivity regions.",
+    subtitle: "Healthcare Accessibility Platform",
     highlights: [
-      "Offline-first triage sync for remote village clinics.",
-      "Prescription image parsing and local database querying.",
-      "Intelligent patient-doctor workflow synchronization.",
-      "Low-bandwidth data compression pipelines."
+      "Offline-first architecture",
+      "Prescription analysis",
+      "Rural healthcare communication"
     ],
-    tech: ["React", "Node.js", "AI Processing", "Offline Storage"],
-    achievement: "AI For Bharat Hackathon Winner",
+    tech: ["React", "Node", "Express"],
+    nodeColor: "#2E7D20", // Green
+    tag: 'A',
     github: "https://github.com/",
-    demo: "https://arogyasarathi.demo/",
-    stamp: "SANCTUM FOUND"
+    demo: "" // No demo button
   },
   {
     id: 3,
     title: "Dynosaur Website",
-    treasureName: "Merchant Trading Port",
-    theme: "Digital business craftsmanship",
-    nodeColor: "#D95F1A", // Warm Orange
-    level: "Lv. 03",
-    tag: "D", // Dynosaur
-    description: "Premium editorial marketing website built for Dynosaur French Ice Cream & Cookies, focusing on brand storytelling and fluid parallax showcases.",
+    subtitle: "Premium Brand Experience",
     highlights: [
-      "Dynamic infinite dessert product menu showcase.",
-      "Custom physics-based scroll-driven animations.",
-      "Integrated Swiggy delivery API and Google Maps."
+      "Interactive menu showcase",
+      "Swiggy integration",
+      "Storytelling-focused design"
     ],
-    tech: ["React", "TypeScript", "Vite", "Framer Motion"],
-    achievement: "Real Client Deployment",
+    tech: ["React", "TypeScript", "Framer Motion"],
+    nodeColor: "#D95F1A", // Orange
+    tag: 'D',
     github: "https://github.com/",
-    demo: "https://dynosaur.demo/",
-    stamp: "PORT UNLOCKED"
+    demo: "https://dynosaur.demo/"
   }
 ];
-
-// Sparkle Particle Animation
-const Sparkle = ({ delay, x, y }: { delay: number; x: number; y: number }) => (
-  <motion.svg
-    initial={{ scale: 0, opacity: 0, rotate: 0 }}
-    animate={{ 
-      scale: [0, 1.3, 0], 
-      opacity: [0, 1, 0],
-      rotate: [0, 90, 180]
-    }}
-    transition={{ 
-      duration: 1.6, 
-      repeat: Infinity, 
-      delay, 
-      ease: "easeInOut" 
-    }}
-    className="absolute w-4 h-4 text-[#C6930A] pointer-events-none z-20"
-    style={{ left: x, top: y }}
-    viewBox="0 0 24 24"
-    fill="currentColor"
-  >
-    <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" />
-  </motion.svg>
-);
-
-// Floating Dust Speck Spec Animation for Notebook Cards
-const DustParticle = ({ delay, x, y }: { delay: number; x: number; y: number }) => (
-  <motion.div
-    initial={{ y: 0, opacity: 0, scale: 0.8 }}
-    animate={{ 
-      y: [-15, -60], 
-      x: [0, (Math.random() - 0.5) * 25],
-      opacity: [0, 0.45, 0], 
-      scale: [0.8, 1.1, 0.6] 
-    }}
-    transition={{ duration: 3.5, repeat: Infinity, delay, ease: "easeOut" }}
-    className="absolute w-1 h-1 rounded-full bg-[#8B6F58]/25 pointer-events-none z-0"
-    style={{ left: x, top: y }}
-  />
-);
 
 // Medallion Node Component
 const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => {
@@ -117,307 +59,182 @@ const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => 
     switch (proj.tag) {
       case 'C': // Golden Compass
         return (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="12" cy="12" r="9" />
             <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
             <polygon points="12,12 14.5,7.5 12,5 9.5,7.5" fill="currentColor" stroke="none" />
             <polygon points="12,12 14.5,16.5 12,19 9.5,16.5" opacity="0.4" fill="currentColor" stroke="none" />
           </svg>
         );
-      case 'A': // Forest Seal (Healing Temple)
+      case 'A': // Forest Seal
         return (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="12" cy="12" r="9" strokeDasharray="3,2" />
             <path d="M12 5 C 15 8, 17 12, 12 19 C 7 12, 9 8, 12 5 Z" fill="currentColor" fillOpacity="0.2" />
-            <path d="M12 5 V 19 M12 10 Q 14 12 15 11 M12 14 Q 10 16 9 15" strokeLinecap="round" />
+            <path d="M12 5 V 19 M12 10 Q 14 12 15 11" strokeLinecap="round" />
           </svg>
         );
-      case 'D': // Anchor Compass (Trading Port)
+      case 'D': // Anchor Compass
         return (
-          <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <circle cx="12" cy="12" r="4" />
             <path d="M 12,4 V 16 M 12,16 C 9,16 6,14 6,10 M 12,16 C 15,16 18,14 18,10 M 6,10 H 4 M 18,10 H 20" />
-            <circle cx="12" cy="4" r="1.5" fill="currentColor" />
+            <circle cx="12" cy="4" r="1.2" fill="currentColor" />
           </svg>
         );
       default:
-        return <Compass className="w-6 h-6" />;
+        return <Compass className="w-5 h-5" />;
     }
   };
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex items-center justify-center animate-fade-in">
       {/* Inner medallion ring */}
       <motion.div
         animate={{
-          scale: isActive ? 1.25 : 1.0,
-          rotate: isActive ? 360 : 0,
+          scale: isActive ? 1.05 : 1.0,
+          borderColor: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.25)",
           boxShadow: isActive 
-            ? `0 0 25px 8px ${proj.nodeColor}35, inset 0 0 10px rgba(58,43,32,0.15)`
-            : "0 4px 12px rgba(58,43,32,0.12)"
+            ? `0 0 12px 2px ${proj.nodeColor}20` 
+            : "0 1px 3px rgba(58,43,32,0.03)"
         }}
-        transition={{ 
-          rotate: { duration: 12, repeat: Infinity, ease: "linear" },
-          scale: { type: "spring", stiffness: 200, damping: 15 }
-        }}
-        className="w-14 h-14 rounded-full border-4 bg-[#F9F0E4] flex items-center justify-center z-10 cursor-pointer"
+        transition={{ duration: 0.3 }}
+        className="w-10 h-10 rounded-full border bg-[#F9F0E4] flex items-center justify-center z-10"
         style={{
-          borderColor: proj.nodeColor,
-          borderStyle: "double",
+          borderWidth: "1.5px",
         }}
       >
-        {/* Ancient compass marks inside active medallion */}
-        {isActive && (
-          <div className="absolute inset-0 rounded-full border border-dashed border-[#8B6F58]/35 animate-spin-slow" />
-        )}
-        
-        <span style={{ color: proj.nodeColor }}>
+        <span style={{ color: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.5)" }}>
           {renderIcon()}
         </span>
       </motion.div>
 
-      {/* Medallion outer compass ticks */}
-      <motion.svg 
-        animate={{ rotate: isActive ? 90 : 0 }}
-        transition={{ duration: 0.5 }}
-        className="absolute w-20 h-20 text-[#8B6F58]/35 pointer-events-none" 
-        viewBox="0 0 100 100"
-      >
-        <line x1="50" y1="5" x2="50" y2="15" stroke="currentColor" strokeWidth="1.5" />
-        <line x1="50" y1="85" x2="50" y2="95" stroke="currentColor" strokeWidth="1.5" />
-        <line x1="5" y1="50" x2="15" y2="50" stroke="currentColor" strokeWidth="1.5" />
-        <line x1="85" y1="50" x2="95" y2="50" stroke="currentColor" strokeWidth="1.5" />
-      </motion.svg>
-
       {/* Sparkles around active node */}
       {isActive && (
         <>
-          <Sparkle delay={0} x={-15} y={-15} />
-          <Sparkle delay={0.4} x={45} y={-8} />
-          <Sparkle delay={0.8} x={-8} y={45} />
-          <Sparkle delay={1.2} x={40} y={40} />
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1, 0.5] }}
+            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            className="absolute -top-3.5 -right-3.5 text-[#C6930A] pointer-events-none z-20"
+          >
+            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" />
+            </svg>
+          </motion.div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.5 }}
+            animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1, 0.5] }}
+            transition={{ duration: 2.2, repeat: Infinity, delay: 1.1, ease: "easeInOut" }}
+            className="absolute -bottom-3 -left-3 text-[#C6930A] pointer-events-none z-20"
+          >
+            <svg width="8" height="8" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" />
+            </svg>
+          </motion.div>
         </>
       )}
     </div>
   );
 };
 
-// Discovery Card Component (Notebook / Journal Page)
-const DiscoveryCard = ({ proj, isActive }: { proj: any; isActive: boolean }) => (
+// Elegant Compact Discovery Card (8-10 lines visible)
+const DiscoveryCard = ({ proj, opacity, y }: { proj: any; opacity: any; y: any }) => (
   <motion.div
-    initial={{ opacity: 0, y: 40, scale: 0.96 }}
-    whileInView={{ opacity: 1, y: 0, scale: 1 }}
-    viewport={{ once: true, margin: "-100px" }}
-    transition={{ duration: 0.6, ease: "easeOut" }}
-    animate={{ 
-      rotateX: isActive ? 0 : -12, 
-      opacity: isActive ? 1 : 0.45, 
-      scale: isActive ? 1.0 : 0.95,
-      y: isActive ? 0 : 20
-    }}
-    style={{ transformPerspective: 1000, transformOrigin: "top center" }}
-    className="w-full max-w-[460px] rounded-[24px] p-6 bg-[#F9F0E4] text-[#3A2B20] border-2 border-[#CDB38D]/40 shadow-[0_15px_45px_rgba(58,43,32,0.06)] relative overflow-hidden group"
+    style={{ opacity, y }}
+    className="w-[280px] rounded-[16px] p-4.5 bg-[#F9F0E4] text-[#3A2B20] border border-[rgba(58,43,32,0.08)] shadow-[0_4px_20px_rgba(58,43,32,0.03)] relative overflow-hidden"
   >
-    {/* Page lines background detail to feel like a notebook */}
-    <div className="absolute inset-0 opacity-[0.06] pointer-events-none"
-         style={{
-           backgroundImage: "linear-gradient(#3A2B20 1px, transparent 1px)",
-           backgroundSize: "100% 24px",
-           backgroundPosition: "0 8px"
-         }}
-    />
+    <div className="space-y-3">
+      {/* Header */}
+      <div className="border-b border-[#CDB38D]/20 pb-1.5">
+        <h3 className="font-serif text-sm font-bold tracking-tight">
+          {proj.title}
+        </h3>
+        <span className="font-sans text-[10px] text-[#8B6F58] tracking-wider block font-medium mt-0.5">
+          {proj.subtitle}
+        </span>
+      </div>
 
-    {/* Floating Dust specs */}
-    {isActive && (
-      <>
-        <DustParticle delay={0} x={30} y={150} />
-        <DustParticle delay={0.8} x={160} y={180} />
-        <DustParticle delay={1.6} x={290} y={120} />
-      </>
-    )}
+      {/* 3 Achievements (Bulleted list) */}
+      <ul className="space-y-1 text-[10.5px] font-sans text-[#3A2B20]/85 font-light leading-relaxed">
+        {proj.highlights.map((h: string, hIdx: number) => (
+          <li key={hIdx} className="flex items-start">
+            <span className="text-[#8B6F58]/70 font-mono mr-1.5 shrink-0">•</span>
+            <span>{h}</span>
+          </li>
+        ))}
+      </ul>
 
-    {/* Discovery Ink Stamp Slam Down */}
-    <AnimatePresence>
-      {isActive && (
-        <motion.div
-          initial={{ scale: 3, opacity: 0, rotate: -45 }}
-          animate={{ scale: 1, opacity: 0.85, rotate: -15 }}
-          exit={{ scale: 1.5, opacity: 0 }}
-          transition={{ type: "spring", stiffness: 140, damping: 12, delay: 0.4 }}
-          className="absolute bottom-6 right-6 pointer-events-none select-none z-20 border-4 border-dashed rounded-md px-3 py-1.5 font-mono text-[10px] font-bold uppercase tracking-widest"
-          style={{
-            borderColor: proj.nodeColor,
-            color: proj.nodeColor,
-          }}
-        >
-          {proj.stamp}
-        </motion.div>
-      )}
-    </AnimatePresence>
-
-    <div className="space-y-4 relative z-10">
-      {/* Card Header */}
-      <div className="flex items-center justify-between border-b border-[#CDB38D]/35 pb-3">
-        <div className="flex items-center gap-2.5">
-          <div 
-            className="w-8 h-8 rounded-full flex items-center justify-center text-white text-sm font-bold font-serif shadow-sm"
-            style={{ backgroundColor: proj.nodeColor }}
+      {/* Tech pills */}
+      <div className="flex flex-wrap gap-1 pt-0.5">
+        {proj.tech.map((t: string) => (
+          <span 
+            key={t}
+            className="font-mono text-[8.5px] text-[#3A2B20]/80 bg-[#E8D5B5]/25 border border-[#CDB38D]/20 px-1.5 py-0.5 rounded"
           >
-            {proj.tag}
-          </div>
-          <div>
-            <h3 className="font-serif text-lg font-bold tracking-tight">
-              {proj.title}
-            </h3>
-            <span className="font-mono text-[9px] text-[#8B6F58] tracking-wider block uppercase font-medium">
-              {proj.treasureName}
-            </span>
-          </div>
-        </div>
-        <span className="font-mono text-[10px] text-[#3A2B20] font-bold bg-[#E8D5B5]/40 px-2.5 py-0.5 rounded-full border border-[#CDB38D]/50 shadow-sm">
-          {proj.level}
-        </span>
+            {t}
+          </span>
+        ))}
       </div>
 
-      {/* Description */}
-      <p className="font-sans text-xs sm:text-sm leading-relaxed text-[#3A2B20]/90 font-light italic">
-        "{proj.description}"
-      </p>
-
-      {/* Highlights / Mission Completed */}
-      <div className="space-y-2">
-        <span className="font-mono text-[9px] text-[#8B6F58] uppercase tracking-wider block font-bold">
-          ✦ MISSION COMPLETED:
-        </span>
-        <ul className="space-y-1.5 text-xs font-sans text-[#3A2B20]/85 font-light">
-          {proj.highlights.map((h: string, hIdx: number) => (
-            <li key={hIdx} className="flex items-start">
-              <span className="text-[#8B6F58] font-mono mr-2 shrink-0">✔</span>
-              <span>{h}</span>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      {/* Tech stack */}
-      <div className="space-y-1.5">
-        <span className="font-mono text-[9px] text-[#8B6F58] uppercase tracking-wider block font-bold">
-          ✦ TOOLS DEPLOYED:
-        </span>
-        <div className="flex flex-wrap gap-1">
-          {proj.tech.map((t: string) => (
-            <span 
-              key={t}
-              className="font-mono text-[9px] text-[#3A2B20] bg-[#E8D5B5]/25 border border-[#CDB38D]/40 px-2 py-0.5 rounded"
-            >
-              {t}
-            </span>
-          ))}
-        </div>
-      </div>
-
-      {/* Achievement & Theme Info */}
-      <div className="grid grid-cols-2 gap-3 pt-2.5 text-[10px] font-mono border-t border-[#CDB38D]/25">
-        <div>
-          <span className="text-[#8B6F58] block uppercase tracking-wider">REWARD ACHIEVED:</span>
-          <span className="text-[#3A2B20] font-semibold block mt-0.5">{proj.achievement}</span>
-        </div>
-        <div>
-          <span className="text-[#8B6F58] block uppercase tracking-wider">THEME:</span>
-          <span className="text-[#3A2B20] font-semibold block mt-0.5">{proj.theme}</span>
-        </div>
-      </div>
-
-      {/* Links */}
-      <div className="pt-2 flex gap-2">
+      {/* Buttons */}
+      <div className="pt-2.5 border-t border-[#CDB38D]/15 flex gap-1.5">
         <a
           href={proj.github}
           target="_blank"
           rel="noreferrer"
-          className="cursor-pointer border border-[#8B6F58]/50 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/30 text-[#3A2B20] font-semibold text-[11px] py-1.5 px-3 rounded-lg flex items-center gap-1.5 transition-all duration-300"
+          className="cursor-pointer border border-[#8B6F58]/30 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/15 text-[#3A2B20] font-semibold text-[9.5px] py-1 px-2.5 rounded flex items-center gap-1 transition-all duration-150"
         >
-          <Github className="w-3.5 h-3.5" />
+          <Github className="w-2.5 h-2.5" />
           <span>Repository</span>
         </a>
-        <a
-          href={proj.demo}
-          target="_blank"
-          rel="noreferrer"
-          className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[11px] py-1.5 px-3.5 rounded-lg flex items-center gap-1.5 transition-all duration-300 shadow-sm"
-        >
-          <ExternalLink className="w-3.5 h-3.5" />
-          <span>Discovery Demo</span>
-        </a>
+        {proj.demo && (
+          <a
+            href={proj.demo}
+            target="_blank"
+            rel="noreferrer"
+            className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[9.5px] py-1 px-3 rounded flex items-center gap-1 transition-all duration-150"
+          >
+            <ExternalLink className="w-2.5 h-2.5" />
+            <span>{proj.title === 'Dynosaur Website' ? 'Live Site' : 'Demo'}</span>
+          </a>
+        )}
       </div>
     </div>
   </motion.div>
 );
 
-// Map Sketches Background Component
+// Map Sketches Background Component (Minimal annotations - 50% reduction)
 const MapSketches = ({ opacity }: { opacity: any }) => (
   <motion.div style={{ opacity }} className="absolute inset-0 pointer-events-none select-none z-0">
-    {/* Compass Rose top-right */}
-    <div className="absolute top-[6%] right-[8%] text-[#3A2B20]/6">
-      <Compass className="w-48 h-48 stroke-[0.75]" />
+    {/* 1 Compass Rose (Top Right) */}
+    <div className="absolute top-[10%] right-[12%] text-[#3A2B20]/4">
+      <Compass className="w-32 h-32 stroke-[0.75]" />
     </div>
 
-    {/* Map Folds lines */}
-    <svg className="absolute inset-0 w-full h-full text-[#3A2B20]/4 opacity-25" fill="none">
-      <line x1="0" y1="530" x2="2000" y2="530" stroke="currentColor" strokeWidth="1" strokeDasharray="3,3" />
-      <line x1="0" y1="1060" x2="2000" y2="1060" stroke="currentColor" strokeWidth="1" strokeDasharray="3,3" />
-      <line x1="500" y1="0" x2="500" y2="2000" stroke="currentColor" strokeWidth="1" strokeDasharray="3,3" />
+    {/* Mountain silhouettes (Few, low opacity) */}
+    <svg className="absolute left-[8%] top-[25%] text-[#3A2B20]/4 w-16 h-10" viewBox="0 0 100 50" fill="none">
+      <path d="M 10,40 L 30,15 L 50,40 M 40,40 L 55,25 L 75,40" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
     </svg>
 
-    {/* Map coordinates */}
-    <div className="absolute top-12 left-8 font-mono text-[9px] text-[#3A2B20]/25 tracking-widest uppercase rotate-90 origin-top-left">
-      SEC N 17° 26' 48\" / E 78° 23' 15\"
-    </div>
-    <div className="absolute bottom-12 right-12 font-mono text-[9px] text-[#3A2B20]/25 tracking-widest uppercase">
-      GRID SECTOR 03 / EXPEDITION
-    </div>
-
-    {/* Island Sketch 1 (Top Left) */}
-    <svg className="absolute left-[4%] top-[10%] text-[#3A2B20]/6 w-36 h-24" viewBox="0 0 150 100" fill="none">
-      <path d="M 20,40 C 40,20 80,15 110,30 C 130,40 140,70 120,85 C 90,95 50,90 30,80 C 15,70 10,55 20,40 Z" stroke="currentColor" strokeWidth="1" strokeDasharray="4,4" />
-      <path d="M 30,45 C 45,30 75,25 100,38 C 115,45 125,65 110,75" stroke="currentColor" strokeWidth="0.5" />
-      <text x="50" y="60" className="font-serif text-[9px] fill-[#3A2B20]/35 tracking-wider">Isle of Healing</text>
+    <svg className="absolute right-[8%] top-[65%] text-[#3A2B20]/4 w-16 h-10" viewBox="0 0 100 50" fill="none">
+      <path d="M 15,45 L 35,20 L 55,45 M 45,45 L 60,30 L 80,45" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
     </svg>
 
-    {/* Island Sketch 2 (Middle Right) */}
-    <svg className="absolute right-[3%] top-[45%] text-[#3A2B20]/6 w-40 h-28" viewBox="0 0 150 100" fill="none">
-      <path d="M 30,30 C 60,10 120,20 130,50 C 140,75 110,90 80,85 C 50,80 20,90 15,65 C 10,45 15,35 30,30 Z" stroke="currentColor" strokeWidth="1" strokeDasharray="4,4" />
-      <text x="35" y="55" className="font-serif text-[9px] fill-[#3A2B20]/35 tracking-wider">Trading Lagoon</text>
+    {/* 2 Treasure X Markers (Subtle, desaturated) */}
+    <svg className="absolute left-[15%] top-[55%] text-[#E15A42]/8 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M18 6L6 18M6 6l12 12" />
     </svg>
 
-    {/* Island Sketch 3 (Bottom Left) */}
-    <svg className="absolute left-[3%] top-[72%] text-[#3A2B20]/6 w-36 h-24" viewBox="0 0 150 100" fill="none">
-      <path d="M 25,25 C 55,15 95,25 105,45 C 115,65 90,85 70,80 C 50,75 25,85 20,60 C 15,40 15,30 25,25 Z" stroke="currentColor" strokeWidth="1" strokeDasharray="4,4" />
-      <text x="35" y="52" className="font-serif text-[9px] fill-[#3A2B20]/35 tracking-wider">HQ Archipelago</text>
-    </svg>
-
-    {/* Mountain Ridges Left side */}
-    <svg className="absolute left-[8%] top-[25%] text-[#3A2B20]/6 w-24 h-16" viewBox="0 0 100 50" fill="none">
-      <path d="M 10,40 L 30,10 L 50,40 M 40,40 L 55,20 L 75,40" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-      <text x="22" y="47" className="font-mono text-[7px] fill-[#3A2B20]/25 tracking-wider">CBIT RIDGE</text>
-    </svg>
-
-    {/* Mountain Ridges Right side */}
-    <svg className="absolute right-[8%] top-[20%] text-[#3A2B20]/6 w-24 h-16" viewBox="0 0 100 50" fill="none">
-      <path d="M 10,40 L 30,10 L 50,40 M 40,40 L 55,20 L 75,40" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" />
-    </svg>
-
-    {/* Group of Pine Trees */}
-    <svg className="absolute left-[12%] top-[55%] text-[#3A2B20]/6 w-20 h-24" viewBox="0 0 80 100" fill="none">
-      <path d="M 20,60 V 80 M 20,40 L 10,55 H 30 Z M 20,25 L 12,38 H 28 Z" stroke="currentColor" strokeWidth="1.2" fill="none" />
-      <path d="M 45,70 V 90 M 45,55 L 35,68 H 55 Z M 45,42 L 38,53 H 52 Z" stroke="currentColor" strokeWidth="1.2" fill="none" />
-      <text x="12" y="93" className="font-mono text-[7px] fill-[#3A2B20]/25 tracking-wider">DEEP WOODS</text>
+    <svg className="absolute right-[18%] top-[30%] text-[#E15A42]/8 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+      <path d="M18 6L6 18M6 6l12 12" />
     </svg>
   </motion.div>
 );
 
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [activeIndex, setActiveIndex] = useState(-1);
 
   // Scroll tracking across the Projects section viewport entry/exit
   const { scrollYProgress } = useScroll({
@@ -425,18 +242,18 @@ export default function Projects() {
     offset: ["start end", "start start"]
   });
 
-  // Section background color morphs from About forest brown (#26180F) to parchment sand (#E8D5B5)
+  // Section background color morphs from About forest brown (#26180F) to parchment sand (#F3ECE0)
   const backgroundColor = useTransform(
     scrollYProgress,
     [0, 0.45],
-    ["#26180F", "#E8D5B5"]
+    ["#26180F", "#F3ECE0"]
   );
 
-  // Title/Text colors morph from light wood to dark explorer brown
+  // Text/Title colors morph from wood-white to dark explorer brown
   const textColor = useTransform(
     scrollYProgress,
     [0, 0.45],
-    ["rgba(245,241,235,0.78)", "#3A2B20"]
+    ["rgba(245,241,235,0.78)", "rgba(58, 43, 32, 0.8)"]
   );
   
   const headingColor = useTransform(
@@ -448,238 +265,234 @@ export default function Projects() {
   const labelColor = useTransform(
     scrollYProgress,
     [0, 0.45],
-    ["rgba(255,170,80,0.9)", "rgba(58,43,32,0.65)"]
+    ["rgba(255,170,80,0.9)", "rgba(58, 43, 32, 0.65)"]
   );
 
-  // Fade out elements from About section (Vines, Torch Glows, Forest Fog) as we scroll down into Projects parchment
-  const morphOverlayOpacity = useTransform(scrollYProgress, [0, 0.35], [1, 0]);
-  const sketchesOpacity = useTransform(scrollYProgress, [0.25, 0.55], [0, 0.08]);
-  const trailDrawOpacity = useTransform(scrollYProgress, [0.3, 0.5], [0, 1]);
+  // Fade out elements from About section (Vines, Torch Glows, Forest Fog) early in the transition
+  const vinesOpacity = useTransform(scrollYProgress, [0, 0.22], [0.8, 0]);
+  const torchGlowOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
+  
+  // Fade in parchment assets and texture
+  const sketchesOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 0.12]);
+  const vignetteOpacity = useTransform(scrollYProgress, [0.15, 0.45], [0, 0.15]);
+  const noiseOpacity = useTransform(scrollYProgress, [0.15, 0.45], [0, 0.04]);
+  const trailDrawOpacity = useTransform(scrollYProgress, [0.35, 0.5], [0, 1]);
 
-  // Section scroll tracker for active index thresholds
+  // Section scroll tracker for main active index thresholds and trail drawing
   const { scrollYProgress: sectionScrollProgress } = useScroll({
     target: sectionRef,
     offset: ["start start", "end end"]
   });
 
   useMotionValueEvent(sectionScrollProgress, "change", (latest) => {
-    if (latest < 0.35) {
+    // Staggered node activations matching the card visibilities
+    if (latest >= 0.05 && latest <= 0.28) {
       setActiveIndex(0);
-    } else if (latest < 0.7) {
+    } else if (latest >= 0.38 && latest <= 0.62) {
       setActiveIndex(1);
-    } else {
+    } else if (latest >= 0.72 && latest <= 0.95) {
       setActiveIndex(2);
+    } else {
+      setActiveIndex(-1);
     }
   });
 
-  // Dynamic path length illumination: 22% for node 1, 55% for node 2, 100% for node 3
-  const activePathLength = activeIndex === 0 ? 0.22 : activeIndex === 1 ? 0.55 : 1.0;
-  const activePathColor = activeIndex === 0 ? "#D4AF37" : activeIndex === 1 ? "#2E7D20" : "#D95F1A";
+  // Card Opacities and Y-shifts (fading to 0 in between nodes to preserve whitespace)
+  const card1Opacity = useTransform(sectionScrollProgress, [0.02, 0.08, 0.22, 0.28], [0, 1, 1, 0]);
+  const card2Opacity = useTransform(sectionScrollProgress, [0.35, 0.42, 0.56, 0.62], [0, 1, 1, 0]);
+  const card3Opacity = useTransform(sectionScrollProgress, [0.68, 0.75, 0.88, 0.95], [0, 1, 1, 0]);
+
+  const card1Y = useTransform(sectionScrollProgress, [0.02, 0.08, 0.22, 0.28], [8, 0, 0, -8]);
+  const card2Y = useTransform(sectionScrollProgress, [0.35, 0.42, 0.56, 0.62], [8, 0, 0, -8]);
+  const card3Y = useTransform(sectionScrollProgress, [0.68, 0.75, 0.88, 0.95], [8, 0, 0, -8]);
+
+  // Path draws itself smoothly as user scrolls through the section
+  const trailDrawLength = useTransform(sectionScrollProgress, [0.05, 0.9], [0, 1]);
 
   return (
     <motion.section
       ref={sectionRef}
       id="projects"
       style={{ backgroundColor }}
-      className="relative z-20 min-h-[200vh] flex flex-col justify-start overflow-hidden pt-24 pb-32"
+      className="relative z-20 min-h-[300vh] flex flex-col justify-start overflow-hidden pt-24 pb-32"
     >
       
-      {/* 1. MORPHING OVERLAY LAYER (Stage 1 to Stage 3 Transformation) */}
+      {/* 1. MORPHING OVERLAY LAYER (Stage 1 to Stage 3 Transition) */}
       <motion.div 
-        style={{ opacity: morphOverlayOpacity }} 
-        className="absolute inset-0 pointer-events-none z-10 bg-[#26180F] origin-top"
+        style={{ opacity: vinesOpacity }} 
+        className="absolute inset-0 pointer-events-none z-10 origin-top"
       >
-        {/* Soft amber forest fog overlay */}
-        <div 
-          className="absolute inset-0 opacity-40"
-          style={{
-            background: "radial-gradient(circle at top center, rgba(225, 138, 66, 0.12) 0%, transparent 80%)",
-            filter: "blur(40px)",
-          }}
+        {/* Softening Torch Glows */}
+        <motion.div 
+          style={{ 
+            opacity: torchGlowOpacity,
+            boxShadow: "0 0 100px 40px rgba(255,140,66,0.18)"
+          }} 
+          className="absolute left-[10%] top-[10%] w-[1px] h-[1px] rounded-full hidden md:block"
+        />
+        <motion.div 
+          style={{ 
+            opacity: torchGlowOpacity,
+            boxShadow: "0 0 100px 40px rgba(255,140,66,0.18)"
+          }} 
+          className="absolute right-[10%] top-[10%] w-[1px] h-[1px] rounded-full hidden md:block"
         />
 
-        {/* Softening Torch Glows */}
-        <div className="absolute left-[10%] top-[10%] w-[1px] h-[1px] rounded-full hidden md:block"
-             style={{ boxShadow: "0 0 100px 40px rgba(255,140,66,0.2)" }} />
-        <div className="absolute right-[10%] top-[10%] w-[1px] h-[1px] rounded-full hidden md:block"
-             style={{ boxShadow: "0 0 100px 40px rgba(255,140,66,0.2)" }} />
-
-        {/* Vines that fade away naturally */}
-        <svg className="absolute left-[30px] top-0 w-[120px] h-[450px] opacity-80" viewBox="0 0 120 450" fill="none">
-          <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
-          <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#2E7D20" strokeWidth="0.75" fill="none" strokeLinecap="round" />
-          {/* A few quick leaves */}
-          <path d="M 16,50 C 24,38 38,42 41,50 C 38,58 24,62 16,50 Z" fill="#3F8F2A" stroke="#123016" strokeWidth="0.75" />
-          <path d="M 18,110 C 26,98 40,102 43,110 C 40,118 26,122 18,110 Z" fill="#2E7D20" stroke="#123016" strokeWidth="0.75" />
-          <path d="M 12,170 C 20,158 34,162 37,170 C 34,178 20,182 12,170 Z" fill="#5CAF38" stroke="#123016" strokeWidth="0.75" />
+        {/* About vines fading out smoothly */}
+        <svg className="absolute left-[30px] top-0 w-[120px] h-[450px]" viewBox="0 0 120 450" fill="none">
+          <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#1C5A13" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+          <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
         </svg>
 
-        <svg className="absolute right-[35px] top-0 w-[120px] h-[450px] opacity-80" viewBox="0 0 120 450" fill="none">
-          <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
-          <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#2E7D20" strokeWidth="0.75" fill="none" strokeLinecap="round" />
-          {/* A few quick leaves */}
-          <path d="M 74,50 C 66,38 52,42 49,50 C 52,58 66,62 74,50 Z" fill="#3F8F2A" stroke="#123016" strokeWidth="0.75" />
-          <path d="M 72,110 C 64,98 50,102 47,110 C 50,118 64,122 72,110 Z" fill="#2E7D20" stroke="#123016" strokeWidth="0.75" />
-          <path d="M 78,170 C 70,158 56,162 53,170 C 56,178 70,182 78,170 Z" fill="#5CAF38" stroke="#123016" strokeWidth="0.75" />
+        <svg className="absolute right-[35px] top-0 w-[120px] h-[450px]" viewBox="0 0 120 450" fill="none">
+          <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#1C5A13" strokeWidth="2.5" fill="none" strokeLinecap="round" />
+          <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
         </svg>
       </motion.div>
 
       {/* Aged Paper Texture Overlay */}
-      <div 
-        className="absolute inset-0 opacity-[0.04] pointer-events-none mix-blend-multiply z-0" 
+      <motion.div 
         style={{ 
+          opacity: noiseOpacity,
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
-        }} 
+        }}
+        className="absolute inset-0 pointer-events-none mix-blend-multiply z-0" 
       />
 
+      {/* Paper Fold Creases (Light & Shadow creases for a folded map look) */}
+      <div className="absolute inset-0 pointer-events-none z-10 mix-blend-multiply opacity-[0.04] bg-[linear-gradient(to_right,transparent_49%,rgba(0,0,0,0.5)_50%,transparent_51%),linear-gradient(to_bottom,transparent_49%,rgba(0,0,0,0.5)_50%,transparent_51%)]" />
+      <div className="absolute inset-0 pointer-events-none z-10 mix-blend-screen opacity-[0.02] bg-[linear-gradient(to_right,transparent_48%,rgba(255,255,255,0.7)_49.5%,transparent_51%),linear-gradient(to_bottom,transparent_48%,rgba(255,255,255,0.7)_49.5%,transparent_51%)]" />
+
       {/* Light vignette frame */}
-      <div 
-        className="absolute inset-0 pointer-events-none z-0"
-        style={{
-          background: "radial-gradient(ellipse at center, transparent 40%, rgba(58, 43, 32, 0.15) 100%)",
+      <motion.div 
+        style={{ 
+          opacity: vignetteOpacity,
+          background: "radial-gradient(ellipse at center, transparent 40%, rgba(58, 43, 32, 0.12) 100%)",
         }}
+        className="absolute inset-0 pointer-events-none z-0"
       />
 
       {/* Decorative sketches & folds */}
       <MapSketches opacity={sketchesOpacity} />
 
       {/* 2. MAIN CONTENT ZONE */}
-      <div className="max-w-[1200px] w-full mx-auto px-6 md:px-20 z-10 relative flex-grow flex flex-col justify-start">
+      <div className="max-w-[1000px] w-full mx-auto px-6 md:px-16 z-10 relative flex-grow flex flex-col justify-start">
         
         {/* SECTION HEADER */}
-        <motion.div className="mb-24 select-none max-w-[800px] mx-auto text-center space-y-4">
+        <motion.div className="mb-24 select-none max-w-[800px] mx-auto text-center space-y-3">
           <motion.span 
             style={{ color: labelColor }}
             className="font-mono text-[12px] tracking-[8px] uppercase block font-semibold"
           >
-            03 / THE EXPEDITION
+            02 / THE EXPEDITION
           </motion.span>
           <motion.h2 
             style={{ color: headingColor }}
-            className="font-display text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold tracking-tight leading-tight whitespace-nowrap"
+            className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight whitespace-nowrap"
           >
             A Journey Through Things I Have Built
           </motion.h2>
           <motion.p 
             style={{ color: textColor }}
-            className="font-sans text-[16px] md:text-[18px] leading-[1.6] font-light max-w-[600px] mx-auto"
+            className="font-sans text-[15px] md:text-[17px] leading-[1.6] font-light max-w-[550px] mx-auto"
           >
             Follow the winding trail map to discover hidden project milestones, platform integrations, and command centers.
           </motion.p>
         </motion.div>
 
-        {/* Desktop Map Layout (Alternating path nodes and cards) */}
+        {/* Desktop Map Layout (Alternating path nodes and cards with massive whitespace) */}
         <motion.div 
           style={{ opacity: trailDrawOpacity }}
-          className="hidden lg:block relative w-full h-[1500px] z-10"
+          className="hidden lg:flex relative w-full h-[1200px] z-10"
         >
-          {/* Centered Winding Route Path SVG */}
-          <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-            <svg className="w-full h-full" viewBox="0 0 1000 1500" fill="none" xmlns="http://www.w3.org/2000/svg">
-              {/* Main Winding Route Dashed Line */}
-              <path
-                d="M 500,0 C 500,120 380,180 380,300 C 380,420 620,450 620,600 C 620,720 620,750 620,800 C 620,950 380,1100 380,1250 C 380,1350 500,1420 500,1500"
-                stroke="#8B6F58"
-                strokeWidth="3.5"
-                strokeDasharray="8,8"
-                strokeLinecap="round"
-                opacity="0.25"
-              />
+          {/* Left Column: Winding Trail Map (40% width) */}
+          <div className="w-[40%] h-full relative flex items-center justify-center">
+            
+            {/* Winding Route Path SVG */}
+            <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
+              <svg className="w-full h-full" viewBox="0 0 300 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Main Winding Route Dashed Line */}
+                <path
+                  d="M 150,0 C 150,100 100,150 100,250 C 100,380 200,470 200,600 C 200,730 100,820 100,950 C 100,1050 150,1100 150,1200"
+                  stroke="#8B6F58"
+                  strokeWidth="1.2"
+                  strokeDasharray="4,6"
+                  strokeLinecap="round"
+                  opacity="0.12"
+                />
 
-              {/* Active Route Highlight Track */}
-              <motion.path
-                d="M 500,0 C 500,120 380,180 380,300 C 380,420 620,450 620,600 C 620,720 620,750 620,800 C 620,950 380,1100 380,1250 C 380,1350 500,1420 500,1500"
-                stroke={activePathColor}
-                strokeWidth="4"
-                strokeDasharray="8,8"
-                strokeLinecap="round"
-                animate={{ pathLength: activePathLength }}
-                transition={{ duration: 0.7, ease: "easeInOut" }}
-              />
+                {/* Active Route Highlight Track */}
+                <motion.path
+                  d="M 150,0 C 150,100 100,150 100,250 C 100,380 200,470 200,600 C 200,730 100,820 100,950 C 100,1050 150,1100 150,1200"
+                  stroke="#5C4A3C"
+                  strokeWidth="1.2"
+                  strokeDasharray="4,6"
+                  strokeLinecap="round"
+                  style={{ pathLength: trailDrawLength }}
+                  opacity="0.45"
+                />
+              </svg>
+            </div>
 
-              {/* DETOUR / FORK 1: from Node 1 (380, 300) to a secret chest */}
-              <path
-                d="M 380,300 C 320,350 250,420 250,480"
-                stroke="#8B6F58"
-                strokeWidth="2"
-                strokeDasharray="6,6"
-                opacity="0.2"
-              />
-              <text x="240" y="495" fontSize="18" opacity="0.3">❌</text>
-
-              {/* DETOUR / FORK 2: from Node 2 (620, 800) to a camp tent */}
-              <path
-                d="M 620,800 C 680,850 750,920 750,980"
-                stroke="#8B6F58"
-                strokeWidth="2"
-                strokeDasharray="6,6"
-                opacity="0.2"
-              />
-              <text x="740" y="995" fontSize="18" opacity="0.3">⛺</text>
-            </svg>
-          </div>
-
-          {/* PROJECT DESTINATION 01 (ContentIQ - Medallion Left, Card Right) */}
-          <div className="absolute top-[200px] inset-x-0 grid grid-cols-2 items-center">
-            {/* Left: Node Medallion */}
-            <div className="flex justify-end pr-28 relative">
+            {/* Checkpoint Nodes positioned on path */}
+            <div className="absolute top-[250px] left-[33.3%] -translate-x-1/2 -translate-y-1/2">
               <MedallionNode proj={projects[0]} isActive={activeIndex === 0} />
             </div>
-            {/* Right: Discovery Card */}
-            <div className="flex justify-start pl-8">
-              <DiscoveryCard proj={projects[0]} isActive={activeIndex === 0} />
-            </div>
-          </div>
 
-          {/* PROJECT DESTINATION 02 (Arogya Sarathi - Card Left, Medallion Right) */}
-          <div className="absolute top-[680px] inset-x-0 grid grid-cols-2 items-center">
-            {/* Left: Discovery Card */}
-            <div className="flex justify-end pr-8">
-              <DiscoveryCard proj={projects[1]} isActive={activeIndex === 1} />
-            </div>
-            {/* Right: Node Medallion */}
-            <div className="flex justify-start pl-28 relative">
+            <div className="absolute top-[600px] left-[66.6%] -translate-x-1/2 -translate-y-1/2">
               <MedallionNode proj={projects[1]} isActive={activeIndex === 1} />
             </div>
-          </div>
 
-          {/* PROJECT DESTINATION 03 (Dynosaur Website - Medallion Left, Card Right) */}
-          <div className="absolute top-[1150px] inset-x-0 grid grid-cols-2 items-center">
-            {/* Left: Node Medallion */}
-            <div className="flex justify-end pr-28 relative">
+            <div className="absolute top-[950px] left-[33.3%] -translate-x-1/2 -translate-y-1/2">
               <MedallionNode proj={projects[2]} isActive={activeIndex === 2} />
             </div>
-            {/* Right: Discovery Card */}
-            <div className="flex justify-start pl-8">
-              <DiscoveryCard proj={projects[2]} isActive={activeIndex === 2} />
+
+          </div>
+
+          {/* Right Column: Sticky Project Details Card with Massive Whitespace */}
+          <div className="w-[60%] pl-24 relative">
+            <div className="sticky top-[250px] h-[300px] w-full flex items-center justify-start">
+              
+              <div className="relative w-full">
+                {/* Card 1 */}
+                <div className="absolute inset-x-0 top-0">
+                  <DiscoveryCard proj={projects[0]} opacity={card1Opacity} y={card1Y} />
+                </div>
+
+                {/* Card 2 */}
+                <div className="absolute inset-x-0 top-0">
+                  <DiscoveryCard proj={projects[1]} opacity={card2Opacity} y={card2Y} />
+                </div>
+
+                {/* Card 3 */}
+                <div className="absolute inset-x-0 top-0">
+                  <DiscoveryCard proj={projects[2]} opacity={card3Opacity} y={card3Y} />
+                </div>
+              </div>
+
             </div>
           </div>
 
         </motion.div>
 
-        {/* Mobile Stack Layout */}
-        <div className="lg:hidden relative w-full px-2 space-y-20 z-10 mt-6">
-          {projects.map((proj, idx) => (
+        {/* Mobile Stack Layout (Clean stacked flow) */}
+        <div className="lg:hidden relative w-full px-2 space-y-16 z-10 mt-6">
+          {projects.map((proj) => (
             <div key={proj.id} className="flex flex-col items-center">
               {/* Medallion Node above the card */}
-              <div className="mb-6">
-                <MedallionNode proj={proj} isActive={activeIndex === idx} />
-                <div className="text-center mt-3">
-                  <span className="font-mono text-[9px] uppercase tracking-wider opacity-60" style={{ color: "#3A2B20" }}>
-                    {proj.level} • {proj.treasureName}
-                  </span>
-                </div>
+              <div className="mb-4">
+                <MedallionNode proj={proj} isActive={true} />
               </div>
               
               {/* The Discovery Card */}
-              <DiscoveryCard proj={proj} isActive={activeIndex === idx} />
+              <DiscoveryCard proj={proj} opacity={1.0} y={0} />
             </div>
           ))}
         </div>
 
       </div>
 
-      {/* 3. BOTTOM GRADIENT TRANSITION ZONE (Seamlessly blends into parchment / manual top of Skills) */}
+      {/* 3. BOTTOM GRADIENT TRANSITION ZONE (Blends into Skills dark void cover) */}
       <div 
         className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
         style={{
