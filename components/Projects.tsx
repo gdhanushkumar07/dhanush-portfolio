@@ -1,21 +1,23 @@
 "use client";
 
 import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent } from 'framer-motion';
+import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
 import { Github, ExternalLink, Compass } from 'lucide-react';
 
-// Real Project Data (Simplified details to fit in 8-10 lines)
+// Simplified real project data matching the requested details exactly
 const projects = [
   {
     id: 1,
     title: "ContentIQ",
     subtitle: "AI Media Creation Platform",
+    description: "AI-powered media intelligence platform built during the AI For Bharat Hackathon for scene analysis, automated script generation, multilingual dubbing, and content distribution.",
     highlights: [
       "Scene-level intelligence",
+      "AI-assisted script generation",
       "Multilingual dubbing",
-      "Automated distribution"
+      "Social distribution automation"
     ],
-    tech: ["AWS", "React", "TypeScript"],
+    tech: ["React", "TypeScript", "AWS", "Bedrock", "Transcribe"],
     nodeColor: "#D4AF37", // Gold
     tag: 'C',
     github: "https://github.com/",
@@ -25,13 +27,15 @@ const projects = [
     id: 2,
     title: "Arogya Sarathi",
     subtitle: "Healthcare Accessibility Platform",
+    description: "Offline-first healthcare solution designed for rural regions, enabling prescription parsing, patient routing, and medical assistance under low-connectivity conditions.",
     highlights: [
       "Offline-first architecture",
-      "Prescription analysis",
-      "Rural healthcare communication"
+      "Prescription intelligence",
+      "Patient-doctor coordination",
+      "Rural healthcare support"
     ],
-    tech: ["React", "Node", "Express"],
-    nodeColor: "#2E7D20", // Green
+    tech: ["React", "Node.js", "Express", "MongoDB"],
+    nodeColor: "#2E7D20", // Forest Green
     tag: 'A',
     github: "https://github.com/",
     demo: "" // No demo button
@@ -39,27 +43,29 @@ const projects = [
   {
     id: 3,
     title: "Dynosaur Website",
-    subtitle: "Premium Brand Experience",
+    subtitle: "Premium Brand Experience Platform",
+    description: "Modern storytelling-driven website engineered for Dynosaur Ice Cream featuring immersive product presentation, custom interactions, and ordering integrations.",
     highlights: [
       "Interactive menu showcase",
+      "Motion-driven storytelling",
       "Swiggy integration",
-      "Storytelling-focused design"
+      "Custom animations"
     ],
-    tech: ["React", "TypeScript", "Framer Motion"],
-    nodeColor: "#D95F1A", // Orange
+    tech: ["React", "TypeScript", "Framer Motion", "Vite"],
+    nodeColor: "#D95F1A", // Burnt Orange
     tag: 'D',
     github: "https://github.com/",
     demo: "https://dynosaur.demo/"
   }
 ];
 
-// Medallion Node Component
+// Medallion Node Component (Increased size, glow, pulse, shine sweep)
 const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => {
   const renderIcon = () => {
     switch (proj.tag) {
       case 'C': // Golden Compass
         return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="12" cy="12" r="9" />
             <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
             <polygon points="12,12 14.5,7.5 12,5 9.5,7.5" fill="currentColor" stroke="none" />
@@ -68,7 +74,7 @@ const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => 
         );
       case 'A': // Forest Seal
         return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+          <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
             <circle cx="12" cy="12" r="9" strokeDasharray="3,2" />
             <path d="M12 5 C 15 8, 17 12, 12 19 C 7 12, 9 8, 12 5 Z" fill="currentColor" fillOpacity="0.2" />
             <path d="M12 5 V 19 M12 10 Q 14 12 15 11" strokeLinecap="round" />
@@ -76,40 +82,73 @@ const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => 
         );
       case 'D': // Anchor Compass
         return (
-          <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+          <svg className="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <circle cx="12" cy="12" r="4" />
             <path d="M 12,4 V 16 M 12,16 C 9,16 6,14 6,10 M 12,16 C 15,16 18,14 18,10 M 6,10 H 4 M 18,10 H 20" />
             <circle cx="12" cy="4" r="1.2" fill="currentColor" />
           </svg>
         );
       default:
-        return <Compass className="w-5 h-5" />;
+        return <Compass className="w-7 h-7" />;
     }
   };
 
   return (
-    <div className="relative flex items-center justify-center animate-fade-in">
-      {/* Inner medallion ring */}
+    <div className="relative flex items-center justify-center">
+      {/* Concentric Pulsing Ring for active node */}
+      {isActive && (
+        <motion.div
+          animate={{
+            scale: [1, 1.45],
+            opacity: [0.5, 0]
+          }}
+          transition={{
+            duration: 2.0,
+            repeat: Infinity,
+            ease: "easeOut"
+          }}
+          className="absolute inset-0 rounded-full border-2 pointer-events-none"
+          style={{ borderColor: proj.nodeColor }}
+        />
+      )}
+
+      {/* Inner Medallion (Discovered waypoint node) */}
       <motion.div
         animate={{
           scale: isActive ? 1.05 : 1.0,
           borderColor: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.25)",
           boxShadow: isActive 
-            ? `0 0 12px 2px ${proj.nodeColor}20` 
-            : "0 1px 3px rgba(58,43,32,0.03)"
+            ? `0 0 20px 4px ${proj.nodeColor}30` 
+            : "0 2px 6px rgba(58,43,32,0.04)"
         }}
         transition={{ duration: 0.3 }}
-        className="w-10 h-10 rounded-full border bg-[#F9F0E4] flex items-center justify-center z-10"
+        className="w-14 h-14 rounded-full border-2 bg-[#F9F0E4] flex items-center justify-center z-10 relative overflow-hidden"
         style={{
-          borderWidth: "1.5px",
+          borderWidth: "2px",
         }}
       >
-        <span style={{ color: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.5)" }}>
+        {/* Shine Sweep animation on active */}
+        {isActive && (
+          <motion.div
+            animate={{
+              x: ["-100%", "200%"]
+            }}
+            transition={{
+              duration: 2.5,
+              repeat: Infinity,
+              ease: "easeInOut",
+              repeatDelay: 1.5
+            }}
+            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-12 pointer-events-none z-10"
+          />
+        )}
+
+        <span style={{ color: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.45)" }}>
           {renderIcon()}
         </span>
       </motion.div>
 
-      {/* Sparkles around active node */}
+      {/* Soft gold sparkles around active node */}
       {isActive && (
         <>
           <motion.div
@@ -138,95 +177,51 @@ const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => 
   );
 };
 
-// Elegant Compact Discovery Card (8-10 lines visible)
-const DiscoveryCard = ({ proj, opacity, y }: { proj: any; opacity: any; y: any }) => (
-  <motion.div
-    style={{ opacity, y }}
-    className="w-[280px] rounded-[16px] p-4.5 bg-[#F9F0E4] text-[#3A2B20] border border-[rgba(58,43,32,0.08)] shadow-[0_4px_20px_rgba(58,43,32,0.03)] relative overflow-hidden"
-  >
-    <div className="space-y-3">
-      {/* Header */}
-      <div className="border-b border-[#CDB38D]/20 pb-1.5">
-        <h3 className="font-serif text-sm font-bold tracking-tight">
-          {proj.title}
-        </h3>
-        <span className="font-sans text-[10px] text-[#8B6F58] tracking-wider block font-medium mt-0.5">
-          {proj.subtitle}
-        </span>
-      </div>
-
-      {/* 3 Achievements (Bulleted list) */}
-      <ul className="space-y-1 text-[10.5px] font-sans text-[#3A2B20]/85 font-light leading-relaxed">
-        {proj.highlights.map((h: string, hIdx: number) => (
-          <li key={hIdx} className="flex items-start">
-            <span className="text-[#8B6F58]/70 font-mono mr-1.5 shrink-0">•</span>
-            <span>{h}</span>
-          </li>
-        ))}
-      </ul>
-
-      {/* Tech pills */}
-      <div className="flex flex-wrap gap-1 pt-0.5">
-        {proj.tech.map((t: string) => (
-          <span 
-            key={t}
-            className="font-mono text-[8.5px] text-[#3A2B20]/80 bg-[#E8D5B5]/25 border border-[#CDB38D]/20 px-1.5 py-0.5 rounded"
-          >
-            {t}
-          </span>
-        ))}
-      </div>
-
-      {/* Buttons */}
-      <div className="pt-2.5 border-t border-[#CDB38D]/15 flex gap-1.5">
-        <a
-          href={proj.github}
-          target="_blank"
-          rel="noreferrer"
-          className="cursor-pointer border border-[#8B6F58]/30 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/15 text-[#3A2B20] font-semibold text-[9.5px] py-1 px-2.5 rounded flex items-center gap-1 transition-all duration-150"
-        >
-          <Github className="w-2.5 h-2.5" />
-          <span>Repository</span>
-        </a>
-        {proj.demo && (
-          <a
-            href={proj.demo}
-            target="_blank"
-            rel="noreferrer"
-            className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[9.5px] py-1 px-3 rounded flex items-center gap-1 transition-all duration-150"
-          >
-            <ExternalLink className="w-2.5 h-2.5" />
-            <span>{proj.title === 'Dynosaur Website' ? 'Live Site' : 'Demo'}</span>
-          </a>
-        )}
-      </div>
-    </div>
-  </motion.div>
-);
-
-// Map Sketches Background Component (Minimal annotations - 50% reduction)
+// Map Sketches Background Component (Richer hand-drawn elements under 10% opacity)
 const MapSketches = ({ opacity }: { opacity: any }) => (
   <motion.div style={{ opacity }} className="absolute inset-0 pointer-events-none select-none z-0">
-    {/* 1 Compass Rose (Top Right) */}
-    <div className="absolute top-[10%] right-[12%] text-[#3A2B20]/4">
-      <Compass className="w-32 h-32 stroke-[0.75]" />
+    {/* Compass Rose (Top Right) */}
+    <div className="absolute top-[8%] right-[10%] text-[#3A2B20]/4">
+      <Compass className="w-36 h-36 stroke-[0.75]" />
     </div>
 
     {/* Mountain silhouettes (Few, low opacity) */}
-    <svg className="absolute left-[8%] top-[25%] text-[#3A2B20]/4 w-16 h-10" viewBox="0 0 100 50" fill="none">
-      <path d="M 10,40 L 30,15 L 50,40 M 40,40 L 55,25 L 75,40" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+    <svg className="absolute left-[6%] top-[20%] text-[#3A2B20]/5 w-18 h-12" viewBox="0 0 100 50" fill="none">
+      <path d="M 10,40 L 30,15 L 50,40 M 40,40 L 55,25 L 75,40" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
     </svg>
 
-    <svg className="absolute right-[8%] top-[65%] text-[#3A2B20]/4 w-16 h-10" viewBox="0 0 100 50" fill="none">
-      <path d="M 15,45 L 35,20 L 55,45 M 45,45 L 60,30 L 80,45" stroke="currentColor" strokeWidth="1" strokeLinecap="round" />
+    <svg className="absolute right-[8%] top-[65%] text-[#3A2B20]/5 w-18 h-12" viewBox="0 0 100 50" fill="none">
+      <path d="M 15,45 L 35,20 L 55,45 M 45,45 L 60,30 L 80,45" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
     </svg>
 
-    {/* 2 Treasure X Markers (Subtle, desaturated) */}
-    <svg className="absolute left-[15%] top-[55%] text-[#E15A42]/8 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+    {/* Faint navigation wave lines */}
+    <svg className="absolute left-[38%] top-[15%] text-[#3A2B20]/3 w-16 h-8" viewBox="0 0 60 20" fill="none">
+      <path d="M 0,10 Q 15,5 30,10 T 60,10 M 0,15 Q 15,10 30,15 T 60,15" stroke="currentColor" strokeWidth="0.5" />
+    </svg>
+
+    {/* Ship illustration sailing on waves */}
+    <div className="absolute left-[8%] top-[45%] text-[#3A2B20]/6 w-14 h-14">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round">
+        <path d="M2 17h20M5 17c0-3 3-5 7-5s7 2 7 5 M12 12V3 M12 6h5L12 9" />
+        <path d="M3 19c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1" strokeDasharray="2,2" />
+      </svg>
+    </div>
+
+    {/* Waypoint symbols & Faint navigation sketches */}
+    <svg className="absolute right-[12%] top-[38%] text-[#3A2B20]/4 w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75">
+      <path d="M12 2L2 22h20L12 2zm0 6l6 10H6l6-10z" />
+    </svg>
+
+    <svg className="absolute left-[20%] top-[80%] text-[#3A2B20]/4 w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75">
+      <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 7v10M7 12h10" />
+    </svg>
+
+    {/* 2 Treasure X Markers */}
+    <svg className="absolute left-[12%] top-[60%] text-[#E15A42]/7 w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M18 6L6 18M6 6l12 12" />
     </svg>
 
-    <svg className="absolute right-[18%] top-[30%] text-[#E15A42]/8 w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
+    <svg className="absolute right-[18%] top-[25%] text-[#E15A42]/7 w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
       <path d="M18 6L6 18M6 6l12 12" />
     </svg>
   </motion.div>
@@ -234,7 +229,7 @@ const MapSketches = ({ opacity }: { opacity: any }) => (
 
 export default function Projects() {
   const sectionRef = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState(-1);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   // Scroll tracking across the Projects section viewport entry/exit
   const { scrollYProgress } = useScroll({
@@ -268,7 +263,7 @@ export default function Projects() {
     ["rgba(255,170,80,0.9)", "rgba(58, 43, 32, 0.65)"]
   );
 
-  // Fade out elements from About section (Vines, Torch Glows, Forest Fog) early in the transition
+  // Fade out elements from About section early in the transition
   const vinesOpacity = useTransform(scrollYProgress, [0, 0.22], [0.8, 0]);
   const torchGlowOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
   
@@ -285,29 +280,21 @@ export default function Projects() {
   });
 
   useMotionValueEvent(sectionScrollProgress, "change", (latest) => {
-    // Staggered node activations matching the card visibilities
-    if (latest >= 0.05 && latest <= 0.28) {
+    // Determine active index thresholds based on scrolls
+    if (latest < 0.35) {
       setActiveIndex(0);
-    } else if (latest >= 0.38 && latest <= 0.62) {
+    } else if (latest < 0.70) {
       setActiveIndex(1);
-    } else if (latest >= 0.72 && latest <= 0.95) {
-      setActiveIndex(2);
     } else {
-      setActiveIndex(-1);
+      setActiveIndex(2);
     }
   });
 
-  // Card Opacities and Y-shifts (fading to 0 in between nodes to preserve whitespace)
-  const card1Opacity = useTransform(sectionScrollProgress, [0.02, 0.08, 0.22, 0.28], [0, 1, 1, 0]);
-  const card2Opacity = useTransform(sectionScrollProgress, [0.35, 0.42, 0.56, 0.62], [0, 1, 1, 0]);
-  const card3Opacity = useTransform(sectionScrollProgress, [0.68, 0.75, 0.88, 0.95], [0, 1, 1, 0]);
+  // Path draws itself smoothly as user scrolls through the section (expanded to 1800 height)
+  const trailDrawLength = useTransform(sectionScrollProgress, [0.05, 0.85], [0, 1]);
 
-  const card1Y = useTransform(sectionScrollProgress, [0.02, 0.08, 0.22, 0.28], [8, 0, 0, -8]);
-  const card2Y = useTransform(sectionScrollProgress, [0.35, 0.42, 0.56, 0.62], [8, 0, 0, -8]);
-  const card3Y = useTransform(sectionScrollProgress, [0.68, 0.75, 0.88, 0.95], [8, 0, 0, -8]);
-
-  // Path draws itself smoothly as user scrolls through the section
-  const trailDrawLength = useTransform(sectionScrollProgress, [0.05, 0.9], [0, 1]);
+  // Get current active project content
+  const activeProj = projects[activeIndex];
 
   return (
     <motion.section
@@ -376,10 +363,10 @@ export default function Projects() {
       <MapSketches opacity={sketchesOpacity} />
 
       {/* 2. MAIN CONTENT ZONE */}
-      <div className="max-w-[1000px] w-full mx-auto px-6 md:px-16 z-10 relative flex-grow flex flex-col justify-start">
+      <div className="max-w-[1100px] w-full mx-auto px-6 md:px-12 z-10 relative flex-grow flex flex-col justify-start">
         
         {/* SECTION HEADER */}
-        <motion.div className="mb-24 select-none max-w-[800px] mx-auto text-center space-y-3">
+        <motion.div className="mb-20 select-none max-w-[800px] mx-auto text-center space-y-3">
           <motion.span 
             style={{ color: labelColor }}
             className="font-mono text-[12px] tracking-[8px] uppercase block font-semibold"
@@ -400,74 +387,169 @@ export default function Projects() {
           </motion.p>
         </motion.div>
 
-        {/* Desktop Map Layout (Alternating path nodes and cards with massive whitespace) */}
+        {/* Desktop Interactive Layout (55% Map, 45% Pinned Journal Card) */}
         <motion.div 
           style={{ opacity: trailDrawOpacity }}
-          className="hidden lg:flex relative w-full h-[1200px] z-10"
+          className="hidden lg:grid grid-cols-[55%_45%] relative w-full h-[1800px] z-10 gap-8"
         >
-          {/* Left Column: Winding Trail Map (40% width) */}
-          <div className="w-[40%] h-full relative flex items-center justify-center">
+          {/* Left Side (55%): Scrollable Winding Explorer Map */}
+          <div className="w-full h-full relative flex items-center justify-center">
             
-            {/* Winding Route Path SVG */}
+            {/* Winding Route Path SVG (Thicker, hand-drawn pencil look Centerpiece) */}
             <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-              <svg className="w-full h-full" viewBox="0 0 300 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Main Winding Route Dashed Line */}
+              <svg className="w-full h-full" viewBox="0 0 300 1800" fill="none" xmlns="http://www.w3.org/2000/svg">
+                {/* Secondary offset sketched route (For hand-sketched aesthetic) */}
                 <path
-                  d="M 150,0 C 150,100 100,150 100,250 C 100,380 200,470 200,600 C 200,730 100,820 100,950 C 100,1050 150,1100 150,1200"
+                  d="M 150,0 C 150,150 100,250 100,400 C 100,600 200,750 200,950 C 200,1150 100,1300 100,1500 C 100,1650 150,1720 150,1800"
                   stroke="#8B6F58"
                   strokeWidth="1.2"
-                  strokeDasharray="4,6"
+                  strokeDasharray="3,5"
                   strokeLinecap="round"
-                  opacity="0.12"
+                  opacity="0.08"
+                  transform="translate(1.5, -0.5)"
                 />
 
-                {/* Active Route Highlight Track */}
+                {/* Main route base line */}
+                <path
+                  d="M 150,0 C 150,150 100,250 100,400 C 100,600 200,750 200,950 C 200,1150 100,1300 100,1500 C 100,1650 150,1720 150,1800"
+                  stroke="#8B6F58"
+                  strokeWidth="3.5"
+                  strokeDasharray="6,8"
+                  strokeLinecap="round"
+                  opacity="0.18"
+                />
+
+                {/* Traversed route highlight segment */}
                 <motion.path
-                  d="M 150,0 C 150,100 100,150 100,250 C 100,380 200,470 200,600 C 200,730 100,820 100,950 C 100,1050 150,1100 150,1200"
+                  d="M 150,0 C 150,150 100,250 100,400 C 100,600 200,750 200,950 C 200,1150 100,1300 100,1500 C 100,1650 150,1720 150,1800"
                   stroke="#5C4A3C"
-                  strokeWidth="1.2"
-                  strokeDasharray="4,6"
+                  strokeWidth="3.5"
+                  strokeDasharray="6,8"
                   strokeLinecap="round"
                   style={{ pathLength: trailDrawLength }}
-                  opacity="0.45"
+                  opacity="0.6"
                 />
               </svg>
             </div>
 
-            {/* Checkpoint Nodes positioned on path */}
-            <div className="absolute top-[250px] left-[33.3%] -translate-x-1/2 -translate-y-1/2">
+            {/* Checkpoint nodes positioned accurately on path */}
+            <div className="absolute top-[400px] left-[33.3%] -translate-x-1/2 -translate-y-1/2">
               <MedallionNode proj={projects[0]} isActive={activeIndex === 0} />
             </div>
 
-            <div className="absolute top-[600px] left-[66.6%] -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-[950px] left-[66.6%] -translate-x-1/2 -translate-y-1/2">
               <MedallionNode proj={projects[1]} isActive={activeIndex === 1} />
             </div>
 
-            <div className="absolute top-[950px] left-[33.3%] -translate-x-1/2 -translate-y-1/2">
+            <div className="absolute top-[1500px] left-[33.3%] -translate-x-1/2 -translate-y-1/2">
               <MedallionNode proj={projects[2]} isActive={activeIndex === 2} />
             </div>
 
           </div>
 
-          {/* Right Column: Sticky Project Details Card with Massive Whitespace */}
-          <div className="w-[60%] pl-24 relative">
-            <div className="sticky top-[250px] h-[300px] w-full flex items-center justify-start">
+          {/* Right Side (45%): Sticky content-morphing Journal Card */}
+          <div className="w-full pl-6 relative">
+            <div className="sticky top-[220px] w-full flex items-center justify-start">
               
-              <div className="relative w-full">
-                {/* Card 1 */}
-                <div className="absolute inset-x-0 top-0">
-                  <DiscoveryCard proj={projects[0]} opacity={card1Opacity} y={card1Y} />
-                </div>
+              {/* 3D Perspective Wrapper for subtle paper flip transition */}
+              <div style={{ perspective: 1200 }} className="w-[336px] min-h-[390px] relative">
+                
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={activeIndex}
+                    initial={{ rotateY: 90, opacity: 0, scale: 0.98 }}
+                    animate={{ rotateY: 0, opacity: 1, scale: 1 }}
+                    exit={{ rotateY: -90, opacity: 0, scale: 0.98 }}
+                    transition={{ duration: 0.75, ease: [0.25, 1, 0.5, 1] }}
+                    style={{ transformOrigin: "left center" }}
+                    className="w-full h-full rounded-[16px] p-6 bg-[#F9F0E4] text-[#3A2B20] border border-[rgba(58,43,32,0.12)] shadow-[0_12px_40px_rgba(58,43,32,0.06)] relative overflow-hidden"
+                  >
+                    {/* Subtle lined paper pattern overlay */}
+                    <div 
+                      className="absolute inset-0 pointer-events-none opacity-[0.05]"
+                      style={{
+                        backgroundImage: "linear-gradient(rgba(58,43,32,0.2) 1px, transparent 1px)",
+                        backgroundSize: "100% 24px"
+                      }}
+                    />
 
-                {/* Card 2 */}
-                <div className="absolute inset-x-0 top-0">
-                  <DiscoveryCard proj={projects[1]} opacity={card2Opacity} y={card2Y} />
-                </div>
+                    <div className="space-y-4 relative z-10">
+                      {/* Plaque Header */}
+                      <div className="border-b border-[#CDB38D]/35 pb-2">
+                        <div className="flex items-center justify-between">
+                          <h3 className="font-serif text-base font-bold tracking-tight">
+                            {activeProj.title}
+                          </h3>
+                          <span className="font-mono text-[9px] uppercase tracking-wider bg-[#E8D5B5]/50 px-2 py-0.5 rounded border border-[#CDB38D]/30">
+                            0{activeProj.id}
+                          </span>
+                        </div>
+                        <span className="font-sans text-[10.5px] text-[#8B6F58] tracking-wider block font-semibold mt-0.5 uppercase">
+                          {activeProj.subtitle}
+                        </span>
+                      </div>
 
-                {/* Card 3 */}
-                <div className="absolute inset-x-0 top-0">
-                  <DiscoveryCard proj={projects[2]} opacity={card3Opacity} y={card3Y} />
-                </div>
+                      {/* Description */}
+                      <p className="font-sans text-xs text-[#3A2B20]/85 leading-relaxed font-light">
+                        {activeProj.description}
+                      </p>
+
+                      {/* Highlights Bullet List */}
+                      <div className="space-y-2">
+                        <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">KEY WAYPOINTS</span>
+                        <ul className="space-y-1.5 text-[11px] font-sans text-[#3A2B20]/90 font-light leading-relaxed">
+                          {activeProj.highlights.map((h: string, hIdx: number) => (
+                            <li key={hIdx} className="flex items-start">
+                              <span className="text-[#8B6F58]/80 font-mono mr-2 shrink-0">•</span>
+                              <span>{h}</span>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+
+                      {/* Tech Pills */}
+                      <div className="space-y-2 pt-1">
+                        <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">DEPLOYS</span>
+                        <div className="flex flex-wrap gap-1">
+                          {activeProj.tech.map((t: string) => (
+                            <span 
+                              key={t}
+                              className="font-mono text-[9px] text-[#3A2B20]/80 bg-[#E8D5B5]/30 border border-[#CDB38D]/25 px-2 py-0.5 rounded"
+                            >
+                              {t}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Action buttons */}
+                      <div className="pt-3 border-t border-[#CDB38D]/20 flex gap-2">
+                        <a
+                          href={activeProj.github}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="cursor-pointer border border-[#8B6F58]/40 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/20 text-[#3A2B20] font-semibold text-[10px] py-1.5 px-3 rounded-lg flex items-center gap-1.5 transition-all duration-200"
+                        >
+                          <Github className="w-3 h-3" />
+                          <span>Repository</span>
+                        </a>
+                        {activeProj.demo && (
+                          <a
+                            href={activeProj.demo}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[10px] py-1.5 px-3.5 rounded-lg flex items-center gap-1.5 transition-all duration-200"
+                          >
+                            <ExternalLink className="w-3 h-3" />
+                            <span>{activeProj.title === 'Dynosaur Website' ? 'Live Site' : 'Demo'}</span>
+                          </a>
+                        )}
+                      </div>
+                    </div>
+
+                  </motion.div>
+                </AnimatePresence>
+
               </div>
 
             </div>
@@ -475,17 +557,86 @@ export default function Projects() {
 
         </motion.div>
 
-        {/* Mobile Stack Layout (Clean stacked flow) */}
+        {/* Mobile Layout (Standard sequential stacked waypoints) */}
         <div className="lg:hidden relative w-full px-2 space-y-16 z-10 mt-6">
           {projects.map((proj) => (
             <div key={proj.id} className="flex flex-col items-center">
-              {/* Medallion Node above the card */}
+              {/* Medallion Node */}
               <div className="mb-4">
                 <MedallionNode proj={proj} isActive={true} />
               </div>
               
-              {/* The Discovery Card */}
-              <DiscoveryCard proj={proj} opacity={1.0} y={0} />
+              {/* Card */}
+              <div className="w-[300px] rounded-[16px] p-5.5 bg-[#F9F0E4] text-[#3A2B20] border border-[rgba(58,43,32,0.12)] shadow-[0_12px_40px_rgba(58,43,32,0.06)] relative overflow-hidden">
+                <div className="space-y-4">
+                  <div className="border-b border-[#CDB38D]/35 pb-2">
+                    <div className="flex items-center justify-between">
+                      <h3 className="font-serif text-base font-bold tracking-tight">
+                        {proj.title}
+                      </h3>
+                      <span className="font-mono text-[9px] uppercase tracking-wider bg-[#E8D5B5]/50 px-2 py-0.5 rounded border border-[#CDB38D]/30">
+                        0{proj.id}
+                      </span>
+                    </div>
+                    <span className="font-sans text-[10.5px] text-[#8B6F58] tracking-wider block font-semibold mt-0.5 uppercase">
+                      {proj.subtitle}
+                    </span>
+                  </div>
+
+                  <p className="font-sans text-xs text-[#3A2B20]/85 leading-relaxed font-light">
+                    {proj.description}
+                  </p>
+
+                  <div className="space-y-2">
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">KEY WAYPOINTS</span>
+                    <ul className="space-y-1.5 text-[11px] font-sans text-[#3A2B20]/90 font-light leading-relaxed">
+                      {proj.highlights.map((h: string, hIdx: number) => (
+                        <li key={hIdx} className="flex items-start">
+                          <span className="text-[#8B6F58]/80 font-mono mr-2 shrink-0">•</span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="space-y-2 pt-1">
+                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">DEPLOYS</span>
+                    <div className="flex flex-wrap gap-1">
+                      {proj.tech.map((t: string) => (
+                        <span 
+                          key={t}
+                          className="font-mono text-[9px] text-[#3A2B20]/80 bg-[#E8D5B5]/30 border border-[#CDB38D]/25 px-2 py-0.5 rounded"
+                        >
+                          {t}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
+
+                  <div className="pt-3 border-t border-[#CDB38D]/20 flex gap-2">
+                    <a
+                      href={proj.github}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="cursor-pointer border border-[#8B6F58]/40 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/20 text-[#3A2B20] font-semibold text-[10px] py-1.5 px-3 rounded-lg flex items-center gap-1.5 transition-all duration-200"
+                    >
+                      <Github className="w-3 h-3" />
+                      <span>Repository</span>
+                    </a>
+                    {proj.demo && (
+                      <a
+                        href={proj.demo}
+                        target="_blank"
+                        rel="noreferrer"
+                        className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[10px] py-1.5 px-3.5 rounded-lg flex items-center gap-1.5 transition-all duration-200"
+                      >
+                        <ExternalLink className="w-3 h-3" />
+                        <span>{proj.title === 'Dynosaur Website' ? 'Live Site' : 'Demo'}</span>
+                      </a>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
           ))}
         </div>
