@@ -6,35 +6,35 @@ import { Github, Linkedin, Mail, FileText } from 'lucide-react';
 
 // Hanging Forest Vines Leaves Definitions (Desaturated forest green colors)
 const leftVineLeaves = [
-  { x: 16, y: 50, rotate: -35, scale: 0.8, color: "#3F8F2A" },
-  { x: 18, y: 110, rotate: 145, scale: 0.85, color: "#2E7D20" },
-  { x: 12, y: 170, rotate: -40, scale: 0.75, color: "#5CAF38" },
-  { x: 23, y: 230, rotate: 50, scale: 0.85, color: "#3F8F2A" },
-  { x: 28, y: 290, rotate: 160, scale: 0.8, color: "#2E7D20" },
-  { x: 22, y: 350, rotate: -35, scale: 0.75, color: "#5CAF38" },
-  { x: 19, y: 410, rotate: 130, scale: 0.85, color: "#3F8F2A" },
+  { x: 16, y: 50, rotate: -35, scale: 0.6, color: "#2A5A2A" },
+  { x: 18, y: 110, rotate: 145, scale: 0.65, color: "#224D22" },
+  { x: 12, y: 170, rotate: -40, scale: 0.55, color: "#305F30" },
+  { x: 23, y: 230, rotate: 50, scale: 0.65, color: "#2A5A2A" },
+  { x: 28, y: 290, rotate: 160, scale: 0.6, color: "#224D22" },
+  { x: 22, y: 350, rotate: -35, scale: 0.55, color: "#305F30" },
+  { x: 19, y: 410, rotate: 130, scale: 0.65, color: "#2A5A2A" },
   
   // Leaves on sub-branches
-  { x: 30, y: 145, rotate: 20, scale: 0.7, color: "#3F8F2A" },
-  { x: 34, y: 180, rotate: 160, scale: 0.7, color: "#2E7D20" },
-  { x: 32, y: 290, rotate: 30, scale: 0.7, color: "#5CAF38" },
-  { x: 29, y: 335, rotate: 150, scale: 0.7, color: "#3F8F2A" },
+  { x: 30, y: 145, rotate: 20, scale: 0.5, color: "#2A5A2A" },
+  { x: 34, y: 180, rotate: 160, scale: 0.5, color: "#224D22" },
+  { x: 32, y: 290, rotate: 30, scale: 0.5, color: "#305F30" },
+  { x: 29, y: 335, rotate: 150, scale: 0.5, color: "#2A5A2A" },
 ];
 
 const rightVineLeaves = [
-  { x: 74, y: 50, rotate: 45, scale: 0.8, color: "#3F8F2A" },
-  { x: 72, y: 110, rotate: -135, scale: 0.85, color: "#2E7D20" },
-  { x: 78, y: 170, rotate: 30, scale: 0.75, color: "#5CAF38" },
-  { x: 58, y: 230, rotate: 150, scale: 0.85, color: "#3F8F2A" },
-  { x: 52, y: 290, rotate: -45, scale: 0.8, color: "#2E7D20" },
-  { x: 68, y: 350, rotate: 120, scale: 0.75, color: "#5CAF38" },
-  { x: 62, y: 410, rotate: 45, scale: 0.85, color: "#3F8F2A" },
+  { x: 74, y: 50, rotate: 45, scale: 0.6, color: "#2A5A2A" },
+  { x: 72, y: 110, rotate: -135, scale: 0.65, color: "#224D22" },
+  { x: 78, y: 170, rotate: 30, scale: 0.55, color: "#305F30" },
+  { x: 58, y: 230, rotate: 150, scale: 0.65, color: "#2A5A2A" },
+  { x: 52, y: 290, rotate: -45, scale: 0.6, color: "#224D22" },
+  { x: 68, y: 350, rotate: 120, scale: 0.55, color: "#305F30" },
+  { x: 62, y: 410, rotate: 45, scale: 0.65, color: "#2A5A2A" },
 
   // Leaves on sub-branches
-  { x: 60, y: 145, rotate: -20, scale: 0.7, color: "#3F8F2A" },
-  { x: 56, y: 180, rotate: -160, scale: 0.7, color: "#2E7D20" },
-  { x: 58, y: 290, rotate: -30, scale: 0.7, color: "#5CAF38" },
-  { x: 61, y: 335, rotate: -150, scale: 0.7, color: "#3F8F2A" },
+  { x: 60, y: 145, rotate: -20, scale: 0.5, color: "#2A5A2A" },
+  { x: 56, y: 180, rotate: -160, scale: 0.5, color: "#224D22" },
+  { x: 58, y: 290, rotate: -30, scale: 0.5, color: "#305F30" },
+  { x: 61, y: 335, rotate: -150, scale: 0.5, color: "#2A5A2A" },
 ];
 
 // Static background particles for ambient layout depth
@@ -157,7 +157,7 @@ export default function About() {
   return (
     <section 
       id="about" 
-      className="pt-32 pb-40 px-6 md:px-20 relative overflow-hidden"
+      className="pt-32 pb-40 px-6 md:px-[120px] relative overflow-hidden"
       style={{
         background: "linear-gradient(to bottom, #17110D 0%, #1B120D 30%, #21160E 70%, #26180F 100%)"
       }}
@@ -259,16 +259,16 @@ export default function About() {
         style={{ transformOrigin: "top center", filter: "blur(0.3px)" }}
       >
         {/* Main Vine Stem */}
-        <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
-        <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#2E7D20" strokeWidth="0.75" fill="none" strokeLinecap="round" />
+        <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#224D22" strokeWidth="3.0" fill="none" strokeLinecap="round" />
+        <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#2A5A2A" strokeWidth="0.75" fill="none" strokeLinecap="round" />
 
         {/* Sub-branch 1 */}
-        <path d="M 17,120 C 35,140 40,180 23,210" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-        <path d="M 17,120 C 35,140 40,180 23,210" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+        <path d="M 17,120 C 35,140 40,180 23,210" stroke="#224D22" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 17,120 C 35,140 40,180 23,210" stroke="#2A5A2A" strokeWidth="0.5" fill="none" strokeLinecap="round" />
 
         {/* Sub-branch 2 */}
-        <path d="M 22,260 C 38,280 36,320 20,350" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-        <path d="M 22,260 C 38,280 36,320 20,350" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+        <path d="M 22,260 C 38,280 36,320 20,350" stroke="#224D22" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 22,260 C 38,280 36,320 20,350" stroke="#2A5A2A" strokeWidth="0.5" fill="none" strokeLinecap="round" />
 
         {leftVineLeaves.map((leaf, idx) => (
           <g key={idx} transform={`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotate}) scale(${leaf.scale})`}>
@@ -279,7 +279,7 @@ export default function About() {
               strokeWidth="0.75" 
               style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))" }}
             />
-            <path d="M0 0 Q 12.5 -2 22 0" fill="none" stroke="#5CAF38" strokeWidth="0.5" />
+            <path d="M0 0 Q 12.5 -2 22 0" fill="none" stroke="#2A5A2A" strokeWidth="0.5" />
           </g>
         ))}
       </motion.svg>
@@ -294,16 +294,16 @@ export default function About() {
         style={{ transformOrigin: "top center", filter: "blur(0.3px)" }}
       >
         {/* Main Vine Stem */}
-        <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
-        <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#2E7D20" strokeWidth="0.75" fill="none" strokeLinecap="round" />
+        <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#224D22" strokeWidth="3.0" fill="none" strokeLinecap="round" />
+        <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#2A5A2A" strokeWidth="0.75" fill="none" strokeLinecap="round" />
 
         {/* Sub-branch 1 */}
-        <path d="M 73,120 C 55,140 50,180 67,210" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-        <path d="M 73,120 C 55,140 50,180 67,210" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+        <path d="M 73,120 C 55,140 50,180 67,210" stroke="#224D22" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 73,120 C 55,140 50,180 67,210" stroke="#2A5A2A" strokeWidth="0.5" fill="none" strokeLinecap="round" />
 
         {/* Sub-branch 2 */}
-        <path d="M 68,260 C 52,280 54,320 70,350" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
-        <path d="M 68,260 C 52,280 54,320 70,350" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+        <path d="M 68,260 C 52,280 54,320 70,350" stroke="#224D22" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 68,260 C 52,280 54,320 70,350" stroke="#2A5A2A" strokeWidth="0.5" fill="none" strokeLinecap="round" />
 
         {rightVineLeaves.map((leaf, idx) => (
           <g key={idx} transform={`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotate}) scale(${leaf.scale})`}>
@@ -314,7 +314,7 @@ export default function About() {
               strokeWidth="0.75" 
               style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))" }}
             />
-            <path d="M0 0 Q 12.5 -2 22 0" fill="none" stroke="#5CAF38" strokeWidth="0.5" />
+            <path d="M0 0 Q 12.5 -2 22 0" fill="none" stroke="#2A5A2A" strokeWidth="0.5" />
           </g>
         ))}
       </motion.svg>
@@ -380,15 +380,15 @@ export default function About() {
           <Torch className="right-[-56px] top-[150px]" />
 
           <motion.div 
-            className="rounded-[24px] border overflow-hidden w-full p-6 md:p-10 transition-all duration-500 hover:border-[#FFAA50]/25"
+            className="rounded-[24px] border overflow-hidden w-full p-6 md:p-10 transition-all duration-500 hover:border-[rgba(255,140,0,0.35)]"
             initial="initial"
             whileInView="animate"
             viewport={{ once: true, margin: "-100px" }}
             variants={panelReveal}
             style={{
-              background: "rgba(28,22,20,0.92)",
-              border: "1px solid rgba(255,170,80,0.10)",
-              boxShadow: "0 20px 80px rgba(0,0,0,0.4), 0 0 60px rgba(255,120,40,0.04)"
+              background: "rgba(32,22,18,0.92)",
+              border: "1px solid rgba(255,140,0,0.18)",
+              boxShadow: "0 20px 80px rgba(0,0,0,0.5), 0 0 60px rgba(255,140,0,0.04)"
             }}
           >
             <motion.div 
@@ -396,105 +396,63 @@ export default function About() {
               variants={revealContainer}
             >
               
-              {/* LEFT COLUMN: Clean Identity Plaque (38%) */}
+              {/* LEFT COLUMN: Clean Identity Plaque & Bio (38%) */}
               <motion.div 
-                className="space-y-8 pb-10 lg:pb-0 lg:pr-12 flex flex-col justify-between"
-                style={{ borderRight: "1px solid rgba(255,170,80,0.08)" }}
+                className="space-y-6 pb-10 lg:pb-0 lg:pr-12 flex flex-col justify-center"
+                style={{ borderRight: "1px solid rgba(255,140,0,0.08)" }}
                 variants={fadeUp}
               >
-                <div className="flex flex-col justify-between h-full p-6 md:p-8 rounded-2xl border border-[rgba(255,170,80,0.06)] bg-[rgba(255,255,255,0.01)] relative overflow-hidden">
-                  <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-bl from-[rgba(255,170,80,0.02)] to-transparent pointer-events-none" />
-                  
-                  <div className="space-y-6">
-                    {/* Compass Emblem */}
-                    <div className="w-10 h-10 rounded-xl border border-[rgba(255,170,80,0.2)] bg-[rgba(255,170,80,0.05)] flex items-center justify-center text-[rgba(255,170,80,0.8)]">
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-                        <circle cx="12" cy="12" r="10" />
-                        <polygon points="16.24,7.76 14.12,14.12 7.76,16.24 9.88,9.88" />
-                      </svg>
-                    </div>
-
-                    <div className="space-y-1">
-                      <span className="font-mono text-[10px] text-[#FFAA50]/60 tracking-[0.2em] uppercase">IDENTITY PLAQUE</span>
-                      <h3 className="font-display text-2xl font-extrabold text-[#F5F1EB] tracking-tight">
-                        Golconda Dhanush Kumar
-                      </h3>
-                      <p className="font-mono text-xs text-[#FFAA50]/90 font-medium">
-                        CSE Student
-                      </p>
-                    </div>
-
-                    <div className="h-[1px] w-full bg-[rgba(255,170,80,0.08)]" />
-
-                    <div className="grid grid-cols-2 gap-4 text-xs font-mono">
-                      <div>
-                        <span className="text-[#C9B7A4]/40 block uppercase tracking-wider text-[9px]">EDUCATION</span>
-                        <span className="text-[#F5F1EB] font-medium block mt-1">CBIT Hyderabad</span>
-                      </div>
-                      <div>
-                        <span className="text-[#C9B7A4]/40 block uppercase tracking-wider text-[9px]">GRADUATION</span>
-                        <span className="text-[#F5F1EB] font-medium block mt-1">Class of 2028</span>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-8 border-t border-[rgba(255,170,80,0.08)] pt-5">
-                    <span className="text-[#C9B7A4]/40 font-mono text-[9px] block uppercase tracking-wider mb-2">PERSONAL MISSION</span>
-                    <p className="font-sans text-sm text-[rgba(245,241,235,0.78)] font-light leading-relaxed italic">
-                      "Building software that transforms ideas into scalable systems."
-                    </p>
-                  </div>
+                <div className="space-y-4">
+                  <span className="font-mono text-[10px] text-[#FFAA50]/60 tracking-[0.2em] uppercase">ABOUT ME</span>
+                  <h3 className="font-display text-2xl font-extrabold text-[#F5F1EB] tracking-tight">
+                    Golconda Dhanush Kumar
+                  </h3>
+                  <p className="font-mono text-xs text-[#FFAA50]/90 font-medium">
+                    CSE Student
+                  </p>
+                  <div className="h-[1px] w-12 bg-[#FFAA50]/20" />
+                  <p className="font-sans text-sm text-[rgba(245,241,235,0.78)] font-light leading-relaxed">
+                    I am a Computer Science student at CBIT Hyderabad, passionate about building robust, high-performance systems and <span className="underline decoration-[#E18A42] underline-offset-4 decoration-1 font-medium">solving complex algorithmic challenges</span>.
+                  </p>
                 </div>
               </motion.div>
 
-              {/* RIGHT COLUMN: Bio, Education, Skills, Connections (62%) */}
+              {/* RIGHT COLUMN: Education, Tech Chips, Socials, Resume (62%) */}
               <motion.div 
                 className="space-y-6 flex flex-col justify-between"
                 variants={fadeUp}
               >
                 <div className="space-y-6">
-                  {/* Biography (max 4 lines) */}
-                  <div className="pb-5" style={{ borderBottom: "1px solid rgba(255,170,80,0.08)" }}>
-                    <span className="font-mono text-[12px] tracking-[5px] uppercase block mb-3 text-[rgba(255,170,80,0.8)]">
-                      THE RECORD
-                    </span>
-                    <div className="font-sans text-[16px] leading-[1.8] text-[rgba(245,241,235,0.78)] font-light mt-4">
-                      <p>
-                        Hi, I'm Dhanush, a Computer Science student at CBIT Hyderabad. I love building robust, high-performance systems and exploring intelligent tools. My learning journey revolves around crafting clean architectures, exploring cloud pipelines, and <span className="underline decoration-[#E18A42] underline-offset-4 decoration-1 font-medium">solving complex algorithmic challenges</span>. I enjoy turning problems into scalable products and experimenting with new technologies.
-                      </p>
-                    </div>
-                  </div>
-
                   {/* Education Badge */}
                   <div className="space-y-3">
-                    <h4 className="font-mono text-[12px] tracking-[5px] uppercase text-[rgba(255,170,80,0.8)] font-semibold">
+                    <h4 className="font-mono text-[12px] tracking-[5px] uppercase text-[rgba(255,140,0,0.8)] font-semibold">
                       ACADEMIC JOURNEY
                     </h4>
                     <div className="flex mt-3">
                       <div 
                         className="flex items-center gap-2.5 px-4 py-2 rounded-xl text-xs font-mono text-[#FFAA50] bg-[rgba(255,170,80,0.03)] hover:bg-[rgba(255,170,80,0.06)] transition-all duration-300"
-                        style={{ border: "1px solid rgba(255,170,80,0.12)" }}
+                        style={{ border: "1px solid rgba(255,140,0,0.12)" }}
                       >
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
                           <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
                           <path d="M6 12v5c0 2 2 3 6 3s6-1 6-3v-5" />
                         </svg>
-                        <span>Chaitanya Bharathi Institute of Technology (2024 - 2028)</span>
+                        <span>CBIT Hyderabad (2024 - 2028)</span>
                       </div>
                     </div>
                   </div>
 
                   {/* Skills Chips (max 10) */}
                   <div className="space-y-3">
-                    <h4 className="font-mono text-[12px] tracking-[5px] uppercase text-[rgba(255,170,80,0.8)] font-semibold">
+                    <h4 className="font-mono text-[12px] tracking-[5px] uppercase text-[rgba(255,140,0,0.8)] font-semibold">
                       TOOLKIT MASTERED
                     </h4>
                     <div className="flex flex-wrap gap-2 mt-4">
                       {['Java', 'Spring Boot', 'React', 'Next.js', 'Node.js', 'PostgreSQL', 'MongoDB', 'AWS', 'Docker', 'TypeScript'].map((skill) => (
                         <span
                           key={skill}
-                          className="font-sans text-xs h-[42px] px-[18px] flex items-center bg-[rgba(255,255,255,0.03)] text-[#C9B7A4]/90 rounded-lg cursor-default border hover:border-[#FFAA50]/30 hover:text-[#F5F1EB] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,170,80,0.08)] transition-all duration-300"
-                          style={{ border: "1px solid rgba(255,170,80,0.12)" }}
+                          className="font-sans text-xs h-[36px] px-[14px] flex items-center bg-[rgba(255,255,255,0.03)] text-[#C9B7A4]/90 rounded-lg cursor-default border hover:border-[#FFAA50]/30 hover:text-[#F5F1EB] transition-all duration-300"
+                          style={{ border: "1px solid rgba(255,140,0,0.12)" }}
                         >
                           {skill}
                         </span>
@@ -504,7 +462,7 @@ export default function About() {
 
                   {/* Journey Connections / Social Links */}
                   <div className="space-y-3">
-                    <h4 className="font-mono text-[12px] tracking-[5px] uppercase text-[rgba(255,170,80,0.8)] font-semibold">
+                    <h4 className="font-mono text-[12px] tracking-[5px] uppercase text-[rgba(255,140,0,0.8)] font-semibold">
                       JOURNEY CONNECTIONS
                     </h4>
                     <div className="flex flex-wrap gap-4 items-center mt-4">
@@ -547,7 +505,7 @@ export default function About() {
                 </div>
 
                 {/* Bottom Motto Footer */}
-                <div className="pt-5 mt-6 flex flex-col items-center" style={{ borderTop: "1px solid rgba(255,170,80,0.08)" }}>
+                <div className="pt-4 mt-4 flex flex-col items-center" style={{ borderTop: "1px solid rgba(255,170,80,0.08)" }}>
                   <p className="font-mono text-[9px] sm:text-[10px] text-[#C9B7A4]/40 uppercase tracking-[0.3em] select-none text-center">
                     Curiosity today. Impact tomorrow.
                   </p>
@@ -558,38 +516,12 @@ export default function About() {
           </motion.div>
         </div>
 
-        {/* Small Achievement Strip (Horizontal Row, exactly 4 achievements) */}
-        <motion.div 
-          className="mt-16 border-t border-[rgba(255,170,80,0.06)] pt-12 max-w-[1050px] mx-auto w-full"
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true, margin: "-100px" }}
-          variants={fadeUp}
-        >
-          <span className="font-mono text-[10px] text-[#FFAA50]/60 tracking-[0.25em] uppercase block mb-8 text-center font-medium">
-            ACHIEVEMENTS UNLOCKED
-          </span>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-stretch justify-center">
-            {[
-              { badge: "🏆", title: "AI For Bharat Winner", desc: "National Hackathon" },
-              { badge: "🥈", title: "Adobe India Hackathon", desc: "Whiteboard Sync Project" },
-              { badge: "💻", title: "200+ LeetCode Problems", desc: "Algorithmic Ascent" },
-              { badge: "🎯", title: "9.55 CGPA CSE", desc: "CBIT Batch Distinction" }
-            ].map((ach, idx) => (
-              <div 
-                key={idx} 
-                className="rounded-2xl p-4 flex flex-col items-center justify-center text-center border transition-all duration-300 hover:border-[rgba(255,170,80,0.20)] bg-[rgba(255,255,255,0.01)]"
-                style={{
-                  border: "1px solid rgba(255,170,80,0.08)"
-                }}
-              >
-                <span className="text-2xl mb-2 filter drop-shadow-[0_0_8px_rgba(255,170,80,0.25)]">{ach.badge}</span>
-                <h4 className="font-sans text-xs font-semibold text-[#F5F1EB]">{ach.title}</h4>
-                <span className="font-mono text-[9px] text-[#C9B7A4]/50 uppercase tracking-wider mt-1 block">{ach.desc}</span>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+      {/* About to Projects transition trail */}
+      <div className="absolute bottom-0 inset-x-0 h-32 pointer-events-none z-10 flex justify-center">
+        <svg className="w-32 h-full text-[rgba(255,170,80,0.15)]" viewBox="0 0 120 120" preserveAspectRatio="none" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M 60,0 C 60,30 50,90 60,120" stroke="currentColor" strokeWidth="2.5" strokeDasharray="6 6" />
+        </svg>
+      </div>
 
       </div>
     </section>

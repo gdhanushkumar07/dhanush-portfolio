@@ -16,7 +16,7 @@ import Contact from '@/components/Contact';
 
 export default function App() {
   const handleOpenJourney = () => {
-    const target = document.querySelector('#projects');
+    const target = document.querySelector('#about');
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
     }
@@ -41,14 +41,14 @@ export default function App() {
         {/* Cinematic Entrance Hero Banner */}
         <Hero onOpenCodex={handleOpenJourney} />
 
+        {/* Narrative Biography & Growth Timeline Checkpoint */}
+        <About />
+
         {/* Featured Projects Log */}
         <Projects />
 
         {/* Technical Toolkit & Mastery Levels */}
         <Skills />
-
-        {/* Narrative Biography & Growth Timeline Checkpoint */}
-        <About />
 
         {/* Competitive Milestone Benchmarks */}
         <Achievements />

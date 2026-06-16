@@ -1,7 +1,7 @@
 "use client";
 
-import React, { useMemo } from 'react';
-import { motion } from 'framer-motion';
+import React, { useMemo, useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 interface HeroProps {
@@ -10,6 +10,26 @@ interface HeroProps {
 
 export default function Hero({ onOpenCodex }: HeroProps) {
   const [mounted, setMounted] = React.useState(false);
+  const containerRef = useRef<HTMLElement>(null);
+
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end start"]
+  });
+
+  // Scroll transforms for smooth morph transition
+  const skyOpacity = useTransform(scrollYProgress, [0, 0.8], [1, 0.1]);
+  const moonOpacity = useTransform(scrollYProgress, [0, 0.5], [0.7, 0]);
+  const layer1Opacity = useTransform(scrollYProgress, [0, 0.7], [0.35, 0]);
+  const layer2Opacity = useTransform(scrollYProgress, [0, 0.75], [0.55, 0]);
+  const layer3Opacity = useTransform(scrollYProgress, [0, 0.8], [0.75, 0]);
+  const layer4Opacity = useTransform(scrollYProgress, [0, 0.85], [0.90, 0]);
+  const layer5Opacity = useTransform(scrollYProgress, [0, 0.9], [1.0, 0]);
+  const hillsY = useTransform(scrollYProgress, [0, 1], [0, 80]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.6], [1, 0]);
+  const textY = useTransform(scrollYProgress, [0, 0.6], [0, -50]);
+  const amberOverlayOpacity = useTransform(scrollYProgress, [0.3, 0.9], [0, 0.98]);
+  const beaconOpacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
 
   // Programmatically generate 120 random stars in the upper sky
   const stars = useMemo(() => {
@@ -82,6 +102,7 @@ export default function Hero({ onOpenCodex }: HeroProps) {
 
   return (
     <section
+      ref={containerRef}
       id="hero"
       className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden px-6 select-none bg-gradient-to-b from-[#020B24] via-[#041A4D] to-[#071D42]"
     >
@@ -90,6 +111,7 @@ export default function Hero({ onOpenCodex }: HeroProps) {
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1.5 }}
+        style={{ opacity: skyOpacity }}
         className="absolute inset-0 pointer-events-none z-0"
       >
         {stars.map((star) => (
@@ -121,6 +143,7 @@ export default function Hero({ onOpenCodex }: HeroProps) {
         initial={{ opacity: 0, scale: 0.8, x: 20 }}
         animate={{ opacity: 0.7, scale: 1, x: 0 }}
         transition={{ duration: 2.0, delay: 0.4, ease: "easeOut" }}
+        style={{ opacity: moonOpacity }}
         className="absolute top-16 right-16 sm:top-24 sm:right-28 w-12 h-12 sm:w-16 sm:h-16 rounded-full bg-[#E5E2D9] moon-glow z-10"
       />
 
@@ -132,12 +155,22 @@ export default function Hero({ onOpenCodex }: HeroProps) {
         className="absolute w-[600px] h-[600px] sm:w-[900px] sm:h-[900px] bg-[#F5A623]/[0.08] rounded-full blur-[160px] pointer-events-none z-10"
       />
 
-      {/* 4. Text & Heading Content Area */}
+      {/* 4. Scroll-driven Forest Clearing Transition Overlay */}
+      <motion.div 
+        className="absolute inset-0 pointer-events-none z-15"
+        style={{
+          backgroundColor: "#17110D",
+          opacity: amberOverlayOpacity
+        }}
+      />
+
+      {/* 5. Text & Heading Content Area */}
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-20 flex flex-col items-center text-center max-w-4xl px-4 mt-[-40px]"
+        style={{ opacity: textOpacity, y: textY }}
+        className="relative z-25 flex flex-col items-center text-center max-w-4xl px-4 mt-[-40px]"
       >
         {/* Eyebrow */}
         <motion.span
@@ -147,7 +180,7 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           THE JOURNEY OF A BUILDER
         </motion.span>
 
-        {/* Heading (Sized 15% smaller, on two lines instead of three) */}
+        {/* Heading */}
         <motion.h1
           variants={textItemVariants}
           className="font-display font-extrabold text-[clamp(3.1rem,7vw,5.5rem)] md:text-[clamp(4.2rem,8.5vw,7.4rem)] leading-[0.95] tracking-tight text-glow mb-6 sm:mb-8"
@@ -191,15 +224,16 @@ export default function Hero({ onOpenCodex }: HeroProps) {
         </motion.button>
       </motion.div>
 
-      {/* 5. Landscape Hills (SVG Paths, 5 Layers with Opacity Gradients & Separation) */}
+      {/* 6. Landscape Hills (SVG Paths, 5 Layers with Opacity Gradients & Separation) */}
       <div className="absolute inset-x-0 bottom-0 w-full h-[32vh] sm:h-[37vh] md:h-[42vh] pointer-events-none z-30 select-none">
         
-        {/* Layer 1 (Furthest, Darkest, Opacity 0.35) */}
+        {/* Layer 1 (Furthest, Darkest) */}
         <motion.svg
           variants={landscapeVariants(0.05)}
           initial="hidden"
           animate="visible"
-          className="absolute inset-0 w-full h-full opacity-[0.35]"
+          style={{ opacity: layer1Opacity, y: hillsY }}
+          className="absolute inset-0 w-full h-full"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
         >
@@ -209,12 +243,13 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           />
         </motion.svg>
 
-        {/* Layer 2 (Opacity 0.55) */}
+        {/* Layer 2 */}
         <motion.svg
           variants={landscapeVariants(0.18)}
           initial="hidden"
           animate="visible"
-          className="absolute inset-0 w-full h-full opacity-[0.55]"
+          style={{ opacity: layer2Opacity, y: hillsY }}
+          className="absolute inset-0 w-full h-full"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
         >
@@ -224,12 +259,13 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           />
         </motion.svg>
 
-        {/* Layer 3 (Opacity 0.75) */}
+        {/* Layer 3 */}
         <motion.svg
           variants={landscapeVariants(0.32)}
           initial="hidden"
           animate="visible"
-          className="absolute inset-0 w-full h-full opacity-[0.75]"
+          style={{ opacity: layer3Opacity, y: hillsY }}
+          className="absolute inset-0 w-full h-full"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
         >
@@ -239,12 +275,13 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           />
         </motion.svg>
 
-        {/* Layer 4 (Opacity 0.90) */}
+        {/* Layer 4 */}
         <motion.svg
           variants={landscapeVariants(0.45)}
           initial="hidden"
           animate="visible"
-          className="absolute inset-0 w-full h-full opacity-[0.90]"
+          style={{ opacity: layer4Opacity, y: hillsY }}
+          className="absolute inset-0 w-full h-full"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
         >
@@ -254,11 +291,12 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           />
         </motion.svg>
 
-        {/* Layer 5 (Foreground, Closest, Opacity 1.0) */}
+        {/* Layer 5 (Foreground, Closest) */}
         <motion.svg
           variants={landscapeVariants(0.58)}
           initial="hidden"
           animate="visible"
+          style={{ opacity: layer5Opacity, y: hillsY }}
           className="absolute inset-0 w-full h-full"
           viewBox="0 0 1440 320"
           preserveAspectRatio="none"
@@ -270,16 +308,14 @@ export default function Hero({ onOpenCodex }: HeroProps) {
         </motion.svg>
       </div>
 
-      {/* 6. Central Glowing Waypoint Beacon (Pulsing Journey Marker) & Fireflies */}
-      <div className="absolute inset-0 pointer-events-none z-40">
+      {/* 7. Central Glowing Waypoint Beacon & Fireflies */}
+      <motion.div 
+        style={{ opacity: beaconOpacity }}
+        className="absolute inset-0 pointer-events-none z-40"
+      >
         
         {/* Pulsing Beacon Light Source (Bottom Center) */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.6 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.8, delay: 1.0, ease: "easeOut" }}
-          className="absolute bottom-11 sm:bottom-12 left-1/2 transform -translate-x-1/2 w-8 h-8 flex items-center justify-center"
-        >
+        <div className="absolute bottom-11 sm:bottom-12 left-1/2 transform -translate-x-1/2 w-8 h-8 flex items-center justify-center">
           {/* Subtle Outer Pulsing Wave Ring */}
           <motion.div
             animate={{ scale: [1, 2.2, 1], opacity: [0.6, 0, 0.6] }}
@@ -292,7 +328,7 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           />
           {/* Circular Beacon Hub */}
           <div className="w-2.5 h-2.5 rounded-full bg-accent-amber shadow-[0_0_12px_3px_rgba(245,166,35,0.8)]" />
-        </motion.div>
+        </div>
 
         {/* Floating Fireflies drifting slowly across the landscape */}
         {fireflies.map((p) => (
@@ -320,7 +356,7 @@ export default function Hero({ onOpenCodex }: HeroProps) {
             }}
           />
         ))}
-      </div>
+      </motion.div>
     </section>
   );
 }

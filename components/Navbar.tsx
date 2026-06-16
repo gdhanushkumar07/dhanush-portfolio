@@ -15,9 +15,9 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
 
   const navItems: NavItem[] = [
+    { id: 'about', label: 'About', href: '#about' },
     { id: 'projects', label: 'Projects', href: '#projects' },
     { id: 'skills', label: 'Skills', href: '#skills' },
-    { id: 'about', label: 'About', href: '#about' },
     { id: 'achievements', label: 'Achievements', href: '#achievements' },
     { id: 'contact', label: 'Contact', href: '#contact' },
   ];
@@ -28,7 +28,7 @@ export default function Navbar() {
 
       // Simple intersection tracker
       const scrollPosition = window.scrollY + 200;
-      const sections = ['hero', 'projects', 'skills', 'about', 'achievements', 'contact'];
+      const sections = ['hero', 'about', 'skills', 'projects', 'achievements', 'contact'];
       
       for (const section of sections) {
         const el = document.getElementById(section);
