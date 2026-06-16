@@ -115,56 +115,38 @@ export const skillsData: SkillCategory[] = [
 
 export const projectsData: Project[] = [
   {
+    id: "contentiq",
+    title: "ContentIQ",
+    subtitle: "AI Video Intelligence & Distribution System",
+    timelineLabel: "AI for Bharat Hackathon Winner Project",
+    date: "March 2026",
+    description: "An advanced, high-performance media processing and evaluation dashboard built to analyze multi-modal engagement parameters using cloud serverless constructs.",
+    features: [
+      "Engineered multi-modal asset evaluation pipeline using AWS Bedrock large models",
+      "Created sub-second transcription and linguistic sync using AWS Transcribe workflows",
+      "Pioneered secure, decoupled storage flow using AWS S3 upload events triggering automated multi-stage AWS Lambdas",
+      "Designed a professional high-fidelity dashboard visualizer tracing retention forecasts and dynamic script alternates"
+    ],
+    tags: ["React", "TypeScript", "AWS S3", "AWS Lambda", "AWS Bedrock", "AWS Transcribe", "Tailwind CSS"],
+    isFeatured: true,
+    github: "https://github.com/",
+    demo: "https://github.com/"
+  },
+  {
     id: "arogyasarathi",
     title: "Arogya Sarathi",
-    subtitle: "AI-Powered Rural Healthcare Platform",
-    timelineLabel: "Offline-First Healthcare Ecosystem",
+    subtitle: "Rural Low-Bandwidth Telemedicine Interface",
+    timelineLabel: "Healthcare Innovation Hackathon Milestone",
     date: "January 2026",
-    description: "An offline-first patient triage and live specialist consult portal tailored for extreme low-signal healthcare clinics in remote rural hubs, integrating lightweight AI models.",
+    description: "An offline-first patient triage and live specialist consult portal tailored for extreme low-signal healthcare clinics in remote rural hubs.",
     features: [
       "Optimized payload compression matrices and light socket triggers to function below 50kbps",
       "Developed secure client-side database caching using persistent service-worker synchronizers",
       "Built structured offline queues that auto-reconcile with cloud instances upon network verification",
       "Created highly accessible vernacular interfaces featuring voice translation assist badges"
     ],
-    tags: ["React", "Node.js", "Express.js", "MongoDB", "AI Integration"],
-    isFeatured: true,
-    github: "https://github.com/",
-    demo: "https://github.com/"
-  },
-  {
-    id: "dynosaur",
-    title: "Dynosaur Website",
-    subtitle: "Premium Business Platform",
-    timelineLabel: "Storytelling French Ice Cream & Cookies",
-    date: "December 2025",
-    description: "A premium business website for Dynosaur French Ice Cream & Cookies. Features storytelling-focused design, interactive menu, user reviews, maps, Swiggy integration, and search engine optimization.",
-    features: [
-      "Designed an immersive storytelling experience with smooth visual micro-interactions",
-      "Created an interactive menu with custom filters and Swiggy delivery integrations",
-      "Integrated Google Maps location pins and custom customer review panels",
-      "Optimized build assets and metadata headers for outstanding SEO performance"
-    ],
-    tags: ["React", "TypeScript", "Vercel", "SEO Optimization"],
-    isFeatured: true,
-    github: "https://github.com/",
-    demo: "https://github.com/"
-  },
-  {
-    id: "portfolioexplorer",
-    title: "Portfolio Explorer",
-    subtitle: "Explorer-Inspired Personal Portfolio",
-    timelineLabel: "Interactive Narrative Navigation",
-    date: "Present",
-    description: "An explorer-inspired storytelling website serving as my personal portfolio. Designed to present academic achievements, full-stack tools, and projects through a gamified journal trail.",
-    features: [
-      "Designed immersive storytelling layout with custom forest vine decoration layers",
-      "Implemented smooth scrolling morph transitions linking hero sky to character plaque",
-      "Pioneered scroll-linked SVG adventure trails tracking project milestones",
-      "Built light and interactive skills lists removing progress bar dashboard patterns"
-    ],
-    tags: ["React", "Framer Motion", "TypeScript", "Tailwind CSS"],
-    isFeatured: true,
+    tags: ["React", "Node.js", "Express.js", "TypeScript", "MongoDB", "Tailwind CSS"],
+    isFeatured: false,
     github: "https://github.com/",
     demo: "https://github.com/"
   }

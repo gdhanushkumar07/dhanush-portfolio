@@ -16,8 +16,8 @@ export default function Navbar() {
 
   const navItems: NavItem[] = [
     { id: 'about', label: 'About', href: '#about' },
-    { id: 'projects', label: 'Projects', href: '#projects' },
     { id: 'skills', label: 'Skills', href: '#skills' },
+    { id: 'projects', label: 'Projects', href: '#projects' },
     { id: 'achievements', label: 'Achievements', href: '#achievements' },
     { id: 'contact', label: 'Contact', href: '#contact' },
   ];
