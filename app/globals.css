@@ -1,0 +1,84 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&family=Space+Grotesk:wght@500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --color-bg-void: #060D1F;
+  --color-bg-ink: #0D1B35;
+  --color-bg-card: #111E38;
+  --color-accent-amber: #F5A623;
+  --color-accent-teal: #38BDF8;
+  --color-text-primary: #F0EDE6;
+  --color-text-fog: #8A9BB8;
+  --color-border-dim: #1E2E4A;
+  --color-success-emerald: #22C55E;
+  
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    background-color: #020B24;
+    color: #F0EDE6;
+    font-family: var(--font-sans);
+  }
+  
+  /* Blinking terminal cursor keyframe & animation utility */
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+
+  /* Twinkling star animation keyframe */
+  @keyframes twinkle {
+    0%, 100% { opacity: 0.2; }
+    50% { opacity: 1; }
+  }
+}
+
+/* Cinematic glowing utilities */
+.moon-glow {
+  box-shadow: 
+    0 0 25px 4px rgba(255, 255, 255, 0.35),
+    0 0 60px 15px rgba(255, 255, 255, 0.18),
+    0 0 120px 30px rgba(255, 255, 255, 0.08);
+}
+
+.text-glow {
+  text-shadow: 0 0 20px rgba(245, 166, 35, 0.2);
+}
+
+
+/* Scrollbar styles matching the aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #060D1F;
+}
+::-webkit-scrollbar-thumb {
+  background: #1E2E4A;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #F5A623;
+}
+
+/* Signature glowing card accents */
+.amber-glow-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.amber-glow-card:hover {
+  border-color: #F5A623;
+  box-shadow: 0 0 15px rgba(245, 166, 35, 0.15);
+  transform: translateY(-4px);
+}
+
+.teal-glow-card {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.teal-glow-card:hover {
+  border-color: #38BDF8;
+  box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
+}
