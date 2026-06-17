@@ -32,7 +32,7 @@ export default function App() {
   }, []);
 
   return (
-    <div className="bg-bg-void min-h-screen text-text-primary antialiased font-sans selection:bg-accent-amber/25 selection:text-text-primary flex flex-col justify-between">
+    <div className="min-h-screen antialiased font-sans selection:bg-[rgba(255,170,80,0.2)] selection:text-[#F5F1EB] flex flex-col justify-between" style={{ background: "#060D1F", color: "#F0EDE6" }}>
       {/* Premium Glassmorphic Top Header Navigation Overlay */}
       <Navbar />
 
@@ -57,14 +57,17 @@ export default function App() {
         <Contact />
       </main>
 
-      {/* Modern Compact System Footer */}
-      <footer className="bg-bg-void border-t border-border-dim/40 py-8 px-6 sm:px-12 text-center text-xs font-mono text-text-fog/45">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          <span>
-            &copy; 2026 Golconda Dhanush Kumar. Engineered for lightning performance and full responsive fidelity.
+      {/* Expedition Log Footer */}
+      <footer
+        className="relative py-8 px-6 sm:px-12 text-center"
+        style={{ background: "#17110D", borderTop: "1px solid rgba(255,170,80,0.06)" }}
+      >
+        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-3">
+          <span className="font-mono text-[9.5px] text-[#C9B7A4]/30 uppercase tracking-widest">
+            &copy; 2026 Golconda Dhanush Kumar · CBIT Hyderabad · All Discoveries Reserved
           </span>
-          <span className="text-accent-teal font-semibold tracking-wide">
-            EXPLORE • EVOLVE • BUILD // SUCCESS
+          <span className="font-mono text-[9.5px] text-[rgba(255,170,80,0.3)] tracking-widest uppercase">
+            17°22′N 78°28′E · Expedition Still Active
           </span>
         </div>
       </footer>

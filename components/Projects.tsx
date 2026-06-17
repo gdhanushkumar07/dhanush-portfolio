@@ -1,677 +1,506 @@
 "use client";
 
-import React, { useRef, useState } from 'react';
-import { motion, useScroll, useTransform, useMotionValueEvent, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink, Compass } from 'lucide-react';
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Github, ExternalLink, Award, Compass, Footprints } from 'lucide-react';
 
-// Simplified real project data matching the requested details exactly
-const projects = [
+interface Discovery {
+  id: number;
+  discoveryId: string;
+  region: string;
+  coords: string;
+  level: string;
+  title: string;
+  subtitle: string;
+  badge: string;
+  nodeLetter: string;
+  nodeX: number; // percentage width
+  nodeY: number; // percentage height
+  mission: string[];
+  records: string;
+  tools: string[];
+  reward: string;
+  github: string;
+  demo: string;
+}
+
+const discoveries: Discovery[] = [
+  {
+    id: 0,
+    discoveryId: "#01",
+    region: "Isle of Intelligence",
+    coords: "17°24′N 78°25′E",
+    level: "Lv. 21",
+    title: "ContentIQ",
+    subtitle: "AI Media Creation & Distribution Platform",
+    badge: "AI HACKATHON WINNER",
+    nodeLetter: "C",
+    nodeX: 25,
+    nodeY: 25,
+    mission: [
+      "Scene-level intelligence for media analysis",
+      "Automated script generation pipeline",
+      "Multilingual voice cloning & dubbing",
+      "Serverless automation at production scale"
+    ],
+    records: "Flagship AI media platform engineered for high-concurrency processing. Built serverless workflows with AWS Bedrock and Lambda for real-time video intelligence.",
+    tools: ["React", "TypeScript", "AWS Bedrock", "Lambda", "S3"],
+    reward: "🏆 AI For Bharat 2026 — National Winner",
+    github: "https://github.com/",
+    demo: "https://github.com/",
+  },
   {
     id: 1,
-    title: "ContentIQ",
-    role: "AI Media Creation Platform",
-    summary: [
-      "Built during AI For Bharat Hackathon.",
-      "Scene-level intelligence.",
-      "Script generation.",
-      "Multilingual dubbing.",
-      "Media distribution automation."
+    discoveryId: "#02",
+    region: "Valley of Healing",
+    coords: "17°22′N 78°28′E",
+    level: "Lv. 20",
+    title: "Arogya Sarathi",
+    subtitle: "Rural Healthcare Accessibility Platform",
+    badge: "HEALTH INNOVATION",
+    nodeLetter: "A",
+    nodeX: 72,
+    nodeY: 55,
+    mission: [
+      "Offline-first sync queue for rural clinics",
+      "AI-powered medical prescription parsing",
+      "Sub-50kbps low-bandwidth telemetry support",
+      "Diagnostic assistance for remote doctors"
     ],
-    tech: ["React", "TypeScript", "AWS", "Bedrock", "Transcribe"],
-    nodeColor: "#D4AF37", // Gold
-    tag: 'C',
+    records: "Telemedicine system designed for extreme low-signal clinics. Relies on progressive service workers that queue transactions and sync once signals reconnect.",
+    tools: ["React", "Next.JS", "Flask", "Python", "MongoDB"],
+    reward: "🌿 Healthcare Innovation Track — Outstanding Merit",
     github: "https://github.com/",
-    demo: "https://contentiq.demo/"
+    demo: "",
   },
   {
     id: 2,
-    title: "Arogya Sarathi",
-    role: "Healthcare Accessibility Platform",
-    summary: [
-      "Offline-first rural healthcare platform.",
-      "Prescription parsing.",
-      "Patient routing.",
-      "Medical assistance.",
-      "Low-connectivity support."
-    ],
-    tech: ["React", "Node.js", "Express", "MongoDB"],
-    nodeColor: "#2E7D20", // Forest Green
-    tag: 'A',
-    github: "https://github.com/",
-    demo: "" // No demo button
-  },
-  {
-    id: 3,
+    discoveryId: "#03",
+    region: "Explorer's Camp",
+    coords: "17°19′N 78°31′E",
+    level: "Lv. 19",
     title: "Dynosaur Website",
-    role: "Premium Brand Experience Platform",
-    summary: [
-      "Interactive website for Dynosaur Ice Cream.",
-      "Immersive storytelling.",
-      "Motion design.",
-      "Menu showcase.",
-      "Ordering integration."
+    subtitle: "Premium Ice Cream Brand Experience",
+    badge: "LIVE DEPLOYMENT",
+    nodeLetter: "D",
+    nodeX: 35,
+    nodeY: 82,
+    mission: [
+      "Premium ice cream web showcase & interactive menu",
+      "Cinematic parallax scrolls and map integration",
+      "Swiggy delivery API & store location coordinates",
+      "Highly optimized page performance & SEO rankings"
     ],
-    tech: ["React", "TypeScript", "Framer Motion", "Vite"],
-    nodeColor: "#D95F1A", // Burnt Orange
-    tag: 'D',
+    records: "Production website built for Dynosaur Ice Cream. Custom animations, real-time Swiggy integration, and SEO optimization shipped directly to customer staging.",
+    tools: ["React", "TypeScript", "Vite", "Framer Motion"],
+    reward: "🚀 Live Production · dynosaur.in",
     github: "https://github.com/",
-    demo: "https://dynosaur.demo/"
+    demo: "https://github.com/",
   }
 ];
 
-// Medallion Node Component (Increased size: 80px, glow, pulse, shine sweep)
-const MedallionNode = ({ proj, isActive }: { proj: any; isActive: boolean }) => {
-  const renderIcon = () => {
-    switch (proj.tag) {
-      case 'C': // Gold Compass
-        return (
-          <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 3v2M12 19v2M3 12h2M19 12h2" />
-            <polygon points="12,12 14.5,7.5 12,5 9.5,7.5" fill="currentColor" stroke="none" />
-            <polygon points="12,12 14.5,16.5 12,19 9.5,16.5" opacity="0.4" fill="currentColor" stroke="none" />
-          </svg>
-        );
-      case 'A': // Green Seal (Healing marker)
-        return (
-          <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-            <circle cx="12" cy="12" r="9" strokeDasharray="3,2" />
-            <path d="M12 5 C 15 8, 17 12, 12 19 C 7 12, 9 8, 12 5 Z" fill="currentColor" fillOpacity="0.2" />
-            <path d="M12 5 V 19 M12 10 Q 14 12 15 11" strokeLinecap="round" />
-          </svg>
-        );
-      case 'D': // Orange Anchor (Merchant marker)
-        return (
-          <svg className="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <circle cx="12" cy="12" r="4" />
-            <path d="M 12,4 V 16 M 12,16 C 9,16 6,14 6,10 M 12,16 C 15,16 18,14 18,10 M 6,10 H 4 M 18,10 H 20" />
-            <circle cx="12" cy="4" r="1.2" fill="currentColor" />
-          </svg>
-        );
-      default:
-        return <Compass className="w-8 h-8" />;
+export default function Projects() {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const cardRefs = [useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null), useRef<HTMLDivElement>(null)];
+  const mapContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY + window.innerHeight / 2;
+      
+      let currentActive = 0;
+      for (let i = 0; i < cardRefs.length; i++) {
+        const ref = cardRefs[i].current;
+        if (ref) {
+          const top = ref.offsetTop;
+          const height = ref.offsetHeight;
+          if (scrollPosition >= top && scrollPosition < top + height) {
+            currentActive = i;
+            break;
+          }
+        }
+      }
+      setActiveIndex(currentActive);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const handleNodeClick = (index: number) => {
+    const ref = cardRefs[index].current;
+    if (ref) {
+      ref.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
   };
 
   return (
-    <div className="relative flex items-center justify-center">
-      {/* Concentric Pulsing Ring for active node */}
-      {isActive && (
-        <motion.div
-          animate={{
-            scale: [1, 1.4],
-            opacity: [0.6, 0]
-          }}
-          transition={{
-            duration: 2.2,
-            repeat: Infinity,
-            ease: "easeOut"
-          }}
-          className="absolute inset-0 rounded-full border-2 pointer-events-none"
-          style={{ borderColor: proj.nodeColor }}
-        />
-      )}
-
-      {/* Inner Medallion */}
-      <motion.div
-        animate={{
-          scale: isActive ? 1.06 : 1.0,
-          borderColor: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.28)",
-          boxShadow: isActive 
-            ? `0 0 24px 6px ${proj.nodeColor}35` 
-            : "0 4px 10px rgba(58,43,32,0.05)"
-        }}
-        transition={{ duration: 0.3 }}
-        className="w-20 h-20 rounded-full border-3 bg-[#F9F0E4] flex flex-col items-center justify-center z-10 relative overflow-hidden select-none"
-        style={{
-          borderWidth: "3px",
-        }}
-      >
-        {/* Shine Sweep animation on active */}
-        {isActive && (
-          <motion.div
-            animate={{
-              x: ["-100%", "200%"]
-            }}
-            transition={{
-              duration: 2.5,
-              repeat: Infinity,
-              ease: "easeInOut",
-              repeatDelay: 1.5
-            }}
-            className="absolute inset-0 bg-gradient-to-r from-transparent via-white/45 to-transparent -skew-x-12 pointer-events-none z-15"
-          />
-        )}
-
-        {/* Project Initial Letter */}
-        <span 
-          className="font-serif text-lg font-bold select-none leading-none mb-1 opacity-90"
-          style={{ color: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.6)" }}
-        >
-          {proj.title[0]}
-        </span>
-
-        {/* Icon */}
-        <span style={{ color: isActive ? proj.nodeColor : "rgba(139, 111, 88, 0.45)" }}>
-          {renderIcon()}
-        </span>
-      </motion.div>
-
-      {/* Faint sparkles */}
-      {isActive && (
-        <>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1, 0.5] }}
-            transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -top-4 -right-4 text-[#C6930A] pointer-events-none z-20"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" />
-            </svg>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, scale: 0.5 }}
-            animate={{ opacity: [0, 0.8, 0], scale: [0.5, 1, 0.5] }}
-            transition={{ duration: 2.2, repeat: Infinity, delay: 1.1, ease: "easeInOut" }}
-            className="absolute -bottom-3.5 -left-3.5 text-[#C6930A] pointer-events-none z-20"
-          >
-            <svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" />
-            </svg>
-          </motion.div>
-        </>
-      )}
-    </div>
-  );
-};
-
-// Map Sketches Background Component (Low-opacity sketches covering map)
-const MapSketches = ({ opacity }: { opacity: any }) => (
-  <motion.div style={{ opacity }} className="absolute inset-0 pointer-events-none select-none z-0">
-    {/* Compass Rose (Top Right) */}
-    <div className="absolute top-[6%] right-[12%] text-[#3A2B20]/4">
-      <Compass className="w-40 h-40 stroke-[0.75]" />
-    </div>
-
-    {/* Mountain silhouettes (Few, low opacity) */}
-    <svg className="absolute left-[6%] top-[15%] text-[#3A2B20]/5 w-24 h-16" viewBox="0 0 100 50" fill="none">
-      <path d="M 10,40 L 30,15 L 50,40 M 40,40 L 55,25 L 75,40" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
-    </svg>
-
-    <svg className="absolute right-[8%] top-[72%] text-[#3A2B20]/5 w-24 h-16" viewBox="0 0 100 50" fill="none">
-      <path d="M 15,45 L 35,20 L 55,45 M 45,45 L 60,30 L 80,45" stroke="currentColor" strokeWidth="0.8" strokeLinecap="round" />
-    </svg>
-
-    {/* Sailing Ship near the center-left bend */}
-    <div className="absolute left-[8%] top-[40%] text-[#3A2B20]/6 w-16 h-16">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75" strokeLinecap="round">
-        <path d="M2 17h20M5 17c0-3 3-5 7-5s7 2 7 5 M12 12V3 M12 6h5L12 9" />
-        <path d="M3 19c2 0 3-1 5-1s3 1 5 1 3-1 5-1 3 1 5 1" strokeDasharray="2,2" />
-      </svg>
-    </div>
-
-    {/* Wave Sketches */}
-    <svg className="absolute left-[38%] top-[25%] text-[#3A2B20]/3 w-20 h-10" viewBox="0 0 60 20" fill="none">
-      <path d="M 0,10 Q 15,5 30,10 T 60,10 M 0,15 Q 15,10 30,15 T 60,15" stroke="currentColor" strokeWidth="0.5" />
-    </svg>
-
-    {/* Waypoint symbols & Faint navigation sketches */}
-    <svg className="absolute right-[15%] top-[42%] text-[#3A2B20]/4 w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75">
-      <path d="M12 2L2 22h20L12 2zm0 6l6 10H6l6-10z" />
-    </svg>
-
-    <svg className="absolute left-[18%] top-[80%] text-[#3A2B20]/4 w-12 h-12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="0.75">
-      <path d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z M12 7v10M7 12h10" />
-    </svg>
-
-    {/* Treasure X Markers */}
-    <svg className="absolute left-[10%] top-[62%] text-[#E15A42]/7 w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M18 6L6 18M6 6l12 12" />
-    </svg>
-
-    <svg className="absolute right-[22%] top-[20%] text-[#E15A42]/7 w-6 h-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5">
-      <path d="M18 6L6 18M6 6l12 12" />
-    </svg>
-  </motion.div>
-);
-
-export default function Projects() {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  // Scroll tracking across the Projects section viewport entry/exit
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start end", "start start"]
-  });
-
-  // Section background color morphs from About forest brown (#26180F) to parchment sand (#F3ECE0)
-  const backgroundColor = useTransform(
-    scrollYProgress,
-    [0, 0.45],
-    ["#26180F", "#F3ECE0"]
-  );
-
-  // Text/Title colors morph from wood-white to dark explorer brown
-  const textColor = useTransform(
-    scrollYProgress,
-    [0, 0.45],
-    ["rgba(245,241,235,0.78)", "rgba(58, 43, 32, 0.8)"]
-  );
-  
-  const headingColor = useTransform(
-    scrollYProgress,
-    [0, 0.45],
-    ["#F5F1EB", "#3A2B20"]
-  );
-
-  const labelColor = useTransform(
-    scrollYProgress,
-    [0, 0.45],
-    ["rgba(255,170,80,0.9)", "rgba(58, 43, 32, 0.65)"]
-  );
-
-  // Fade out elements from About section early in the transition
-  const vinesOpacity = useTransform(scrollYProgress, [0, 0.22], [0.8, 0]);
-  const torchGlowOpacity = useTransform(scrollYProgress, [0, 0.22], [1, 0]);
-  
-  // Fade in parchment assets and texture
-  const sketchesOpacity = useTransform(scrollYProgress, [0.2, 0.5], [0, 0.12]);
-  const vignetteOpacity = useTransform(scrollYProgress, [0.15, 0.45], [0, 0.15]);
-  const noiseOpacity = useTransform(scrollYProgress, [0.15, 0.45], [0, 0.04]);
-  const trailDrawOpacity = useTransform(scrollYProgress, [0.35, 0.5], [0, 1]);
-
-  // Section scroll tracker for main active index thresholds and trail drawing
-  const { scrollYProgress: sectionScrollProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"]
-  });
-
-  useMotionValueEvent(sectionScrollProgress, "change", (latest) => {
-    // Staggered node activations covering the entire scroll height
-    if (latest < 0.35) {
-      setActiveIndex(0);
-    } else if (latest < 0.70) {
-      setActiveIndex(1);
-    } else {
-      setActiveIndex(2);
-    }
-  });
-
-  // Path draws itself smoothly as user scrolls through the section (1800 height)
-  const trailDrawLength = useTransform(sectionScrollProgress, [0.05, 0.85], [0, 1]);
-
-  // Get current active project content
-  const activeProj = projects[activeIndex];
-
-  return (
-    <motion.section
-      ref={sectionRef}
+    <section
       id="projects"
-      style={{ backgroundColor }}
-      className="relative z-20 min-h-[300vh] flex flex-col justify-start overflow-hidden pt-24 pb-32"
+      className="relative overflow-hidden border-t py-24"
+      style={{
+        background: "linear-gradient(135deg, #efe6d3 0%, #e3d3b3 50%, #efe6d3 100%)",
+        borderTopColor: "rgba(107, 84, 56, 0.25)",
+      }}
     >
-      
-      {/* 1. MORPHING OVERLAY LAYER (Stage 1 to Stage 3 Transition) */}
-      <motion.div 
-        style={{ opacity: vinesOpacity }} 
-        className="absolute inset-0 pointer-events-none z-10 origin-top"
-      >
-        {/* Softening Torch Glows */}
-        <motion.div 
-          style={{ 
-            opacity: torchGlowOpacity,
-            boxShadow: "0 0 100px 40px rgba(255,140,66,0.18)"
-          }} 
-          className="absolute left-[10%] top-[10%] w-[1px] h-[1px] rounded-full hidden md:block"
-        />
-        <motion.div 
-          style={{ 
-            opacity: torchGlowOpacity,
-            boxShadow: "0 0 100px 40px rgba(255,140,66,0.18)"
-          }} 
-          className="absolute right-[10%] top-[10%] w-[1px] h-[1px] rounded-full hidden md:block"
-        />
-
-        {/* About vines fading out smoothly */}
-        <svg className="absolute left-[30px] top-0 w-[120px] h-[450px]" viewBox="0 0 120 450" fill="none">
-          <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#1C5A13" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
-        </svg>
-
-        <svg className="absolute right-[35px] top-0 w-[120px] h-[450px]" viewBox="0 0 120 450" fill="none">
-          <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#1C5A13" strokeWidth="2.5" fill="none" strokeLinecap="round" />
-          <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
-        </svg>
-      </motion.div>
-
-      {/* Aged Paper Texture Overlay */}
-      <motion.div 
-        style={{ 
-          opacity: noiseOpacity,
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E")` 
+      {/* Ancient paper grains, aging, and overlay noise */}
+      <div
+        className="absolute inset-0 opacity-[0.07] pointer-events-none mix-blend-multiply z-10"
+        style={{
+          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
-        className="absolute inset-0 pointer-events-none mix-blend-multiply z-0" 
       />
 
-      {/* Paper Fold Creases (Light & Shadow creases for a folded map look) */}
-      <div className="absolute inset-0 pointer-events-none z-10 mix-blend-multiply opacity-[0.04] bg-[linear-gradient(to_right,transparent_49%,rgba(0,0,0,0.5)_50%,transparent_51%),linear-gradient(to_bottom,transparent_49%,rgba(0,0,0,0.5)_50%,transparent_51%)]" />
-      <div className="absolute inset-0 pointer-events-none z-10 mix-blend-screen opacity-[0.02] bg-[linear-gradient(to_right,transparent_48%,rgba(255,255,255,0.7)_49.5%,transparent_51%),linear-gradient(to_bottom,transparent_48%,rgba(255,255,255,0.7)_49.5%,transparent_51%)]" />
-
-      {/* Light vignette frame */}
-      <motion.div 
-        style={{ 
-          opacity: vignetteOpacity,
-          background: "radial-gradient(ellipse at center, transparent 40%, rgba(58, 43, 32, 0.12) 100%)",
+      {/* Creases and folds of an old folded map */}
+      <div className="absolute inset-0 pointer-events-none z-10 mix-blend-multiply opacity-[0.04]"
+        style={{
+          background: `
+            linear-gradient(to right, transparent 33%, rgba(46, 31, 18, 0.4) 33.3%, transparent 33.6%, transparent 66%, rgba(46, 31, 18, 0.4) 66.3%, transparent 66.6%),
+            linear-gradient(to bottom, transparent 49%, rgba(46, 31, 18, 0.4) 49.5%, transparent 50%)
+          `
         }}
-        className="absolute inset-0 pointer-events-none z-0"
       />
 
-      {/* Decorative sketches & folds */}
-      <MapSketches opacity={sketchesOpacity} />
+      {/* Heavy ink wash & vignette edge darkening */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10"
+        style={{
+          background: "radial-gradient(circle at center, transparent 30%, rgba(46, 31, 18, 0.22) 100%)"
+        }}
+      />
 
-      {/* 2. MAIN CONTENT ZONE */}
-      <div className="max-w-[1150px] w-full mx-auto px-6 md:px-8 z-10 relative flex-grow flex flex-col justify-start">
+      {/* Dust and age spots simulation */}
+      <div
+        className="absolute inset-0 pointer-events-none z-10 opacity-[0.03] mix-blend-color-burn"
+        style={{
+          background: "radial-gradient(circle at 20% 30%, #6b5438 0%, transparent 20%), radial-gradient(circle at 80% 70%, #2e1f12 0%, transparent 25%)"
+        }}
+      />
+
+      <div className="max-w-7xl mx-auto px-6 sm:px-12 relative z-20">
         
-        {/* SECTION HEADER */}
-        <motion.div className="mb-20 select-none max-w-[800px] mx-auto text-center space-y-3">
-          <motion.span 
-            style={{ color: labelColor }}
-            className="font-mono text-[12px] tracking-[8px] uppercase block font-semibold"
-          >
-            02 / THE EXPEDITION
-          </motion.span>
-          <motion.h2 
-            style={{ color: headingColor }}
-            className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold tracking-tight leading-tight whitespace-nowrap"
-          >
-            A Journey Through Things I Have Built
-          </motion.h2>
-          <motion.p 
-            style={{ color: textColor }}
-            className="font-sans text-[15px] md:text-[17px] leading-[1.6] font-light max-w-[550px] mx-auto"
-          >
-            Follow the winding trail map to discover hidden project milestones, platform integrations, and command centers.
-          </motion.p>
-        </motion.div>
-
-        {/* Desktop Interactive Layout (65% Map, 35% Card) */}
-        <motion.div 
-          style={{ opacity: trailDrawOpacity }}
-          className="hidden lg:grid grid-cols-[65%_35%] relative w-full h-[1800px] z-10 gap-10"
-        >
-          {/* Left Side (65%): Explorer Map with Centered Expedition Route */}
-          <div className="w-full h-full relative flex items-center justify-center border border-[rgba(139,111,88,0.08)] bg-[#FDFBF7]/10 rounded-2xl overflow-hidden backdrop-blur-[0.5px]">
+        {/* Main 2-Column Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+          
+          {/* LEFT SIDE: Permanent Expedition World Map (40-45% width) */}
+          <div className="lg:col-span-5 sticky top-28 lg:h-[76vh] w-full rounded-2xl border-2 border-[#6b5438]/40 bg-[#efe6d3] shadow-[inset_0_4px_12px_rgba(46,31,18,0.08),0_16px_40px_rgba(50,30,15,0.18)] overflow-hidden flex flex-col justify-between p-4 z-20">
             
-            {/* Winding Route Path SVG (Thick visual centerpiece) */}
-            <div className="absolute inset-0 w-full h-full pointer-events-none z-0">
-              <svg className="w-full h-full" viewBox="0 0 500 1800" fill="none" xmlns="http://www.w3.org/2000/svg">
-                {/* Secondary offset sketched route (For hand-sketched aesthetic) */}
-                <path
-                  d="M 250,0 C 250,150 150,250 150,400 C 150,600 350,750 350,950 C 350,1150 150,1300 150,1500 C 150,1650 250,1720 250,1800"
-                  stroke="#8B6F58"
-                  strokeWidth="1.5"
-                  strokeDasharray="6,8"
-                  strokeLinecap="round"
-                  opacity="0.1"
-                  transform="translate(2.5, -1)"
-                />
+            {/* Torn paper texture accent inside map frame */}
+            <div className="absolute inset-0 pointer-events-none opacity-[0.035] bg-repeat"
+              style={{
+                backgroundImage: `url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0h20v20H0V0zm20 20h20v20H20V20z' fill='%236b5438' fill-opacity='.15' fill-rule='evenodd'/%3E%3C/svg%3E")`
+              }}
+            />
 
-                {/* Main route base line */}
-                <path
-                  d="M 250,0 C 250,150 150,250 150,400 C 150,600 350,750 350,950 C 350,1150 150,1300 150,1500 C 150,1650 250,1720 250,1800"
-                  stroke="#8B6F58"
-                  strokeWidth="5"
-                  strokeDasharray="8,10"
-                  strokeLinecap="round"
-                  opacity="0.25"
-                />
+            {/* Map Header Detail */}
+            <div className="flex justify-between items-center border-b border-[#6b5438]/30 pb-2.5 select-none z-20">
+              <div>
+                <span className="font-mono text-[9px] uppercase tracking-[0.25em] text-[#6b5438] font-bold">Expedition Logbook</span>
+                <h3 className="font-display text-lg font-black text-[#2e1f12] leading-none">Discovery World Map</h3>
+              </div>
+              <div className="text-right font-mono text-[8px] text-[#6b5438] font-bold leading-normal">
+                <div>GRID REF: 17.22°N</div>
+                <div>SCALE: 1:25,000</div>
+              </div>
+            </div>
 
-                {/* Traversed route highlight segment */}
+            {/* Map Canvas with Handdrawn Details */}
+            <div className="relative flex-grow w-full overflow-hidden select-none" ref={mapContainerRef}>
+              
+              {/* Faded Cartography Contour Lines & Grid System (Opacity 3-6%) */}
+              <svg className="absolute inset-0 w-full h-full opacity-[0.045] pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="carto-grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#2e1f12" strokeWidth="0.8" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#carto-grid)" />
+                {/* Simulated contour circles */}
+                <circle cx="30%" cy="30%" r="90" fill="none" stroke="#2e1f12" strokeWidth="1" strokeDasharray="3,6" />
+                <circle cx="30%" cy="30%" r="60" fill="none" stroke="#2e1f12" strokeWidth="1" strokeDasharray="3,6" />
+                <circle cx="75%" cy="60%" r="120" fill="none" stroke="#2e1f12" strokeWidth="1" strokeDasharray="3,6" />
+                <circle cx="75%" cy="60%" r="80" fill="none" stroke="#2e1f12" strokeWidth="1" strokeDasharray="3,6" />
+              </svg>
+
+              {/* Large faded Compass Rose background */}
+              <Compass
+                className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-72 h-72 text-[#6b5438]/[0.05] pointer-events-none spin-slow"
+                style={{ transform: "rotate(12deg)" }}
+              />
+
+              {/* Environmental Sketches (Printed onto map structure) */}
+              {/* Region Label 1: Isle of Intelligence */}
+              <div
+                className={`absolute transition-all duration-500 font-display text-[11px] font-black uppercase tracking-widest pointer-events-none z-10 ${
+                  activeIndex === 0 ? "text-[#b88a2c]/85 scale-105" : "text-[#6b5438]/25"
+                }`}
+                style={{ left: "12%", top: "15%" }}
+              >
+                Isle of Intelligence
+              </div>
+
+              {/* Region Label 2: Valley of Healing */}
+              <div
+                className={`absolute transition-all duration-500 font-display text-[11px] font-black uppercase tracking-widest pointer-events-none z-10 ${
+                  activeIndex === 1 ? "text-[#b88a2c]/85 scale-105" : "text-[#6b5438]/25"
+                }`}
+                style={{ right: "10%", top: "45%" }}
+              >
+                Valley of Healing
+              </div>
+
+              {/* Region Label 3: Explorer's Camp */}
+              <div
+                className={`absolute transition-all duration-500 font-display text-[11px] font-black uppercase tracking-widest pointer-events-none z-10 ${
+                  activeIndex === 2 ? "text-[#b88a2c]/85 scale-105" : "text-[#6b5438]/25"
+                }`}
+                style={{ left: "18%", top: "75%" }}
+              >
+                Explorer's Camp
+              </div>
+
+              {/* Mountains Top-Left */}
+              <svg className="absolute left-[8%] top-[25%] w-14 h-10 text-[#6b5438]/25 pointer-events-none" viewBox="0 0 60 30" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M10 25 L20 10 L30 25 M25 25 L35 15 L45 25" strokeLinecap="round" />
+              </svg>
+
+              {/* Forest clusters near Valley of Healing */}
+              <svg className="absolute right-[8%] top-[62%] w-12 h-12 text-[#6b5438]/25 pointer-events-none" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1">
+                <path d="M10 30 V24 M10 24 L13 26 M10 24 L7 26 M20 30 V22 M20 22 L23 24 M20 22 L17 24 M30 30 V25" strokeLinecap="round" />
+              </svg>
+
+              {/* Ruins / Ancient structures bottom-left */}
+              <svg className="absolute left-[10%] top-[65%] w-12 h-12 text-[#6b5438]/25 pointer-events-none" viewBox="0 0 40 40" fill="none" stroke="currentColor" strokeWidth="1">
+                <rect x="10" y="20" width="10" height="15" strokeLinecap="round" />
+                <rect x="25" y="15" width="8" height="20" strokeLinecap="round" />
+                <path d="M20 35h5" />
+              </svg>
+
+              {/* SVG Handdrawn Winding Trail */}
+              <svg className="absolute inset-0 w-full h-full pointer-events-none" xmlns="http://www.w3.org/2000/svg">
+                {/* Winding path */}
+                <path
+                  d="M 60 110 Q 200 130 230 210 T 150 310 Q 180 370 240 350"
+                  fill="none"
+                  stroke="#6b5438"
+                  strokeWidth="2.5"
+                  strokeDasharray="6,6"
+                  strokeLinecap="round"
+                  className="opacity-25"
+                />
+                
+                {/* Active Glowing Path Segment */}
                 <motion.path
-                  d="M 250,0 C 250,150 150,250 150,400 C 150,600 350,750 350,950 C 350,1150 150,1300 150,1500 C 150,1650 250,1720 250,1800"
-                  stroke="#5C4A3C"
-                  strokeWidth="5"
-                  strokeDasharray="8,10"
+                  d="M 60 110 Q 200 130 230 210 T 150 310 Q 180 370 240 350"
+                  fill="none"
+                  stroke="#b88a2c"
+                  strokeWidth="3.2"
+                  strokeDasharray="6,6"
                   strokeLinecap="round"
-                  style={{ pathLength: trailDrawLength }}
-                  opacity="0.75"
+                  initial={{ pathLength: 0 }}
+                  animate={{
+                    pathLength: activeIndex === 0 ? 0.35 : activeIndex === 1 ? 0.70 : 1
+                  }}
+                  transition={{ duration: 0.6, ease: "easeInOut" }}
                 />
               </svg>
-            </div>
 
-            {/* Checkpoint Nodes positioned precisely on path */}
-            <div className="absolute top-[400px] left-[30%] -translate-x-1/2 -translate-y-1/2">
-              <MedallionNode proj={projects[0]} isActive={activeIndex === 0} />
-            </div>
-            {/* Cursive italic waypoints next to nodes */}
-            <div className="absolute top-[365px] left-[38%] pointer-events-none select-none hidden xl:block">
-              <span className="font-serif text-[13px] italic font-semibold text-[#8B6F58]/75 tracking-wider block">
-                Isle of Intelligence
-              </span>
-            </div>
+              {/* Sailing Vessel following the trail */}
+              <motion.div
+                className="absolute w-7 h-7 text-[#6b5438]/80 pointer-events-none z-20"
+                animate={{
+                  left: activeIndex === 0 ? "25%" : activeIndex === 1 ? "68%" : "38%",
+                  top: activeIndex === 0 ? "28%" : activeIndex === 1 ? "52%" : "86%",
+                  rotate: activeIndex === 0 ? 15 : activeIndex === 1 ? -10 : 20,
+                  y: [0, -3, 0]
+                }}
+                transition={{
+                  left: { duration: 0.8, ease: "easeInOut" },
+                  top: { duration: 0.8, ease: "easeInOut" },
+                  rotate: { duration: 0.8, ease: "easeInOut" },
+                  y: { repeat: Infinity, duration: 2.5, ease: "easeInOut" }
+                }}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M2 17h20 M12 3v14 M12 3l7 5H12 M5 17c1 0 2 1.5 3 1.5s2-1.5 3-1.5 2 1.5 3 1.5" />
+                </svg>
+              </motion.div>
 
-            <div className="absolute top-[950px] left-[70%] -translate-x-1/2 -translate-y-1/2">
-              <MedallionNode proj={projects[1]} isActive={activeIndex === 1} />
-            </div>
-            <div className="absolute top-[915px] left-[48%] pointer-events-none select-none text-right hidden xl:block">
-              <span className="font-serif text-[13px] italic font-semibold text-[#8B6F58]/75 tracking-wider block">
-                Valley of Healing
-              </span>
-            </div>
-
-            <div className="absolute top-[1500px] left-[30%] -translate-x-1/2 -translate-y-1/2">
-              <MedallionNode proj={projects[2]} isActive={activeIndex === 2} />
-            </div>
-            <div className="absolute top-[1465px] left-[38%] pointer-events-none select-none hidden xl:block">
-              <span className="font-serif text-[13px] italic font-semibold text-[#8B6F58]/75 tracking-wider block">
-                Merchant Reef
-              </span>
-            </div>
-
-          </div>
-
-          {/* Right Side (35%): Fixed Sticky Explorer Journal Card */}
-          <div className="w-full pl-2 relative">
-            <div className="sticky top-[220px] w-full flex items-start justify-start">
-              
-              {/* 3D Perspective Wrapper for paper flip transitions */}
-              <div style={{ perspective: 1200 }} className="w-full max-w-[390px] min-h-[460px] relative">
-                
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={activeIndex}
-                    initial={{ rotateY: 90, opacity: 0, scale: 0.98 }}
-                    animate={{ rotateY: 0, opacity: 1, scale: 1 }}
-                    exit={{ rotateY: -90, opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.75, ease: [0.25, 1, 0.5, 1] }}
-                    style={{ transformOrigin: "left center", backfaceVisibility: "hidden" }}
-                    className="w-full rounded-[16px] p-8 bg-[#F9F0E4] text-[#3A2B20] border border-[rgba(58,43,32,0.12)] shadow-[0_12px_40px_rgba(58,43,32,0.06)] relative overflow-hidden"
+              {/* Map Discovery Nodes */}
+              {discoveries.map((disc, idx) => {
+                const isActive = activeIndex === idx;
+                return (
+                  <button
+                    key={disc.id}
+                    className="absolute group z-20 flex flex-col items-center focus:outline-none"
+                    style={{ left: `${disc.nodeX}%`, top: `${disc.nodeY}%`, transform: "translate(-50%, -50%)" }}
+                    onClick={() => handleNodeClick(idx)}
                   >
-                    {/* Bound ledger journal margin stitch line */}
-                    <div className="absolute left-6 top-0 bottom-0 w-[1px] bg-red-400/20 pointer-events-none" />
-                    
-                    {/* Subtle notebook lines detail */}
-                    <div 
-                      className="absolute inset-0 pointer-events-none opacity-[0.04]"
-                      style={{
-                        backgroundImage: "linear-gradient(rgba(58,43,32,0.2) 1px, transparent 1px)",
-                        backgroundSize: "100% 28px",
-                        backgroundPosition: "0 10px"
-                      }}
-                    />
+                    {/* Level marker bubble */}
+                    <span className={`font-mono text-[8px] px-1.5 py-0.5 rounded border mb-1 select-none transition-all duration-300 ${
+                      isActive 
+                        ? 'bg-[#2e1f12] text-[#efe6d3] border-[#2e1f12] shadow-md' 
+                        : 'bg-[#efe6d3] text-[#6b5438] border-[#6b5438]/40'
+                    }`}>
+                      {disc.level}
+                    </span>
 
-                    <div className="pl-3 space-y-5 relative z-10">
-                      {/* Plaque Header */}
-                      <div className="border-b border-[#CDB38D]/35 pb-2.5">
-                        <div className="flex items-center justify-between">
-                          <h3 className="font-serif text-lg font-bold tracking-tight">
-                            {activeProj.title}
-                          </h3>
-                          <span className="font-mono text-[10px] uppercase tracking-wider bg-[#E8D5B5]/60 px-2.5 py-0.5 rounded border border-[#CDB38D]/30">
-                            LOG 0{activeProj.id}
-                          </span>
-                        </div>
-                        <span className="font-sans text-[11px] text-[#8B6F58] tracking-wider block font-semibold mt-1 uppercase">
-                          {activeProj.role}
-                        </span>
-                      </div>
-
-                      {/* Summary Bullet Points */}
-                      <div className="space-y-2.5">
-                        <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">MISSION BRIEF</span>
-                        <ul className="space-y-2 text-[12px] font-sans text-[#3A2B20]/90 font-light leading-relaxed">
-                          {activeProj.summary.map((h: string, hIdx: number) => (
-                            <li key={hIdx} className="flex items-start">
-                              <span className="text-[#8B6F58] font-mono mr-2.5 shrink-0">•</span>
-                              <span>{h}</span>
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
-
-                      {/* Tech Pills */}
-                      <div className="space-y-2.5 pt-1.5">
-                        <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">TOOLKIT</span>
-                        <div className="flex flex-wrap gap-1.5">
-                          {activeProj.tech.map((t: string) => (
-                            <span 
-                              key={t}
-                              className="font-mono text-[9.5px] text-[#3A2B20]/80 bg-[#E8D5B5]/35 border border-[#CDB38D]/30 px-2 py-0.5 rounded"
-                            >
-                              {t}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      {/* Action buttons */}
-                      <div className="pt-4 border-t border-[#CDB38D]/20 flex gap-2">
-                        <a
-                          href={activeProj.github}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="cursor-pointer border border-[#8B6F58]/45 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/20 text-[#3A2B20] font-semibold text-[11px] py-1.5 px-3 rounded-lg flex items-center gap-1.5 transition-all duration-200"
-                        >
-                          <Github className="w-3.5 h-3.5" />
-                          <span>Repository</span>
-                        </a>
-                        {activeProj.demo && (
-                          <a
-                            href={activeProj.demo}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[11px] py-1.5 px-3.5 rounded-lg flex items-center gap-1.5 transition-all duration-200"
-                          >
-                            <ExternalLink className="w-3.5 h-3.5" />
-                            <span>{activeProj.title === 'Dynosaur Website' ? 'Live Site' : 'Demo'}</span>
-                          </a>
-                        )}
+                    {/* Circular custom node ring */}
+                    <div className="relative">
+                      {isActive && (
+                        <span className="absolute -inset-2.5 rounded-full bg-[#b88a2c]/30 animate-ping pointer-events-none" />
+                      )}
+                      <div className={`w-9 h-9 rounded-full flex items-center justify-center font-display font-black text-sm border-2 shadow-[0_4px_10px_rgba(50,30,15,0.15)] transition-all duration-300 ${
+                        isActive
+                          ? 'bg-[#2e1f12] border-[#b88a2c] text-[#efe6d3] scale-110'
+                          : 'bg-[#efe6d3] border-[#6b5438]/50 text-[#2e1f12] group-hover:border-[#6b5438] group-hover:scale-105'
+                      }`}>
+                        {disc.nodeLetter}
                       </div>
                     </div>
 
-                  </motion.div>
-                </AnimatePresence>
-
-              </div>
-
-            </div>
-          </div>
-
-        </motion.div>
-
-        {/* Mobile Layout (Sequential stacked waypoints) */}
-        <div className="lg:hidden relative w-full px-2 space-y-16 z-10 mt-6">
-          {projects.map((proj) => (
-            <div key={proj.id} className="flex flex-col items-center">
-              {/* Medallion Node */}
-              <div className="mb-4">
-                <MedallionNode proj={proj} isActive={true} />
-              </div>
-              
-              {/* Card */}
-              <div className="w-full max-w-[340px] rounded-[16px] p-6.5 bg-[#F9F0E4] text-[#3A2B20] border border-[rgba(58,43,32,0.12)] shadow-[0_12px_40px_rgba(58,43,32,0.06)] relative overflow-hidden">
-                <div className="absolute left-6 top-0 bottom-0 w-[1px] bg-red-400/20 pointer-events-none" />
-                <div className="pl-3 space-y-4">
-                  <div className="border-b border-[#CDB38D]/35 pb-2">
-                    <div className="flex items-center justify-between">
-                      <h3 className="font-serif text-base font-bold tracking-tight">
-                        {proj.title}
-                      </h3>
-                      <span className="font-mono text-[9px] uppercase tracking-wider bg-[#E8D5B5]/50 px-2 py-0.5 rounded border border-[#CDB38D]/30">
-                        0{proj.id}
+                    {/* Title label printed under node */}
+                    <div className="mt-1.5 text-center">
+                      <span className={`font-display font-black text-[9.5px] block leading-tight transition-colors duration-200 ${
+                        isActive ? 'text-[#b88a2c]' : 'text-[#6b5438]/70 group-hover:text-[#2e1f12]'
+                      }`}>
+                        {disc.title}
                       </span>
                     </div>
-                    <span className="font-sans text-[10.5px] text-[#8B6F58] tracking-wider block font-semibold mt-0.5 uppercase">
-                      {proj.role}
+                  </button>
+                );
+              })}
+
+              {/* Coordinates around container edges */}
+              <div className="absolute top-1 left-1/2 -translate-x-1/2 font-mono text-[7px] text-[#6b5438]/45">17°24′00″N</div>
+              <div className="absolute bottom-1 left-1/2 -translate-x-1/2 font-mono text-[7px] text-[#6b5438]/45">17°18′00″N</div>
+              <div className="absolute left-1 top-1/2 -translate-y-1/2 -rotate-90 font-mono text-[7px] text-[#6b5438]/45">78°24′00″E</div>
+              <div className="absolute right-1 top-1/2 -translate-y-1/2 rotate-90 font-mono text-[7px] text-[#6b5438]/45">78°32′00″E</div>
+
+            </div>
+
+            {/* Map footer credits */}
+            <div className="border-t border-[#6b5438]/30 pt-2 flex justify-between items-center text-[8.5px] font-mono text-[#6b5438] font-bold select-none z-20">
+              <span>LEADER: G. Dhanush Kumar</span>
+              <span className="flex items-center gap-1">
+                <Footprints className="w-3.5 h-3.5 text-[#b88a2c]" /> 17°22′N 78°28′E
+              </span>
+            </div>
+
+          </div>
+
+          {/* RIGHT SIDE: Detailed Scrollable Project Cards (55-60% width) */}
+          <div className="lg:col-span-7 space-y-12 pr-1">
+            {discoveries.map((disc, idx) => {
+              const isActive = activeIndex === idx;
+              return (
+                <div
+                  key={disc.id}
+                  ref={cardRefs[idx]}
+                  className={`relative p-6 sm:p-8 rounded-2xl border-2 transition-all duration-300 flex flex-col justify-between overflow-hidden ${
+                    isActive
+                      ? 'bg-[#efe6d3] border-[#2e1f12] shadow-[0_16px_36px_rgba(50,30,15,0.16)] scale-[1.01]'
+                      : 'bg-[#efe6d3]/70 border-[#6b5438]/30 shadow-sm opacity-60 hover:opacity-85'
+                  }`}
+                  style={{
+                    backgroundImage: `radial-gradient(circle at top right, #e3d3b3 0%, transparent 70%)`
+                  }}
+                >
+                  {/* Left accent color rule to match node active color */}
+                  <div className={`absolute left-0 top-0 bottom-0 w-1.5 transition-colors duration-300 ${
+                    isActive ? 'bg-[#b88a2c]' : 'bg-[#6b5438]/20'
+                  }`} />
+
+                  {/* Header / ID / badge */}
+                  <div className="flex justify-between items-start gap-3 mb-5 select-none">
+                    <div className="flex items-center gap-2">
+                      <div className={`w-7 h-7 rounded-full flex items-center justify-center font-mono text-[10px] font-black border transition-colors duration-300 ${
+                        isActive ? 'bg-[#2e1f12] text-[#efe6d3] border-[#2e1f12]' : 'bg-[#6b5438]/10 text-[#6b5438] border-[#6b5438]/20'
+                      }`}>
+                        {disc.discoveryId}
+                      </div>
+                      <span className="font-mono text-[9px] font-black tracking-widest text-[#6b5438] uppercase">{disc.coords}</span>
+                    </div>
+                    
+                    <span className={`font-mono text-[8.5px] font-black px-2.5 py-0.5 rounded border transition-colors duration-300 ${
+                      isActive ? 'bg-[#b88a2c]/15 border-[#b88a2c]/40 text-[#92703a]' : 'bg-[#6b5438]/5 border-[#6b5438]/20 text-[#6b5438]'
+                    }`}>
+                      {disc.badge}
                     </span>
                   </div>
 
-                  <div className="space-y-2">
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">MISSION BRIEF</span>
-                    <ul className="space-y-1.5 text-[11.5px] font-sans text-[#3A2B20]/90 font-light leading-relaxed">
-                      {proj.summary.map((h: string, hIdx: number) => (
-                        <li key={hIdx} className="flex items-start">
-                          <span className="text-[#8B6F58] font-mono mr-2.5 shrink-0">•</span>
-                          <span>{h}</span>
+                  {/* Title & record logs */}
+                  <div className="mb-5">
+                    <h4 className="font-display text-2xl font-black text-[#2e1f12] mb-1.5">{disc.title}</h4>
+                    <p className="font-sans text-[11.5px] text-[#6b5438] font-bold leading-relaxed uppercase tracking-wider mb-3">{disc.subtitle}</p>
+                    <p className="font-sans text-xs sm:text-[13px] text-[#2e1f12]/90 leading-relaxed italic border-l-2 border-[#6b5438]/40 pl-3.5 my-4">
+                      "{disc.records}"
+                    </p>
+                  </div>
+
+                  {/* Milestones list */}
+                  <div className="mb-6 bg-[#e3d3b3]/45 p-4 rounded-xl border border-[#6b5438]/25">
+                    <span className="font-mono text-[9.5px] uppercase tracking-wider text-[#2e1f12] block mb-3 font-black">✦ Field Notes & Milestones</span>
+                    <ul className="space-y-2">
+                      {disc.mission.map((item, i) => (
+                        <li key={i} className="flex items-start gap-2.5 text-xs text-[#2e1f12] leading-relaxed">
+                          <span className="text-[#92703a] font-mono select-none">›</span>
+                          <span className="font-medium">{item}</span>
                         </li>
                       ))}
                     </ul>
                   </div>
 
-                  <div className="space-y-2 pt-1">
-                    <span className="font-mono text-[9px] uppercase tracking-wider text-[#8B6F58] block">TOOLKIT</span>
-                    <div className="flex flex-wrap gap-1">
-                      {proj.tech.map((t: string) => (
-                        <span 
-                          key={t}
-                          className="font-mono text-[9px] text-[#3A2B20]/80 bg-[#E8D5B5]/30 border border-[#CDB38D]/25 px-2 py-0.5 rounded"
-                        >
-                          {t}
-                        </span>
-                      ))}
-                    </div>
+                  {/* Tech Stack tags */}
+                  <div className="mb-5 flex flex-wrap gap-2">
+                    {disc.tools.map((tool) => (
+                      <span
+                        key={tool}
+                        className="font-mono text-[9px] px-2.5 py-1 rounded bg-[#e3d3b3]/60 border border-[#6b5438]/30 text-[#2e1f12] font-black"
+                      >
+                        {tool}
+                      </span>
+                    ))}
                   </div>
 
-                  <div className="pt-3 border-t border-[#CDB38D]/20 flex gap-2">
-                    <a
-                      href={proj.github}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="cursor-pointer border border-[#8B6F58]/40 hover:border-[#3A2B20] bg-transparent hover:bg-[#E8D5B5]/20 text-[#3A2B20] font-semibold text-[10px] py-1.5 px-3 rounded-lg flex items-center gap-1.5 transition-all duration-200"
-                    >
-                      <Github className="w-3 h-3" />
-                      <span>Repository</span>
-                    </a>
-                    {proj.demo && (
+                  {/* Footer actions & awards */}
+                  <div className="flex items-center justify-between border-t border-[#6b5438]/20 pt-4 mt-2">
+                    <span className="font-mono text-[10px] text-[#92703a] flex items-center gap-1.5 font-bold">
+                      <Award className="w-4 h-4 text-[#b88a2c]" /> {disc.reward}
+                    </span>
+                    
+                    <div className="flex items-center gap-1">
                       <a
-                        href={proj.demo}
+                        href={disc.github}
                         target="_blank"
                         rel="noreferrer"
-                        className="cursor-pointer bg-[#3A2B20] hover:bg-[#3A2B20]/90 text-[#F9F0E4] font-semibold text-[10px] py-1.5 px-3.5 rounded-lg flex items-center gap-1.5 transition-all duration-200"
+                        className="p-2 rounded-lg hover:bg-[#e3d3b3]/70 text-[#2e1f12] transition-colors"
+                        title="Repository"
                       >
-                        <ExternalLink className="w-3 h-3" />
-                        <span>{proj.title === 'Dynosaur Website' ? 'Live Site' : 'Demo'}</span>
+                        <Github className="w-4.5 h-4.5" />
                       </a>
-                    )}
+                      {disc.demo && (
+                        <a
+                          href={disc.demo}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="p-2 rounded-lg hover:bg-[#e3d3b3]/70 text-[#2e1f12] transition-colors"
+                          title="Explore Demo"
+                        >
+                          <ExternalLink className="w-4.5 h-4.5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </div>
-          ))}
+              );
+            })}
+          </div>
+          
         </div>
 
       </div>
 
-      {/* 3. BOTTOM GRADIENT TRANSITION ZONE (Blends into Skills dark void cover) */}
-      <div 
-        className="absolute bottom-0 left-0 right-0 h-40 pointer-events-none z-10"
-        style={{
-          background: "linear-gradient(to top, #0A0705 0%, transparent 100%)",
-        }}
-      />
-
-    </motion.section>
+    </section>
   );
 }

@@ -167,7 +167,7 @@ export default function About() {
       <div 
         className="absolute top-0 left-0 right-0 h-48 pointer-events-none z-10"
         style={{
-          background: "linear-gradient(to bottom, #113945 0%, #17110D 100%)",
+          background: "linear-gradient(to bottom, #100C09 0%, #17110D 100%)",
           maskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
           WebkitMaskImage: "linear-gradient(to bottom, black 0%, transparent 100%)",
         }}
@@ -175,7 +175,7 @@ export default function About() {
 
       {/* Transition hill SVG */}
       <div className="absolute top-0 inset-x-0 h-32 pointer-events-none z-0">
-        <svg className="w-full h-full text-[#113945]" viewBox="0 0 1440 120" preserveAspectRatio="none">
+        <svg className="w-full h-full text-[#100C09]" viewBox="0 0 1440 120" preserveAspectRatio="none">
           <path 
             d="M0 0 L1440 0 L1440 40 C1100 60, 800 30, 400 80 C200 100, 100 80, 0 100 Z" 
             fill="currentColor" 
