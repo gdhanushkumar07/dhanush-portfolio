@@ -208,7 +208,7 @@ function MapPanel({
   activeIndex: number;
 }) {
   return (
-    <div className="w-full relative select-none" style={{ height: "650px" }}>
+    <div className="w-full max-w-[420px] mx-auto relative select-none" style={{ aspectRatio: "340 / 900" }}>
       <svg
         className="w-full h-full"
         viewBox="0 0 340 900"
@@ -750,7 +750,7 @@ export default function Projects() {
       />
 
 
-      <div className="max-w-7xl mx-auto px-6 sm:px-10 py-24 relative z-10">
+      <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-24 relative z-10">
         {/* ── TWO-COLUMN EXPEDITION LAYOUT ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 lg:gap-14 items-start">
           

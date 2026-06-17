@@ -132,7 +132,7 @@ const StarField = () => {
 const Moon = () => (
   <div
     className="absolute z-[2] pointer-events-none"
-    style={{ top: "5%", right: "7%", width: 112, height: 112 }}
+    style={{ top: "5%", right: "8%", width: 96, height: 96 }}
   >
     {/* Extra wide soft atmospheric haze glow */}
     <div
@@ -598,7 +598,7 @@ const HeroContent = ({ onOpenCodex }: { onOpenCodex: () => void }) => {
   return (
     <div
       className="relative z-[12] flex flex-col items-center text-center max-w-3xl px-4"
-      style={{ marginTop: "-8vh" }}
+      style={{ marginTop: "2vh" }}
     >
       {/* Eyebrow */}
       <motion.span
@@ -824,7 +824,7 @@ const CampfireWrapper = ({ scrollY }: { scrollY: any }) => {
     <motion.div
       style={{
         opacity,
-        bottom: "12.8%",
+        bottom: "10%",
         left: "50%",
         transform: "translateX(-50%) scale(1.28)",
         transformOrigin: "center bottom",
