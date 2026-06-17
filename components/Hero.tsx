@@ -270,7 +270,12 @@ const Fireflies = () => {
   );
 
   return (
-    <div className="absolute inset-0 pointer-events-none z-[15] overflow-hidden">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.9, ease: "easeInOut" }}
+      className="absolute inset-0 pointer-events-none z-[15] overflow-hidden"
+    >
       {flies.map((f) => (
         <motion.div
           key={f.id}
@@ -296,6 +301,347 @@ const Fireflies = () => {
           }}
         />
       ))}
+    </motion.div>
+  );
+};
+
+
+
+/* ══════════════════════════════════════════════
+   ROOT & VINE TRANSITION SYSTEM
+   Organic roots connecting hero → About
+   ══════════════════════════════════════════════ */
+const RootVineTransition = ({ scrollY }: { scrollY: any }) => {
+  const opacity = useTransform(scrollY, [0, 200, 500], [0, 0.6, 1]);
+  const y = useTransform(scrollY, [0, 400], [30, 0]);
+
+  return (
+    <motion.div
+      style={{ opacity, y, height: "220px" }}
+      className="absolute bottom-0 left-0 right-0 z-[20] pointer-events-none select-none"
+    >
+      <svg
+        width="100%"
+        height="220"
+        viewBox="0 0 1440 220"
+        preserveAspectRatio="xMidYMax meet"
+        fill="none"
+      >
+        {/* Main root trunk from campfire center */}
+        {/* Left main root */}
+        <motion.path
+          d="M720,0 C680,30 600,55 520,90 C440,125 360,140 280,160 C200,180 130,175 60,195"
+          stroke="#1A2E0A"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.5, ease: "easeInOut" }}
+        />
+        {/* Left branch 1 */}
+        <motion.path
+          d="M620,50 C580,70 540,88 500,108"
+          stroke="#162608"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
+        />
+        {/* Left branch 2 */}
+        <motion.path
+          d="M520,90 C490,105 460,118 430,135"
+          stroke="#122005"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        />
+        {/* Left branch leaf-lets */}
+        <motion.path
+          d="M500,108 C488,114 476,122 465,132"
+          stroke="#0E1C04"
+          strokeWidth="1"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+        <motion.path
+          d="M430,135 C418,142 406,150 395,160"
+          stroke="#0E1C04"
+          strokeWidth="1"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+
+        {/* Right main root */}
+        <motion.path
+          d="M720,0 C760,30 840,55 920,90 C1000,125 1080,140 1160,160 C1240,180 1310,175 1380,195"
+          stroke="#1A2E0A"
+          strokeWidth="3.5"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.5, ease: "easeInOut" }}
+        />
+        {/* Right branch 1 */}
+        <motion.path
+          d="M820,50 C860,70 900,88 940,108"
+          stroke="#162608"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.8, ease: "easeInOut" }}
+        />
+        {/* Right branch 2 */}
+        <motion.path
+          d="M920,90 C950,105 980,118 1010,135"
+          stroke="#122005"
+          strokeWidth="1.5"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.5, ease: "easeInOut" }}
+        />
+        <motion.path
+          d="M940,108 C952,114 964,122 975,132"
+          stroke="#0E1C04"
+          strokeWidth="1"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+        <motion.path
+          d="M1010,135 C1022,142 1034,150 1045,160"
+          stroke="#0E1C04"
+          strokeWidth="1"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.2, ease: "easeInOut" }}
+        />
+
+        {/* Center downward root — goes straight into About */}
+        <motion.path
+          d="M720,0 C716,40 712,80 718,120 C722,155 716,185 720,220"
+          stroke="#1A2E0A"
+          strokeWidth="4"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 2.8, ease: "easeInOut" }}
+        />
+        {/* Center sub-root left */}
+        <motion.path
+          d="M716,80 C700,100 685,115 668,135"
+          stroke="#152206"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.6, ease: "easeInOut" }}
+        />
+        {/* Center sub-root right */}
+        <motion.path
+          d="M718,120 C734,138 748,152 762,168"
+          stroke="#152206"
+          strokeWidth="2"
+          strokeLinecap="round"
+          initial={{ pathLength: 0 }}
+          animate={{ pathLength: 1 }}
+          transition={{ duration: 1.6, ease: "easeInOut" }}
+        />
+
+        {/* Leaf shapes on roots */}
+        <motion.ellipse cx="500" cy="108" rx="8" ry="4" fill="#1A3A08" opacity="0.7"
+          transform="rotate(-35 500 108)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.55 }}
+          transition={{ duration: 0.6 }}
+        />
+        <motion.ellipse cx="430" cy="135" rx="7" ry="3.5" fill="#172F07" opacity="0.65"
+          transform="rotate(-25 430 135)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.5 }}
+          transition={{ duration: 0.6 }}
+        />
+        <motion.ellipse cx="940" cy="108" rx="8" ry="4" fill="#1A3A08" opacity="0.7"
+          transform="rotate(35 940 108)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.55 }}
+          transition={{ duration: 0.6 }}
+        />
+        <motion.ellipse cx="1010" cy="135" rx="7" ry="3.5" fill="#172F07" opacity="0.65"
+          transform="rotate(25 1010 135)"
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ scale: 1, opacity: 0.5 }}
+          transition={{ duration: 0.6 }}
+        />
+
+        {/* Small glowing particles on roots */}
+        {[
+          { cx: 580, cy: 65 }, { cx: 460, cy: 120 }, { cx: 860, cy: 65 },
+          { cx: 980, cy: 120 }, { cx: 720, cy: 90 }, { cx: 700, cy: 155 },
+        ].map((pt, i) => (
+          <motion.circle
+            key={i}
+            cx={pt.cx}
+            cy={pt.cy}
+            r="2.5"
+            fill="#3F8F2A"
+            opacity="0"
+            animate={{ opacity: [0, 0.5, 0], scale: [0.8, 1.4, 0.8] }}
+            transition={{ duration: 2.5, repeat: Infinity, delay: 3.5 + i * 0.5 }}
+          />
+        ))}
+      </svg>
+
+      {/* Colour gradient — bleeds hero dark blue into About's earthy dark */}
+      <div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(to bottom, transparent 0%, #0A0C06 55%, #12100A 80%, #17110D 100%)",
+        }}
+      />
+    </motion.div>
+  );
+};
+
+/* ══════════════════════════════════════════════
+   AMBIENT DISCOVERY HINTS — ultra subtle
+   ══════════════════════════════════════════════ */
+const DiscoveryHints = () => (
+  <div className="absolute inset-0 pointer-events-none select-none z-[3] overflow-hidden">
+    {/* Compass — faded, top area */}
+    <svg className="absolute top-[6%] left-[5%] w-14 h-14 opacity-[0.06]" viewBox="0 0 56 56" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="0.5">
+      <circle cx="28" cy="28" r="24" />
+      <circle cx="28" cy="28" r="16" />
+      <circle cx="28" cy="28" r="4" />
+      <path d="M28 4 L31 18 L28 22 L25 18 Z" fill="rgba(255,255,255,0.6)" stroke="none" />
+      <path d="M28 52 L31 38 L28 34 L25 38 Z" fill="rgba(255,255,255,0.3)" stroke="none" />
+      <path d="M4 28 L18 31 L22 28 L18 25 Z" fill="rgba(255,255,255,0.3)" stroke="none" />
+      <path d="M52 28 L38 31 L34 28 L38 25 Z" fill="rgba(255,255,255,0.6)" stroke="none" />
+      <text x="28" y="8" textAnchor="middle" fontSize="5" fill="rgba(255,255,255,0.5)" fontFamily="serif">N</text>
+    </svg>
+
+    {/* Coordinate markings — top left */}
+    <div className="absolute top-5 left-5 opacity-[0.07]">
+      <span className="font-mono text-[7px] text-white tracking-widest block">17°22′N</span>
+      <span className="font-mono text-[7px] text-white tracking-widest block">78°28′E</span>
+    </div>
+
+    {/* Explorer flag marker — right side mid */}
+    <svg className="absolute right-[12%] top-[42%] w-5 h-7 opacity-[0.08]" viewBox="0 0 16 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.8">
+      <line x1="3" y1="1" x2="3" y2="23" strokeLinecap="round" />
+      <path d="M3 2 L14 6 L3 10 Z" fill="rgba(255,255,255,0.4)" />
+    </svg>
+
+    {/* Explorer symbol — bottom left area */}
+    <svg className="absolute left-[8%] bottom-[36%] w-8 h-8 opacity-[0.06]" viewBox="0 0 32 32" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.7">
+      <circle cx="16" cy="16" r="13" />
+      <path d="M16 3 V29 M3 16 H29" strokeDasharray="2,3" opacity="0.6" />
+      <circle cx="16" cy="16" r="3" />
+    </svg>
+
+    {/* Chart scale line — bottom right */}
+    <div className="absolute bottom-[28%] right-[6%] opacity-[0.06]">
+      <div className="flex items-center gap-0.5">
+        <div className="w-px h-3 bg-white" />
+        <div className="w-10 h-px bg-white" />
+        <div className="w-px h-3 bg-white" />
+      </div>
+      <span className="font-mono text-[6px] text-white tracking-widest block mt-0.5 text-center">1:250k</span>
+    </div>
+  </div>
+);
+
+/* ══════════════════════════════════════════════
+   HERO CONTENT — centered, clean, premium
+   ══════════════════════════════════════════════ */
+const HeroContent = ({ onOpenCodex }: { onOpenCodex: () => void }) => {
+  return (
+    <div
+      className="relative z-[12] flex flex-col items-center text-center max-w-3xl px-4"
+      style={{ marginTop: "-8vh" }}
+    >
+      {/* Eyebrow */}
+      <motion.span
+        initial={{ opacity: 0, y: 15 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+        className="font-mono text-[9px] sm:text-[10px] tracking-[0.55em] uppercase font-semibold mb-5"
+        style={{ color: "rgba(245,166,35,0.6)" }}
+      >
+        THE EXPEDITION BEGINS
+      </motion.span>
+
+      {/* Name */}
+      <div className="relative mb-5 inline-block">
+        <motion.h1
+          initial={{ opacity: 0, y: 25 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1.6, ease: [0.16, 1, 0.3, 1] }}
+          className="font-display font-extrabold leading-[0.9] tracking-tight relative z-10 select-none"
+          style={{
+            fontSize: "clamp(4rem,9vw,7.5rem)",
+            color: "#F5F1EB",
+            textShadow: "0 2px 40px rgba(0,0,0,0.6), 0 0 80px rgba(245,166,35,0.07)",
+          }}
+        >
+          Dhanush
+        </motion.h1>
+      </div>
+
+      {/* Role strip */}
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+        className="font-sans text-sm sm:text-base font-light mb-4 tracking-wide"
+        style={{ color: "rgba(200,190,170,0.7)" }}
+      >
+        Full-Stack Developer&nbsp;&nbsp;·&nbsp;&nbsp;Backend Engineer&nbsp;&nbsp;·&nbsp;&nbsp;Builder
+      </motion.p>
+
+      {/* Description */}
+      <motion.p
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.2, ease: "easeInOut" }}
+        className="font-sans text-[14px] sm:text-[15px] font-light max-w-[520px] leading-relaxed mb-10"
+        style={{ color: "rgba(200,190,170,0.5)" }}
+      >
+        Crafting scalable systems, intelligent products,
+        and meaningful digital experiences.
+      </motion.p>
+
+      {/* CTA */}
+      <motion.button
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 1.5, ease: "easeInOut" }}
+        onClick={onOpenCodex}
+        className="group relative flex flex-col items-center gap-2 cursor-pointer focus:outline-none"
+      >
+        <span
+          className="font-mono text-[9px] uppercase tracking-[0.35em] transition-colors duration-300"
+          style={{ color: "rgba(245,166,35,0.5)" }}
+        >
+          Begin The Journey
+        </span>
+        <motion.div
+          animate={{ y: [0, 6, 0] }}
+          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
+        >
+          <ChevronDown className="w-4 h-4" style={{ color: "rgba(245,166,35,0.4)" }} />
+        </motion.div>
+      </motion.button>
     </div>
   );
 };
@@ -311,7 +657,12 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
   const y5 = useTransform(scrollY, [0, 600], [0, 0]);
 
   return (
-    <div className="absolute inset-x-0 bottom-0 w-full h-[55vh] pointer-events-none select-none">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 1.7, ease: "easeInOut" }}
+      className="absolute inset-x-0 bottom-0 w-full h-[55vh] pointer-events-none select-none"
+    >
       {/* Subtle horizon atmospheric haze near horizon (treeline) */}
       <div
         className="absolute inset-x-0 bottom-[16%] h-[28%] z-[7] pointer-events-none"
@@ -415,329 +766,7 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
         {/* Ground patch under campfire — slightly lighter warm earth */}
         <ellipse cx="720" cy="360" rx="90" ry="18" fill="#0F1608" opacity="0.6" />
       </motion.svg>
-    </div>
-  );
-};
-
-/* ══════════════════════════════════════════════
-   ROOT & VINE TRANSITION SYSTEM
-   Organic roots connecting hero → About
-   ══════════════════════════════════════════════ */
-const RootVineTransition = ({ scrollY }: { scrollY: any }) => {
-  const opacity = useTransform(scrollY, [0, 200, 500], [0, 0.6, 1]);
-  const y = useTransform(scrollY, [0, 400], [30, 0]);
-
-  return (
-    <motion.div
-      style={{ opacity, y, height: "220px" }}
-      className="absolute bottom-0 left-0 right-0 z-[20] pointer-events-none select-none"
-    >
-      <svg
-        width="100%"
-        height="220"
-        viewBox="0 0 1440 220"
-        preserveAspectRatio="xMidYMax meet"
-        fill="none"
-      >
-        {/* Main root trunk from campfire center */}
-        {/* Left main root */}
-        <motion.path
-          d="M720,0 C680,30 600,55 520,90 C440,125 360,140 280,160 C200,180 130,175 60,195"
-          stroke="#1A2E0A"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2.5, delay: 1.5, ease: "easeInOut" }}
-        />
-        {/* Left branch 1 */}
-        <motion.path
-          d="M620,50 C580,70 540,88 500,108"
-          stroke="#162608"
-          strokeWidth="2"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.8, delay: 2.2, ease: "easeInOut" }}
-        />
-        {/* Left branch 2 */}
-        <motion.path
-          d="M520,90 C490,105 460,118 430,135"
-          stroke="#122005"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.5, delay: 2.6, ease: "easeInOut" }}
-        />
-        {/* Left branch leaf-lets */}
-        <motion.path
-          d="M500,108 C488,114 476,122 465,132"
-          stroke="#0E1C04"
-          strokeWidth="1"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.2, delay: 3.0, ease: "easeInOut" }}
-        />
-        <motion.path
-          d="M430,135 C418,142 406,150 395,160"
-          stroke="#0E1C04"
-          strokeWidth="1"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.2, delay: 3.2, ease: "easeInOut" }}
-        />
-
-        {/* Right main root */}
-        <motion.path
-          d="M720,0 C760,30 840,55 920,90 C1000,125 1080,140 1160,160 C1240,180 1310,175 1380,195"
-          stroke="#1A2E0A"
-          strokeWidth="3.5"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2.5, delay: 1.5, ease: "easeInOut" }}
-        />
-        {/* Right branch 1 */}
-        <motion.path
-          d="M820,50 C860,70 900,88 940,108"
-          stroke="#162608"
-          strokeWidth="2"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.8, delay: 2.2, ease: "easeInOut" }}
-        />
-        {/* Right branch 2 */}
-        <motion.path
-          d="M920,90 C950,105 980,118 1010,135"
-          stroke="#122005"
-          strokeWidth="1.5"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.5, delay: 2.6, ease: "easeInOut" }}
-        />
-        <motion.path
-          d="M940,108 C952,114 964,122 975,132"
-          stroke="#0E1C04"
-          strokeWidth="1"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.2, delay: 3.0, ease: "easeInOut" }}
-        />
-        <motion.path
-          d="M1010,135 C1022,142 1034,150 1045,160"
-          stroke="#0E1C04"
-          strokeWidth="1"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.2, delay: 3.2, ease: "easeInOut" }}
-        />
-
-        {/* Center downward root — goes straight into About */}
-        <motion.path
-          d="M720,0 C716,40 712,80 718,120 C722,155 716,185 720,220"
-          stroke="#1A2E0A"
-          strokeWidth="4"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 2.8, delay: 1.3, ease: "easeInOut" }}
-        />
-        {/* Center sub-root left */}
-        <motion.path
-          d="M716,80 C700,100 685,115 668,135"
-          stroke="#152206"
-          strokeWidth="2"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.6, delay: 2.4, ease: "easeInOut" }}
-        />
-        {/* Center sub-root right */}
-        <motion.path
-          d="M718,120 C734,138 748,152 762,168"
-          stroke="#152206"
-          strokeWidth="2"
-          strokeLinecap="round"
-          initial={{ pathLength: 0 }}
-          animate={{ pathLength: 1 }}
-          transition={{ duration: 1.6, delay: 2.7, ease: "easeInOut" }}
-        />
-
-        {/* Leaf shapes on roots */}
-        <motion.ellipse cx="500" cy="108" rx="8" ry="4" fill="#1A3A08" opacity="0.7"
-          transform="rotate(-35 500 108)"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.55 }}
-          transition={{ duration: 0.6, delay: 3.1 }}
-        />
-        <motion.ellipse cx="430" cy="135" rx="7" ry="3.5" fill="#172F07" opacity="0.65"
-          transform="rotate(-25 430 135)"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.5 }}
-          transition={{ duration: 0.6, delay: 3.4 }}
-        />
-        <motion.ellipse cx="940" cy="108" rx="8" ry="4" fill="#1A3A08" opacity="0.7"
-          transform="rotate(35 940 108)"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.55 }}
-          transition={{ duration: 0.6, delay: 3.1 }}
-        />
-        <motion.ellipse cx="1010" cy="135" rx="7" ry="3.5" fill="#172F07" opacity="0.65"
-          transform="rotate(25 1010 135)"
-          initial={{ scale: 0, opacity: 0 }}
-          animate={{ scale: 1, opacity: 0.5 }}
-          transition={{ duration: 0.6, delay: 3.4 }}
-        />
-
-        {/* Small glowing particles on roots */}
-        {[
-          { cx: 580, cy: 65 }, { cx: 460, cy: 120 }, { cx: 860, cy: 65 },
-          { cx: 980, cy: 120 }, { cx: 720, cy: 90 }, { cx: 700, cy: 155 },
-        ].map((pt, i) => (
-          <motion.circle
-            key={i}
-            cx={pt.cx}
-            cy={pt.cy}
-            r="2.5"
-            fill="#3F8F2A"
-            opacity="0"
-            animate={{ opacity: [0, 0.5, 0], scale: [0.8, 1.4, 0.8] }}
-            transition={{ duration: 2.5, repeat: Infinity, delay: 3.5 + i * 0.5 }}
-          />
-        ))}
-      </svg>
-
-      {/* Colour gradient — bleeds hero dark blue into About's earthy dark */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background: "linear-gradient(to bottom, transparent 0%, #0A0C06 55%, #12100A 80%, #17110D 100%)",
-        }}
-      />
     </motion.div>
-  );
-};
-
-/* ══════════════════════════════════════════════
-   AMBIENT DISCOVERY HINTS — ultra subtle
-   ══════════════════════════════════════════════ */
-const DiscoveryHints = () => (
-  <div className="absolute inset-0 pointer-events-none select-none z-[3] overflow-hidden">
-    {/* Compass — faded, top area */}
-    <svg className="absolute top-[6%] left-[5%] w-14 h-14 opacity-[0.06]" viewBox="0 0 56 56" fill="none" stroke="rgba(255,255,255,0.8)" strokeWidth="0.5">
-      <circle cx="28" cy="28" r="24" />
-      <circle cx="28" cy="28" r="16" />
-      <circle cx="28" cy="28" r="4" />
-      <path d="M28 4 L31 18 L28 22 L25 18 Z" fill="rgba(255,255,255,0.6)" stroke="none" />
-      <path d="M28 52 L31 38 L28 34 L25 38 Z" fill="rgba(255,255,255,0.3)" stroke="none" />
-      <path d="M4 28 L18 31 L22 28 L18 25 Z" fill="rgba(255,255,255,0.3)" stroke="none" />
-      <path d="M52 28 L38 31 L34 28 L38 25 Z" fill="rgba(255,255,255,0.6)" stroke="none" />
-      <text x="28" y="8" textAnchor="middle" fontSize="5" fill="rgba(255,255,255,0.5)" fontFamily="serif">N</text>
-    </svg>
-
-    {/* Coordinate markings — top left */}
-    <div className="absolute top-5 left-5 opacity-[0.07]">
-      <span className="font-mono text-[7px] text-white tracking-widest block">17°22′N</span>
-      <span className="font-mono text-[7px] text-white tracking-widest block">78°28′E</span>
-    </div>
-
-    {/* Explorer flag marker — right side mid */}
-    <svg className="absolute right-[12%] top-[42%] w-5 h-7 opacity-[0.08]" viewBox="0 0 16 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.8">
-      <line x1="3" y1="1" x2="3" y2="23" strokeLinecap="round" />
-      <path d="M3 2 L14 6 L3 10 Z" fill="rgba(255,255,255,0.4)" />
-    </svg>
-
-    {/* Explorer symbol — bottom left area */}
-    <svg className="absolute left-[8%] bottom-[36%] w-8 h-8 opacity-[0.06]" viewBox="0 0 32 32" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.7">
-      <circle cx="16" cy="16" r="13" />
-      <path d="M16 3 V29 M3 16 H29" strokeDasharray="2,3" opacity="0.6" />
-      <circle cx="16" cy="16" r="3" />
-    </svg>
-
-    {/* Chart scale line — bottom right */}
-    <div className="absolute bottom-[28%] right-[6%] opacity-[0.06]">
-      <div className="flex items-center gap-0.5">
-        <div className="w-px h-3 bg-white" />
-        <div className="w-10 h-px bg-white" />
-        <div className="w-px h-3 bg-white" />
-      </div>
-      <span className="font-mono text-[6px] text-white tracking-widest block mt-0.5 text-center">1:250k</span>
-    </div>
-  </div>
-);
-
-/* ══════════════════════════════════════════════
-   HERO CONTENT — centered, clean, premium
-   ══════════════════════════════════════════════ */
-const HeroContent = ({ onOpenCodex }: { onOpenCodex: () => void }) => {
-  return (
-    <div
-      className="relative z-[12] flex flex-col items-center text-center max-w-3xl px-4"
-      style={{ marginTop: "-8vh" }}
-    >
-      {/* Eyebrow */}
-      <span
-        className="font-mono text-[9px] sm:text-[10px] tracking-[0.55em] uppercase font-semibold mb-5"
-        style={{ color: "rgba(245,166,35,0.6)" }}
-      >
-        THE EXPEDITION BEGINS
-      </span>
-
-      {/* Name */}
-      <h1
-        className="font-display font-extrabold leading-[0.9] tracking-tight mb-5"
-        style={{
-          fontSize: "clamp(4rem,9vw,7.5rem)",
-          color: "#F5F1EB",
-          textShadow: "0 2px 40px rgba(0,0,0,0.6), 0 0 80px rgba(245,166,35,0.07)",
-        }}
-      >
-        Dhanush
-      </h1>
-
-      {/* Role strip */}
-      <p
-        className="font-sans text-sm sm:text-base font-light mb-4 tracking-wide"
-        style={{ color: "rgba(200,190,170,0.7)" }}
-      >
-        Full-Stack Developer&nbsp;&nbsp;·&nbsp;&nbsp;Backend Engineer&nbsp;&nbsp;·&nbsp;&nbsp;Builder
-      </p>
-
-      {/* Description */}
-      <p
-        className="font-sans text-[14px] sm:text-[15px] font-light max-w-[520px] leading-relaxed mb-10"
-        style={{ color: "rgba(200,190,170,0.5)" }}
-      >
-        Crafting scalable systems, intelligent products,
-        and meaningful digital experiences.
-      </p>
-
-      {/* CTA */}
-      <button
-        onClick={onOpenCodex}
-        className="group relative flex flex-col items-center gap-2 cursor-pointer focus:outline-none"
-      >
-        <span
-          className="font-mono text-[9px] uppercase tracking-[0.35em] transition-colors duration-300"
-          style={{ color: "rgba(245,166,35,0.5)" }}
-        >
-          Begin The Journey
-        </span>
-        <motion.div
-          animate={{ y: [0, 6, 0] }}
-          transition={{ duration: 2.4, repeat: Infinity, ease: "easeInOut" }}
-        >
-          <ChevronDown className="w-4 h-4" style={{ color: "rgba(245,166,35,0.4)" }} />
-        </motion.div>
-      </button>
-    </div>
   );
 };
 
@@ -758,121 +787,222 @@ const CampfireWrapper = ({ scrollY }: { scrollY: any }) => {
       }}
       className="absolute z-[16] pointer-events-none select-none"
     >
-      {/* Ground illumination */}
-      <div
-        style={{
-          position: "absolute",
-          width: 320,
-          height: 90,
-          bottom: -12,
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: "radial-gradient(ellipse at center bottom, rgba(245,120,30,0.2) 0%, rgba(200,80,10,0.1) 35%, transparent 70%)",
-          filter: "blur(10px)",
-        }}
-      />
-      {/* Wider ambient glow */}
-      <div
-        style={{
-          position: "absolute",
-          width: 420,
-          height: 220,
-          bottom: 0,
-          left: "50%",
-          transform: "translateX(-50%)",
-          background: "radial-gradient(ellipse at center bottom, rgba(245,140,30,0.13) 0%, rgba(200,90,10,0.06) 42%, transparent 72%)",
-          filter: "blur(28px)",
-        }}
-      />
-
-      {/* Flame SVG */}
-      <svg width="68" height="78" viewBox="0 0 68 78" style={{ position: "relative", zIndex: 1 }}>
-        {/* Logs */}
-        <ellipse cx="34" cy="66" rx="22" ry="5.5" fill="#160B04" opacity="0.9" />
-        <line x1="13" y1="66" x2="55" y2="62" stroke="#261005" strokeWidth="5" strokeLinecap="round" />
-        <line x1="15" y1="70" x2="53" y2="67" stroke="#1E0D04" strokeWidth="4" strokeLinecap="round" />
-
-        {/* Outer flame */}
-        <motion.path
-          d="M34,60 C26,50 22,38 28,26 C30,22 32,26 34,22 C36,18 34,14 36,10 C42,20 44,30 40,40 C46,32 48,22 44,14 C50,24 50,38 46,50 C50,42 54,32 50,22 C56,36 52,50 42,58 Z"
-          fill="#D85808"
-          animate={{
-            scaleX: [1, 1.06, 0.96, 1.04, 1],
-            scaleY: [1, 1.10, 0.93, 1.07, 1],
-            opacity: [0.92, 1, 0.88, 0.98, 0.92],
-          }}
-          style={{ transformOrigin: "34px 60px" }}
-          transition={{ duration: 0.78, repeat: Infinity, ease: "easeInOut" }}
-        />
-        {/* Mid amber flame */}
-        <motion.path
-          d="M34,60 C28,52 26,42 30,32 C32,28 34,32 34,28 C36,24 34,20 36,16 C40,26 42,36 38,44 C42,36 44,28 40,20 C46,30 44,44 40,54 Z"
-          fill="#F58F18"
-          animate={{
-            scaleY: [1, 1.14, 0.91, 1.10, 1],
-            opacity: [0.88, 1, 0.84, 0.96, 0.88],
-          }}
-          style={{ transformOrigin: "34px 60px" }}
-          transition={{ duration: 0.62, repeat: Infinity, ease: "easeInOut", delay: 0.08 }}
-        />
-        {/* Inner yellow */}
-        <motion.path
-          d="M34,60 C30,54 28,46 32,38 C33,35 34,38 34,35 C35,32 33,29 35,26 C38,32 39,40 36,46 C39,40 41,34 39,28 C43,36 41,48 37,56 Z"
-          fill="#FFC038"
-          animate={{
-            scaleY: [1, 1.16, 0.88, 1.12, 1],
-            opacity: [0.82, 1, 0.78, 0.94, 0.82],
-          }}
-          style={{ transformOrigin: "34px 60px" }}
-          transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.18 }}
-        />
-        {/* Core white-yellow */}
-        <motion.ellipse
-          cx="34" cy="50" rx="3" ry="5.5"
-          fill="#FFF3C0"
-          animate={{ scaleY: [1, 1.2, 0.86, 1.15, 1], opacity: [0.78, 1, 0.72, 0.92, 0.78] }}
-          style={{ transformOrigin: "34px 50px" }}
-          transition={{ duration: 0.44, repeat: Infinity, ease: "easeInOut", delay: 0.12 }}
-        />
-      </svg>
-
-      {/* Embers */}
-      {[
-        { dx: -16, delay: 0,   size: 1.5, dur: 3.1 },
-        { dx: 10,  delay: 0.8, size: 1.1, dur: 2.7 },
-        { dx: -5,  delay: 1.4, size: 1.3, dur: 3.4 },
-        { dx: 20,  delay: 0.3, size: 1.0, dur: 2.4 },
-        { dx: -24, delay: 1.9, size: 1.2, dur: 3.0 },
-        { dx: 13,  delay: 2.3, size: 1.1, dur: 2.6 },
-        { dx: -2,  delay: 1.0, size: 1.4, dur: 3.7 },
-      ].map((e, i) => (
-        <motion.div
-          key={i}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.8, ease: "easeInOut" }}
+      >
+        {/* Ground illumination */}
+        <div
           style={{
             position: "absolute",
-            width: e.size * 2,
-            height: e.size * 2,
-            borderRadius: "50%",
-            background: "#FF9030",
-            boxShadow: `0 0 ${e.size * 3}px ${e.size}px rgba(255,140,30,0.7)`,
-            bottom: 6,
-            left: `calc(50% + ${e.dx}px)`,
-          }}
-          animate={{
-            y: [0, -60 - i * 7],
-            x: [0, e.dx * 0.4],
-            opacity: [0.85, 0.5, 0],
-            scale: [1, 0.3],
-          }}
-          transition={{
-            duration: e.dur,
-            repeat: Infinity,
-            ease: "easeOut",
-            delay: e.delay,
-            repeatDelay: 0.3,
+            width: 320,
+            height: 90,
+            bottom: -12,
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "radial-gradient(ellipse at center bottom, rgba(245,120,30,0.2) 0%, rgba(200,80,10,0.1) 35%, transparent 70%)",
+            filter: "blur(10px)",
           }}
         />
-      ))}
+        {/* Wider ambient glow */}
+        <div
+          style={{
+            position: "absolute",
+            width: 420,
+            height: 220,
+            bottom: 0,
+            left: "50%",
+            transform: "translateX(-50%)",
+            background: "radial-gradient(ellipse at center bottom, rgba(245,140,30,0.13) 0%, rgba(200,90,10,0.06) 42%, transparent 72%)",
+            filter: "blur(28px)",
+          }}
+        />
+
+        {/* Campsite details — Background (Behind Fire, zIndex: 0) */}
+        <div className="absolute bottom-[6px] left-[34px] -translate-x-1/2 w-[320px] h-[80px] pointer-events-none z-[0] overflow-visible">
+          {/* Left background tent (distant) */}
+          <svg className="absolute left-[65px] bottom-[18px] w-[18px] h-[14px]" viewBox="0 0 18 14">
+            <polygon points="9,0 0,14 18,14" fill="#040805" />
+            <line x1="9" y1="0" x2="18" y2="14" stroke="rgba(245,140,30,0.3)" strokeWidth="0.8" />
+          </svg>
+
+          {/* Left background: Tiny supply crate */}
+          <svg className="absolute left-[88px] bottom-[17px] w-[6px] h-[6px]" viewBox="0 0 6 6">
+            <rect x="0" y="0" width="6" height="6" fill="#040805" />
+            <line x1="6" y1="0" x2="6" y2="6" stroke="rgba(245,140,30,0.25)" strokeWidth="0.6" />
+          </svg>
+
+          {/* Right background tent (distant) */}
+          <svg className="absolute right-[75px] bottom-[18px] w-[14px] h-[11px]" viewBox="0 0 14 11">
+            <polygon points="7,0 0,11 14,11" fill="#040805" />
+            <line x1="7" y1="0" x2="0" y2="11" stroke="rgba(245,140,30,0.25)" strokeWidth="0.8" />
+          </svg>
+        </div>
+
+        {/* Smoke Wisps (Very low opacity, rising and fading) */}
+        <div className="absolute bottom-[60px] left-[34px] -translate-x-1/2 w-[40px] h-[140px] pointer-events-none z-[2]">
+          <motion.svg width="100%" height="100%" viewBox="0 0 40 140" fill="none">
+            <motion.path
+              d="M20,140 Q12,100 24,70 T16,20"
+              stroke="rgba(200,200,200,0.18)"
+              strokeWidth="1.2"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{
+                pathLength: [0, 1, 1],
+                opacity: [0, 0.12, 0.06, 0],
+                y: [10, -50],
+              }}
+              transition={{
+                duration: 6,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 0.2,
+              }}
+            />
+            <motion.path
+              d="M18,140 Q26,95 16,60 T22,10"
+              stroke="rgba(200,200,200,0.15)"
+              strokeWidth="1.5"
+              strokeLinecap="round"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{
+                pathLength: [0, 1, 1],
+                opacity: [0, 0.1, 0.05, 0],
+                y: [15, -60],
+              }}
+              transition={{
+                duration: 7.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: 2.8,
+              }}
+            />
+          </motion.svg>
+        </div>
+
+        {/* Flame SVG */}
+        <svg width="68" height="78" viewBox="0 0 68 78" style={{ position: "relative", zIndex: 1 }}>
+          {/* Logs */}
+          <ellipse cx="34" cy="66" rx="22" ry="5.5" fill="#160B04" opacity="0.9" />
+          <line x1="13" y1="66" x2="55" y2="62" stroke="#261005" strokeWidth="5" strokeLinecap="round" />
+          <line x1="15" y1="70" x2="53" y2="67" stroke="#1E0D04" strokeWidth="4" strokeLinecap="round" />
+
+          {/* Outer flame */}
+          <motion.path
+            d="M34,60 C26,50 22,38 28,26 C30,22 32,26 34,22 C36,18 34,14 36,10 C42,20 44,30 40,40 C46,32 48,22 44,14 C50,24 50,38 46,50 C50,42 54,32 50,22 C56,36 52,50 42,58 Z"
+            fill="#D85808"
+            animate={{
+              scaleX: [1, 1.06, 0.96, 1.04, 1],
+              scaleY: [1, 1.10, 0.93, 1.07, 1],
+              opacity: [0.92, 1, 0.88, 0.98, 0.92],
+            }}
+            style={{ transformOrigin: "34px 60px" }}
+            transition={{ duration: 0.78, repeat: Infinity, ease: "easeInOut" }}
+          />
+          {/* Mid amber flame */}
+          <motion.path
+            d="M34,60 C28,52 26,42 30,32 C32,28 34,32 34,28 C36,24 34,20 36,16 C40,26 42,36 38,44 C42,36 44,28 40,20 C46,30 44,44 40,54 Z"
+            fill="#F58F18"
+            animate={{
+              scaleY: [1, 1.14, 0.91, 1.10, 1],
+              opacity: [0.88, 1, 0.84, 0.96, 0.88],
+            }}
+            style={{ transformOrigin: "34px 60px" }}
+            transition={{ duration: 0.62, repeat: Infinity, ease: "easeInOut", delay: 0.08 }}
+          />
+          {/* Inner yellow */}
+          <motion.path
+            d="M34,60 C30,54 28,46 32,38 C33,35 34,38 34,35 C35,32 33,29 35,26 C38,32 39,40 36,46 C39,40 41,34 39,28 C43,36 41,48 37,56 Z"
+            fill="#FFC038"
+            animate={{
+              scaleY: [1, 1.16, 0.88, 1.12, 1],
+              opacity: [0.82, 1, 0.78, 0.94, 0.82],
+            }}
+            style={{ transformOrigin: "34px 60px" }}
+            transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.18 }}
+          />
+          {/* Core white-yellow */}
+          <motion.ellipse
+            cx="34" cy="50" rx="3" ry="5.5"
+            fill="#FFF3C0"
+            animate={{ scaleY: [1, 1.2, 0.86, 1.15, 1], opacity: [0.78, 1, 0.72, 0.92, 0.78] }}
+            style={{ transformOrigin: "34px 50px" }}
+            transition={{ duration: 0.44, repeat: Infinity, ease: "easeInOut", delay: 0.12 }}
+          />
+        </svg>
+
+        {/* Campsite details — Foreground (In front of/beside fire, zIndex: 12) */}
+        <div className="absolute bottom-[6px] left-[34px] -translate-x-1/2 w-[320px] h-[80px] pointer-events-none z-[12] overflow-visible">
+          {/* Left midground tent */}
+          <svg className="absolute left-[90px] bottom-[12px] w-[20px] h-[15px]" viewBox="0 0 20 15">
+            <polygon points="10,0 0,15 20,15" fill="#050B07" />
+            <line x1="10" y1="0" x2="20" y2="15" stroke="rgba(245,140,30,0.35)" strokeWidth="0.8" />
+          </svg>
+
+          {/* Left foreground: Rolled backpack */}
+          <svg className="absolute left-[114px] bottom-[6px] w-[13px] h-[9px]" viewBox="0 0 13 9">
+            <rect x="1.5" y="1.5" width="10" height="7" rx="1.5" fill="#050B07" />
+            <rect x="3" y="0" width="7" height="1.5" rx="0.5" fill="#050B07" />
+            <path d="M11.5,1.5 C11.5,1.5 12.5,5 11.5,8.5" stroke="rgba(245,140,30,0.4)" strokeWidth="0.8" fill="none" />
+          </svg>
+
+          {/* Right midground: Lantern post */}
+          <svg className="absolute right-[92px] bottom-[12px] w-[8px] h-[26px]" viewBox="0 0 8 26">
+            <line x1="4" y1="26" x2="4" y2="4" stroke="#040805" strokeWidth="1.2" />
+            <line x1="4" y1="4" x2="1" y2="4" stroke="#040805" strokeWidth="1.2" />
+            <rect x="0" y="4" width="2" height="3" fill="#040805" />
+            <circle cx="1" cy="5.5" r="1" fill="#F5A623" opacity="0.8" />
+          </svg>
+
+          {/* Right foreground: Resting log */}
+          <svg className="absolute right-[112px] bottom-[4px] w-[26px] h-[8px]" viewBox="0 0 26 8">
+            <rect x="0" y="1" width="23" height="6" rx="1" fill="#050B07" />
+            <ellipse cx="23" cy="4" rx="2" ry="3" fill="#050B07" />
+            <path d="M0,4 C5,2 18,2 23,4" stroke="rgba(245,140,30,0.4)" strokeWidth="0.8" fill="none" />
+            <ellipse cx="0" cy="4" rx="1" ry="2" stroke="rgba(245,140,30,0.4)" strokeWidth="0.6" fill="none" />
+          </svg>
+        </div>
+
+        {/* Embers */}
+        {[
+          { dx: -16, delay: 0,   size: 1.5, dur: 3.1 },
+          { dx: 10,  delay: 0.8, size: 1.1, dur: 2.7 },
+          { dx: -5,  delay: 1.4, size: 1.3, dur: 3.4 },
+          { dx: 20,  delay: 0.3, size: 1.0, dur: 2.4 },
+          { dx: -24, delay: 1.9, size: 1.2, dur: 3.0 },
+          { dx: 13,  delay: 2.3, size: 1.1, dur: 2.6 },
+          { dx: -2,  delay: 1.0, size: 1.4, dur: 3.7 },
+        ].map((e, i) => (
+          <motion.div
+            key={i}
+            style={{
+              position: "absolute",
+              width: e.size * 2,
+              height: e.size * 2,
+              borderRadius: "50%",
+              background: "#FF9030",
+              boxShadow: `0 0 ${e.size * 3}px ${e.size}px rgba(255,140,30,0.7)`,
+              bottom: 6,
+              left: `calc(50% + ${e.dx}px)`,
+            }}
+            animate={{
+              y: [0, -60 - i * 7],
+              x: [0, e.dx * 0.4],
+              opacity: [0.85, 0.5, 0],
+              scale: [1, 0.3],
+            }}
+            transition={{
+              duration: e.dur,
+              repeat: Infinity,
+              ease: "easeOut",
+              delay: e.delay,
+              repeatDelay: 0.3,
+            }}
+          />
+        ))}
+      </motion.div>
     </motion.div>
   );
 };
@@ -888,28 +1018,36 @@ export default function Hero({ onOpenCodex }: HeroProps) {
     <section
       ref={sectionRef}
       id="hero"
-      className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden select-none"
-      style={{
-        background: "linear-gradient(175deg, #020817 0%, #041530 25%, #071B45 55%, #0A234F 80%, #0B1E3A 100%)",
-      }}
+      className="relative min-h-screen w-full flex flex-col justify-center items-center overflow-hidden select-none bg-black"
     >
-      {/* Sky stars */}
-      <StarField />
+      {/* Sky Background & Stars (0.3s - 2.0s fade in) */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1.7, ease: "easeInOut" }}
+        className="absolute inset-0 z-0 pointer-events-none"
+        style={{
+          background: "linear-gradient(175deg, #020817 0%, #041530 25%, #071B45 55%, #0A234F 80%, #0B1E3A 100%)",
+        }}
+      >
+        {/* Sky stars */}
+        <StarField />
 
-      {/* Moon */}
-      <Moon />
+        {/* Moon */}
+        <Moon />
 
-      {/* Shooting stars */}
-      <ShootingStars />
+        {/* Shooting stars */}
+        <ShootingStars />
 
-      {/* Ambient discovery hints */}
-      <DiscoveryHints />
+        {/* Ambient discovery hints */}
+        <DiscoveryHints />
+      </motion.div>
 
       {/* Central ambient glow — very soft moonlight */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 3, delay: 1 }}
+        transition={{ duration: 0.9, ease: "easeInOut" }}
         className="absolute pointer-events-none z-[1]"
         style={{
           width: 800,

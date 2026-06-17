@@ -19,7 +19,7 @@ export default function Navbar() {
     { id: 'projects', label: 'Projects', href: '#projects' },
     { id: 'skills', label: 'Skills', href: '#skills' },
     { id: 'achievements', label: 'Achievements', href: '#achievements' },
-    { id: 'contact', label: 'Contact', href: '#contact' },
+    { id: 'contact', label: 'Connect', href: '#contact' },
   ];
 
   useEffect(() => {

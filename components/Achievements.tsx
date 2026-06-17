@@ -3,425 +3,690 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 
+// Hanging Forest Vines Leaves Definitions (Desaturated forest green colors, matching About exactly)
+const leftVineLeaves = [
+  { x: 16, y: 50, rotate: -35, scale: 0.8, color: "#3F8F2A" },
+  { x: 18, y: 110, rotate: 145, scale: 0.85, color: "#2E7D20" },
+  { x: 12, y: 170, rotate: -40, scale: 0.75, color: "#5CAF38" },
+  { x: 23, y: 230, rotate: 50, scale: 0.85, color: "#3F8F2A" },
+  { x: 28, y: 290, rotate: 160, scale: 0.8, color: "#2E7D20" },
+  { x: 22, y: 350, rotate: -35, scale: 0.75, color: "#5CAF38" },
+  { x: 19, y: 410, rotate: 130, scale: 0.85, color: "#3F8F2A" },
+  
+  // Leaves on sub-branches
+  { x: 30, y: 145, rotate: 20, scale: 0.7, color: "#3F8F2A" },
+  { x: 34, y: 180, rotate: 160, scale: 0.7, color: "#2E7D20" },
+  { x: 32, y: 290, rotate: 30, scale: 0.7, color: "#5CAF38" },
+  { x: 29, y: 335, rotate: 150, scale: 0.7, color: "#3F8F2A" },
+];
+
+const rightVineLeaves = [
+  { x: 74, y: 50, rotate: 45, scale: 0.8, color: "#3F8F2A" },
+  { x: 72, y: 110, rotate: -135, scale: 0.85, color: "#2E7D20" },
+  { x: 78, y: 170, rotate: 30, scale: 0.75, color: "#5CAF38" },
+  { x: 58, y: 230, rotate: 150, scale: 0.85, color: "#3F8F2A" },
+  { x: 52, y: 290, rotate: -45, scale: 0.8, color: "#2E7D20" },
+  { x: 68, y: 350, rotate: 120, scale: 0.75, color: "#5CAF38" },
+  { x: 62, y: 410, rotate: 45, scale: 0.85, color: "#3F8F2A" },
+
+  // Leaves on sub-branches
+  { x: 60, y: 145, rotate: -20, scale: 0.7, color: "#3F8F2A" },
+  { x: 56, y: 180, rotate: -160, scale: 0.7, color: "#2E7D20" },
+  { x: 58, y: 290, rotate: -30, scale: 0.7, color: "#5CAF38" },
+  { x: 61, y: 335, rotate: -150, scale: 0.7, color: "#3F8F2A" },
+];
+
 /* ══════════════════════════════════════════════
-   LEGENDARY RELICS DATA
-══════════════════════════════════════════════ */
-const relics = [
+   TREASURES & RELICS DATA
+   ══════════════════════════════════════════════ */
+interface Relic {
+  id: number;
+  relicName: string;
+  relicIcon: React.ReactNode;
+  title: string;
+  recoveredFrom: string;
+  discoveryDate: string;
+  classification: string;
+  expeditionRecord: string;
+  impactDetail: string;
+  seal: string;
+}
+
+const relics: Relic[] = [
   {
     id: 1,
-    tier: "LEGENDARY RELIC",
-    tierColor: "#D4AF37",
-    tierGlow: "rgba(212,175,55,0.22)",
-    pedestalColor: "rgba(212,175,55,0.08)",
     relicName: "Champion's Medal",
     relicIcon: (
-      <svg width="40" height="40" viewBox="0 0 56 56" fill="none" stroke="#D4AF37" strokeWidth="1.1" strokeLinecap="round">
+      <svg width="32" height="32" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
         <path d="M16 48 H40 M21 44 H35" />
         <path d="M28 44 V34" />
         <path d="M14 10 H42 V26 C42 36 35 40 28 40 C21 40 14 36 14 26 Z" />
         <path d="M14 14 C6 14 6 24 14 24" />
         <path d="M42 14 C50 14 50 24 42 24" />
-        <path d="M28 18 L30 23 L35 23 L31 26 L33 31 L28 28 L23 31 L25 26 L21 23 L26 23 Z" fill="#D4AF37" opacity="0.5" stroke="none" />
+        <circle cx="28" cy="22" r="4" fill="currentColor" opacity="0.15" />
       </svg>
     ),
     title: "Dev Duel — Rank 36",
-    organization: "IIT Hyderabad · Elan & nVision",
-    date: "Feb 2026",
-    detail: "Secured All-India Rank 36 among hundreds of professional engineering teams in a high-stakes algorithmic sprint at IIT Hyderabad's prestigious technical fest.",
-    seal: "ALL-INDIA RANK 36",
-    featured: true,
-    wallEngraving: "ALGORITHMS · COGNITION · PRECISION",
+    recoveredFrom: "IIT Hyderabad · Elan & nVision grounds",
+    discoveryDate: "Feb 2026",
+    classification: "Algorithmic Speed Relic",
+    expeditionRecord: "Secured All-India Rank 36 among hundreds of professional engineering teams.",
+    impactDetail: "Wielded algorithmic optimization strategies and data architectures during a high-stakes competitive speed coding calculation sprint at IIT Hyderabad.",
+    seal: "AIR 36 VALIDATED",
   },
   {
     id: 2,
-    tier: "GOLDEN COMPASS TROPHY",
-    tierColor: "#E18A42",
-    tierGlow: "rgba(225,138,66,0.22)",
-    pedestalColor: "rgba(225,138,66,0.08)",
     relicName: "Golden Compass Trophy",
     relicIcon: (
-      <svg width="40" height="40" viewBox="0 0 56 56" fill="none" stroke="#E18A42" strokeWidth="1.1" strokeLinecap="round">
+      <svg width="32" height="32" viewBox="0 0 56 56" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
         <circle cx="28" cy="28" r="22" />
         <circle cx="28" cy="28" r="12" />
-        <circle cx="28" cy="28" r="4" fill="#E18A42" opacity="0.5" stroke="none" />
-        <path d="M28 6 L31 20 L28 24 L25 20 Z" fill="#E18A42" opacity="0.8" stroke="none" />
-        <path d="M28 50 L31 36 L28 32 L25 36 Z" fill="#E18A42" opacity="0.35" stroke="none" />
-        <path d="M6 28 L20 31 L24 28 L20 25 Z" fill="#E18A42" opacity="0.35" stroke="none" />
-        <path d="M50 28 L36 31 L32 28 L36 25 Z" fill="#E18A42" opacity="0.7" stroke="none" />
-        <path d="M28 6 V10 M28 46 V50 M6 28 H10 M46 28 H50" strokeWidth="0.6" />
+        <path d="M28 6 L31 20 L28 24 L25 20 Z" fill="currentColor" opacity="0.3" />
+        <path d="M28 50 L31 36 L28 32 L25 36 Z" fill="currentColor" opacity="0.1" />
+        <path d="M6 28 L20 31 L24 28 L20 25 Z" fill="currentColor" opacity="0.1" />
+        <path d="M50 28 L36 31 L32 28 L36 25 Z" fill="currentColor" opacity="0.3" />
       </svg>
     ),
     title: "AI For Bharat — Winner",
-    organization: "National Hackathon · ContentIQ",
-    date: "Mar 2026",
-    detail: "Won the AI For Bharat National Hackathon with ContentIQ — an AI-powered media creation platform leveraging AWS Bedrock and serverless pipelines for intelligent content generation.",
-    seal: "NATIONAL CHAMPION",
-    featured: true,
-    wallEngraving: "INTELLIGENCE · CREATION · IMPACT",
+    recoveredFrom: "National AWS Proving Grounds",
+    discoveryDate: "Mar 2026",
+    classification: "Cognitive Intelligence Catalyst",
+    expeditionRecord: "Awarded First Place nationally for building ContentIQ media engine.",
+    impactDetail: "Engineered serverless pipelines using AWS Bedrock and Lambda triggers to automatically analyze inputs and compile them into media scripts.",
+    seal: "CHAMPIONSHIP GOLD",
   },
   {
     id: 3,
-    tier: "KNOWLEDGE SEAL",
-    tierColor: "#5E9E5E",
-    tierGlow: "rgba(94,158,94,0.22)",
-    pedestalColor: "rgba(94,158,94,0.08)",
-    relicName: "Knowledge Seal",
+    relicName: "Seal of Foundation",
     relicIcon: (
-      <svg width="36" height="36" viewBox="0 0 52 52" fill="none" stroke="#5E9E5E" strokeWidth="1.1" strokeLinecap="round">
+      <svg width="30" height="30" viewBox="0 0 52 52" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
         <path d="M12 46 C8 46 6 44 6 40 L6 12 C6 8 8 6 12 6 L40 6 C44 6 46 8 46 12 V40 C46 44 44 46 40 46 Z" />
-        <path d="M6 12 C6 8 8 6 12 6 L12 46 C8 46 6 44 6 40 Z" fill="#5E9E5E" opacity="0.12" stroke="none" />
         <path d="M18 18 H38 M18 24 H38 M18 30 H30" />
-        <circle cx="37" cy="38" r="6" fill="#5E9E5E" opacity="0.15" />
-        <path d="M37 35 L38 37 L40 37 L38 39 L39 41 L37 40 L35 41 L36 39 L34 37 L36 37 Z" fill="#5E9E5E" opacity="0.8" stroke="none" />
+        <circle cx="37" cy="38" r="5" fill="currentColor" opacity="0.15" />
       </svg>
     ),
     title: "Data Science Foundation",
-    organization: "Infosys Springboard",
-    date: "Feb 2026",
-    detail: "Certified in analytical modeling, regression metrics, statistical transformations, and programmatic data visualization using Pandas, NumPy, and Matplotlib.",
-    seal: "CERTIFIED EXPLORER",
-    featured: false,
-    wallEngraving: "DATA · ANALYSIS · INSIGHT",
+    recoveredFrom: "Infosys Analytical Trials",
+    discoveryDate: "Feb 2026",
+    classification: "Structured Wisdom Seal",
+    expeditionRecord: "Certified in analytical modeling and statistical transformations.",
+    impactDetail: "Decoded multi-dimensional charts, plotted arrays, and established statistical models using NumPy, Pandas, and data visualization tools.",
+    seal: "RESEARCHER CERTIFIED",
   },
   {
     id: 4,
-    tier: "EXPLORER EMBLEM",
-    tierColor: "#8B7355",
-    tierGlow: "rgba(139,115,85,0.22)",
-    pedestalColor: "rgba(139,115,85,0.08)",
-    relicName: "Explorer Emblem",
+    relicName: "Synchronizer Core",
     relicIcon: (
-      <svg width="36" height="36" viewBox="0 0 52 52" fill="none" stroke="#8B7355" strokeWidth="1.1" strokeLinecap="round">
+      <svg width="30" height="30" viewBox="0 0 52 52" fill="none" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round">
         <circle cx="26" cy="26" r="22" />
         <path d="M26 6 V12 M26 40 V46 M6 26 H12 M40 26 H46" strokeWidth="0.8" />
         <circle cx="26" cy="26" r="6" />
-        <path d="M26 6 L30 22 L26 26 L22 22 Z" fill="#8B7355" opacity="0.6" stroke="none" />
-        <path d="M26 46 L30 30 L26 26 L22 30 Z" fill="#8B7355" opacity="0.25" stroke="none" />
-        <path d="M6 26 L22 30 L26 26 L22 22 Z" fill="#8B7355" opacity="0.25" stroke="none" />
-        <path d="M46 26 L30 30 L26 26 L30 22 Z" fill="#8B7355" opacity="0.5" stroke="none" />
+        <path d="M26 6 L30 22 L26 26 L22 22 Z" fill="currentColor" opacity="0.3" />
       </svg>
     ),
     title: "Adobe India Hackathon",
-    organization: "Team Binary Brains",
-    date: "Jan 2026",
-    detail: "Built a real-time shared vector whiteboard synchronizer ensuring minimal lag across distributed clients — showcased at Adobe India's competitive design hackathon.",
-    seal: "EXPEDITION PARTICIPANT",
-    featured: false,
-    wallEngraving: "DESIGN · SYNC · CREATIVITY",
+    recoveredFrom: "Adobe Collaborative Design Vault",
+    discoveryDate: "Jan 2026",
+    classification: "Real-Time Sync Engine",
+    expeditionRecord: "Constructed a multi-client shared vector sync whiteboard.",
+    impactDetail: "Designed dynamic synchronization protocols allowing team explorers to map ideas concurrently on a canvas with minimal data latency.",
+    seal: "EXPEDITION ENTRY",
   },
 ];
 
-/* ══════════════════════════════════════════════
-   HALL AMBIENT DECORATIONS
-══════════════════════════════════════════════ */
-const HallDecorations = () => (
+const IronCorner = ({ position }: { position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' }) => {
+  const rotation = {
+    'top-left': 'rotate-0 top-2.5 left-2.5',
+    'top-right': 'rotate-90 top-2.5 right-2.5',
+    'bottom-left': 'rotate-270 bottom-2.5 left-2.5',
+    'bottom-right': 'rotate-180 bottom-2.5 right-2.5',
+  }[position];
+
+  return (
+    <div className={`absolute w-8 h-8 pointer-events-none select-none text-[#5A4232]/50 ${rotation}`}>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" fill="currentColor" opacity="0.2" />
+        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" stroke="currentColor" strokeWidth="1.2" />
+        <circle cx="5" cy="5" r="2.5" fill="#2E1F15" stroke="#5A4232" strokeWidth="0.75" />
+        <circle cx="20" cy="5" r="2" fill="#2E1F15" stroke="#5A4232" strokeWidth="0.75" />
+        <circle cx="5" cy="20" r="2" fill="#2E1F15" stroke="#5A4232" strokeWidth="0.75" />
+      </svg>
+    </div>
+  );
+};
+
+const RelicSpotlights = () => (
   <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
-    {/* Hall wall pillars — vertical architectural lines */}
-    <svg className="absolute left-0 top-0 h-full w-16 opacity-[0.04]" viewBox="0 0 64 800" preserveAspectRatio="none" fill="none" stroke="#FFAA50" strokeWidth="0.5">
-      <line x1="8" y1="0" x2="8" y2="800" /><line x1="20" y1="0" x2="20" y2="800" /><line x1="32" y1="0" x2="32" y2="800" />
-    </svg>
-    <svg className="absolute right-0 top-0 h-full w-16 opacity-[0.04]" viewBox="0 0 64 800" preserveAspectRatio="none" fill="none" stroke="#FFAA50" strokeWidth="0.5">
-      <line x1="32" y1="0" x2="32" y2="800" /><line x1="44" y1="0" x2="44" y2="800" /><line x1="56" y1="0" x2="56" y2="800" />
-    </svg>
+    {/* Left Column Spotlight */}
+    <div 
+      className="absolute top-0 left-[18%] w-[150px] h-[550px] opacity-[0.06]"
+      style={{
+        background: "linear-gradient(175deg, rgba(255, 170, 80, 0.45) 0%, transparent 80%)",
+        clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+        filter: "blur(25px)"
+      }}
+    />
+    {/* Center Spotlight */}
+    <div 
+      className="absolute top-0 left-1/2 -translate-x-1/2 w-[280px] h-[650px] opacity-[0.08]"
+      style={{
+        background: "linear-gradient(180deg, rgba(255, 170, 80, 0.5) 0%, transparent 85%)",
+        clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+        filter: "blur(35px)"
+      }}
+    />
+    {/* Right Column Spotlight */}
+    <div 
+      className="absolute top-0 right-[18%] w-[150px] h-[550px] opacity-[0.06]"
+      style={{
+        background: "linear-gradient(185deg, rgba(255, 170, 80, 0.45) 0%, transparent 80%)",
+        clipPath: "polygon(50% 0%, 0% 100%, 100% 100%)",
+        filter: "blur(25px)"
+      }}
+    />
+  </div>
+);
 
-    {/* Expedition banners — hanging from top */}
-    {[{ x: "10%" }, { x: "25%" }, { x: "75%" }, { x: "90%" }].map((pos, i) => (
-      <svg key={i} className="absolute top-0 w-3 h-16 opacity-[0.06]" style={{ left: pos.x }} viewBox="0 0 12 64" fill="none" stroke="#FFAA50" strokeWidth="0.8">
-        <line x1="6" y1="0" x2="6" y2="64" />
-        <path d="M6 8 L12 16 L6 24 L0 16 Z" fill="#FFAA50" opacity="0.5" />
+const dustParticles = [
+  { x: 15, y: 20, size: 2, duration: 16, delay: -1 },
+  { x: 30, y: 50, size: 3, duration: 22, delay: -4 },
+  { x: 45, y: 15, size: 1.5, duration: 18, delay: -8 },
+  { x: 55, y: 65, size: 2.5, duration: 25, delay: -2 },
+  { x: 70, y: 35, size: 3.5, duration: 20, delay: -12 },
+  { x: 85, y: 55, size: 2, duration: 24, delay: -6 },
+  { x: 25, y: 80, size: 1.5, duration: 19, delay: -5 },
+  { x: 65, y: 85, size: 2, duration: 21, delay: -9 }
+];
+
+/* Cinematic Torch & Glow - matches About section exactly */
+const TorchGlow = ({ className }: { className?: string }) => (
+  <div className={`absolute pointer-events-none select-none z-10 hidden md:block ${className}`}>
+    <div 
+      className="w-[1px] h-[1px] rounded-full"
+      style={{
+        boxShadow: `
+          0 0 120px 55px rgba(255,140,66,0.32),
+          0 0 200px 95px rgba(255,110,40,0.15)
+        `
+      }}
+    />
+  </div>
+);
+
+const Torch = ({ className }: { className?: string }) => (
+  <div className={`absolute pointer-events-none select-none z-30 hidden md:block ${className}`}>
+    <div className="relative w-[30px] h-[80px]">
+      <svg width="30" height="80" viewBox="0 0 30 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+        {/* Flame (Animated teardrop shape) */}
+        <motion.g
+          animate={{ 
+            scaleY: [1, 1.03, 0.98, 1.02, 1], 
+            scaleX: [1, 0.98, 1.02, 0.99, 1],
+            opacity: [0.95, 1, 0.97, 1, 0.95],
+            rotate: [0, 0.5, -0.5, 0.2, 0],
+            y: [0, -0.5, 0.2, 0]
+          }}
+          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
+          style={{ originX: "15px", originY: "30px" }}
+        >
+          {/* Outer Flame (#FF8C42) */}
+          <path d="M 15,5 C 9,15 8,25 15,32 C 22,25 21,15 15,5 Z" fill="#FF8C42" />
+          {/* Middle Flame (#FFB347) */}
+          <path d="M 15,12 C 11,18 10,25 15,32 C 20,25 19,18 15,12 Z" fill="#FFB347" />
+          {/* Inner Flame Core (#FFD166) */}
+          <path d="M 15,18 C 12,22 12,27 15,32 C 18,27 18,22 15,18 Z" fill="#FFD166" />
+        </motion.g>
+
+        {/* Metal Cup / Torch Head */}
+        <path d="M 10,32 H 20 L 18,36 H 12 Z" fill="#3D3025" stroke="#251C15" strokeWidth="0.75" />
+
+        {/* Straight Wooden Handle */}
+        <path d="M 15,36 V 70" stroke="#4A382A" strokeWidth="3.5" strokeLinecap="round" />
+
+        {/* Wall Mount Metal Bracket Holder */}
+        <path d="M 8,50 H 22 M 8,47 V 53 M 22,47 V 53" stroke="#3D3025" strokeWidth="1.5" />
+        <path d="M 12,50 H 18" stroke="#251C15" strokeWidth="2.5" />
       </svg>
-    ))}
 
-    {/* Golden coin scatter */}
-    {[
-      { x: "4%", y: "20%" }, { x: "94%", y: "35%" }, { x: "8%", y: "65%" },
-      { x: "92%", y: "72%" }, { x: "50%", y: "5%" }, { x: "3%", y: "48%" },
-    ].map((pos, i) => (
-      <svg key={i} className="absolute w-3 h-3" style={{ left: pos.x, top: pos.y, opacity: 0.1 }}>
-        <circle cx="6" cy="6" r="5" fill="#C6930A" />
-        <circle cx="6" cy="6" r="3" fill="none" stroke="#FFD700" strokeWidth="0.5" />
-      </svg>
-    ))}
-
-    {/* Ancient wall engraving ornaments */}
-    <svg className="absolute top-[8%] left-[7%] w-10 h-10 opacity-[0.06]" viewBox="0 0 40 40" fill="none" stroke="#FFAA50" strokeWidth="0.8">
-      <circle cx="20" cy="20" r="16" /><path d="M20 4 V36 M4 20 H36" strokeDasharray="2,4" opacity="0.5" />
-      <circle cx="20" cy="20" r="4" />
-    </svg>
-    <svg className="absolute top-[8%] right-[7%] w-10 h-10 opacity-[0.06]" viewBox="0 0 40 40" fill="none" stroke="#FFAA50" strokeWidth="0.8">
-      <circle cx="20" cy="20" r="16" /><path d="M20 4 V36 M4 20 H36" strokeDasharray="2,4" opacity="0.5" />
-      <circle cx="20" cy="20" r="4" />
-    </svg>
-
-    {/* Ambient amber glow */}
-    <div className="absolute top-[15%] left-[8%] w-72 h-72 rounded-full"
-      style={{ background: "radial-gradient(circle, rgba(212,175,55,0.055) 0%, transparent 70%)", filter: "blur(50px)" }} />
-    <div className="absolute bottom-[15%] right-[8%] w-72 h-72 rounded-full"
-      style={{ background: "radial-gradient(circle, rgba(225,138,66,0.05) 0%, transparent 70%)", filter: "blur(50px)" }} />
-
-    {/* Twinkling stars */}
-    {[
-      { x: "7%", y: "10%" }, { x: "91%", y: "15%" }, { x: "14%", y: "82%" },
-      { x: "88%", y: "78%" }, { x: "50%", y: "4%" }, { x: "28%", y: "94%" },
-      { x: "72%", y: "90%" },
-    ].map((pos, i) => (
-      <motion.div
-        key={i}
-        className="absolute w-1 h-1 rounded-full bg-[#FFAA50]"
-        style={{ left: pos.x, top: pos.y, opacity: 0.12 }}
-        animate={{ opacity: [0.06, 0.2, 0.06] }}
-        transition={{ duration: 3.5 + i * 0.4, repeat: Infinity, ease: "easeInOut", delay: i * 0.5 }}
-      />
-    ))}
-
-    {/* Vignette */}
-    <div className="absolute inset-0"
-      style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(10,7,5,0.65) 100%)" }} />
+      {/* Floating embers rising from flame */}
+      {Array.from({ length: 3 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute w-1 h-1 rounded-full bg-[#FFAA50]"
+          style={{ left: "14px", bottom: "45px", opacity: 0 }}
+          animate={{
+            y: [-10, -50],
+            x: [0, (i - 1) * 6, (i - 1) * 3],
+            opacity: [0, 0.8, 0],
+            scale: [0.8, 1.2, 0.4]
+          }}
+          transition={{
+            duration: 2.2,
+            repeat: Infinity,
+            delay: i * 0.7,
+            ease: "easeOut"
+          }}
+        />
+      ))}
+    </div>
   </div>
 );
 
 /* ══════════════════════════════════════════════
-   FEATURED LEGEND PEDESTAL (Large)
-══════════════════════════════════════════════ */
-const FeaturedPedestal = ({ relic, delay }: { relic: typeof relics[0]; delay: number }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 50 }}
-    whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-60px" }}
-    transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1], delay }}
-    className="relative rounded-[22px] overflow-hidden group"
-    style={{
-      background: "rgba(28,20,14,0.92)",
-      border: `1px solid ${relic.tierColor}28`,
-      boxShadow: `0 24px 70px rgba(0,0,0,0.35), 0 0 50px ${relic.tierColor}08`,
-    }}
-  >
-    {/* Hover glow */}
-    <div
-      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none rounded-[22px]"
-      style={{ background: `radial-gradient(ellipse at top left, ${relic.tierGlow}, transparent 60%)` }}
-    />
-    {/* Top accent */}
-    <div className="absolute top-0 left-0 right-0 h-px"
-      style={{ background: `linear-gradient(to right, transparent, ${relic.tierColor}65, transparent)` }} />
-    {/* Wall engraving strip */}
-    <div className="absolute top-0 left-0 right-0 h-7 flex items-center justify-center"
-      style={{ background: `${relic.tierColor}08`, borderBottom: `1px solid ${relic.tierColor}15` }}>
-      <span className="font-mono text-[7px] tracking-[0.4em] uppercase" style={{ color: `${relic.tierColor}50` }}>
-        {relic.wallEngraving}
-      </span>
-    </div>
-    {/* Corner flourish */}
-    <svg className="absolute top-7 right-3 w-8 h-8 opacity-15" viewBox="0 0 30 30" fill="none" stroke={relic.tierColor} strokeWidth="0.8">
-      <path d="M2 2 Q2 28 28 28" /><path d="M8 2 Q8 22 28 22" />
+   VAULT ROOM VISUAL DECORATIONS
+   ══════════════════════════════════════════════ */
+const VaultDecorations = () => (
+  <div className="absolute inset-0 pointer-events-none select-none overflow-hidden z-0">
+    {/* Large ancient circular engravings in background (Mayan/Aztec/astronomical relief rings) */}
+    <svg className="absolute left-[5%] top-[10%] w-[45%] h-[50%] opacity-[0.05]" viewBox="0 0 400 400" fill="none" stroke="#FFAA50" strokeWidth="0.8">
+      <circle cx="200" cy="200" r="180" />
+      <circle cx="200" cy="200" r="170" strokeDasharray="3 5" />
+      <circle cx="200" cy="200" r="140" />
+      <circle cx="200" cy="200" r="100" />
+      <circle cx="200" cy="200" r="90" strokeDasharray="10 6" />
+      <circle cx="200" cy="200" r="60" />
+      {[...Array(16)].map((_, i) => {
+        const angle = (i * 360) / 16;
+        return (
+          <line key={i} x1="200" y1="20" x2="200" y2="40" transform={`rotate(${angle} 200 200)`} stroke="#FFAA50" />
+        );
+      })}
     </svg>
 
-    <div className="relative z-10 p-8 pt-10">
-      {/* Tier badge */}
-      <div className="flex items-center justify-between mb-6">
-        <span
-          className="font-mono text-[8.5px] tracking-[0.25em] uppercase px-3 py-1.5 rounded-lg font-bold"
-          style={{ color: relic.tierColor, background: `${relic.tierColor}16`, border: `1px solid ${relic.tierColor}38` }}
-        >
-          ✦ {relic.tier}
-        </span>
-        <span className="font-mono text-[8.5px] text-[#C9B7A4]/35 uppercase tracking-widest">{relic.date}</span>
-      </div>
+    <svg className="absolute right-[5%] bottom-[10%] w-[45%] h-[50%] opacity-[0.05]" viewBox="0 0 400 400" fill="none" stroke="#FFAA50" strokeWidth="0.8">
+      <circle cx="200" cy="200" r="180" />
+      <circle cx="200" cy="200" r="170" strokeDasharray="3 5" />
+      <circle cx="200" cy="200" r="140" />
+      <circle cx="200" cy="200" r="100" />
+      <circle cx="200" cy="200" r="90" strokeDasharray="10 6" />
+      <circle cx="200" cy="200" r="60" />
+      {[...Array(16)].map((_, i) => {
+        const angle = (i * 360) / 16;
+        return (
+          <line key={i} x1="200" y1="20" x2="200" y2="40" transform={`rotate(${angle} 200 200)`} stroke="#FFAA50" />
+        );
+      })}
+    </svg>
 
-      <div className="flex items-start gap-6">
-        {/* Pedestal + Relic icon */}
-        <div className="flex flex-col items-center gap-2 flex-shrink-0">
-          <div
-            className="w-18 h-18 w-[72px] h-[72px] rounded-2xl flex items-center justify-center transition-all duration-300 group-hover:scale-105"
-            style={{
-              background: relic.pedestalColor,
-              border: `1.5px solid ${relic.tierColor}38`,
-              boxShadow: `0 0 24px 6px ${relic.tierGlow}`,
-            }}
-          >
-            {relic.relicIcon}
-          </div>
-          {/* Pedestal base */}
-          <div className="text-center">
-            <span className="font-serif text-[9px] italic block" style={{ color: relic.tierColor, opacity: 0.7 }}>
-              {relic.relicName}
-            </span>
-          </div>
-        </div>
+    {/* Large Monumental Vault Chamber Archways and Brickwork (organic, deep feeling) */}
+    <svg className="absolute inset-0 w-full h-full opacity-[0.07]" viewBox="0 0 1200 900" fill="none" stroke="#5A4232" strokeWidth="1">
+      {/* Massive stone vault ribs/arches */}
+      <path d="M 0 900 V 450 Q 0 100 600 100 Q 1200 100 1200 450 V 900" strokeWidth="3" />
+      <path d="M 60 900 V 480 Q 60 160 600 160 Q 1140 160 1140 480 V 900" strokeWidth="1.5" strokeDasharray="4 6" />
+      <path d="M 120 900 V 510 Q 120 220 600 220 Q 1080 220 1080 510 V 900" />
 
-        <div className="flex-1 min-w-0">
-          <h3 className="font-display text-xl md:text-[1.4rem] font-extrabold text-[#F5F1EB] tracking-tight leading-tight mb-1">
-            {relic.title}
-          </h3>
-          <p className="font-mono text-[10.5px] mb-4 uppercase tracking-wider" style={{ color: relic.tierColor }}>
-            {relic.organization}
-          </p>
-          <p className="font-sans text-[12.5px] text-[#C9B7A4]/75 leading-relaxed font-light">{relic.detail}</p>
-        </div>
-      </div>
+      {/* Vault ceiling lines connecting to center */}
+      <line x1="600" y1="100" x2="600" y2="220" strokeWidth="2" />
+      <line x1="0" y1="450" x2="120" y2="510" />
+      <line x1="1200" y1="450" x2="1080" y2="510" />
+      
+      {/* Stone block joints */}
+      <line x1="300" y1="175" x2="260" y2="230" />
+      <line x1="900" y1="175" x2="940" y2="230" />
+      <line x1="450" y1="125" x2="425" y2="200" />
+      <line x1="750" y1="125" x2="775" y2="200" />
 
-      {/* Footer seal */}
-      <div className="mt-6 pt-5 border-t border-[rgba(255,170,80,0.07)] flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <div className="w-1.5 h-1.5 rounded-full" style={{ background: relic.tierColor }} />
-          <span className="font-mono text-[8.5px] uppercase tracking-[0.2em] text-[#C9B7A4]/35">RELIC CLAIMED</span>
-        </div>
-        <span
-          className="font-mono text-[8.5px] px-2.5 py-1 rounded-full"
-          style={{ color: relic.tierColor, border: `1px solid ${relic.tierColor}28`, background: `${relic.tierColor}0C` }}
-        >
-          {relic.seal}
-        </span>
-      </div>
-    </div>
-  </motion.div>
+      {/* Pillars details */}
+      <line x1="60" y1="480" x2="120" y2="510" />
+      <line x1="1140" y1="480" x2="1080" y2="510" />
+    </svg>
+
+    {/* Rolling Cinematic Fog / Smoke Layers using Framer Motion */}
+    <motion.div 
+      className="absolute top-[15%] left-[-10%] w-[60%] h-[55%] pointer-events-none mix-blend-screen opacity-30"
+      style={{
+        background: "radial-gradient(circle, rgba(225,138,66,0.08) 0%, rgba(139,90,43,0.02) 50%, transparent 100%)",
+        filter: "blur(60px)",
+      }}
+      animate={{
+        x: [-20, 20, -20],
+        y: [-10, 10, -10],
+      }}
+      transition={{
+        duration: 25,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    />
+    <motion.div 
+      className="absolute bottom-[5%] right-[-10%] w-[65%] h-[60%] pointer-events-none mix-blend-screen opacity-25"
+      style={{
+        background: "radial-gradient(circle, rgba(225,138,66,0.07) 0%, rgba(139,90,43,0.01) 60%, transparent 100%)",
+        filter: "blur(70px)",
+      }}
+      animate={{
+        x: [20, -20, 20],
+        y: [10, -10, 10],
+      }}
+      transition={{
+        duration: 30,
+        repeat: Infinity,
+        ease: "easeInOut"
+      }}
+    />
+
+    {/* Amber room lights glow */}
+    <div className="absolute top-[20%] left-[10%] w-[450px] h-[450px] rounded-full"
+      style={{ background: "radial-gradient(circle, rgba(255,140,66,0.06) 0%, transparent 70%)", filter: "blur(60px)" }} />
+    <div className="absolute bottom-[20%] right-[10%] w-[450px] h-[450px] rounded-full"
+      style={{ background: "radial-gradient(circle, rgba(255,140,66,0.06) 0%, transparent 70%)", filter: "blur(60px)" }} />
+  </div>
 );
 
 /* ══════════════════════════════════════════════
-   STANDARD LEGEND PEDESTAL
-══════════════════════════════════════════════ */
-const StandardPedestal = ({ relic, delay }: { relic: typeof relics[0]; delay: number }) => (
+   EXHIBIT SHOWCASE CARD
+   ══════════════════════════════════════════════ */
+const ExhibitCase = ({ relic, delay }: { relic: Relic; delay: number }) => (
   <motion.div
-    initial={{ opacity: 0, y: 40 }}
+    initial={{ opacity: 0, y: 35 }}
     whileInView={{ opacity: 1, y: 0 }}
-    viewport={{ once: true, margin: "-60px" }}
-    transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1], delay }}
-    className="relative rounded-[20px] overflow-hidden group"
+    viewport={{ once: true, margin: "-40px" }}
+    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1], delay }}
+    className="relative rounded-xl overflow-hidden group flex flex-col justify-between"
     style={{
-      background: "rgba(26,18,12,0.90)",
-      border: `1px solid ${relic.tierColor}22`,
-      boxShadow: "0 14px 50px rgba(0,0,0,0.28)",
+      background: "rgba(28, 22, 20, 0.9)",
+      border: "1px solid rgba(255, 170, 80, 0.12)",
+      boxShadow: "0 10px 40px rgba(0,0,0,0.3), inset 0 0 12px rgba(255,170,80,0.02)",
+    }}
+    whileHover={{
+      y: -2,
+      borderColor: "rgba(255, 170, 80, 0.3)",
+      boxShadow: "0 14px 48px rgba(0,0,0,0.45)",
     }}
   >
-    {/* Hover glow */}
-    <div
-      className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none rounded-[20px]"
-      style={{ background: `radial-gradient(ellipse at top, ${relic.tierGlow}, transparent 65%)` }}
-    />
-    {/* Wall engraving strip */}
-    <div className="absolute top-0 left-0 right-0 h-6 flex items-center justify-center"
-      style={{ background: `${relic.tierColor}06`, borderBottom: `1px solid ${relic.tierColor}12` }}>
-      <span className="font-mono text-[6.5px] tracking-[0.35em] uppercase" style={{ color: `${relic.tierColor}45` }}>
-        {relic.wallEngraving}
+    {/* Relic Class header strip */}
+    <div className="px-6 py-2.5 bg-[rgba(255,255,255,0.02)] border-b border-[rgba(255,170,80,0.08)] flex items-center justify-between">
+      <span className="font-mono text-[7px] tracking-[0.2em] text-[#C9B7A4]/70 uppercase">
+        {relic.classification}
+      </span>
+      <span className="font-mono text-[7px] text-[#FFAA50] uppercase tracking-wider">
+        DISCOVERY: {relic.discoveryDate}
       </span>
     </div>
-    {/* Top line */}
-    <div className="absolute top-0 left-0 right-0 h-px"
-      style={{ background: `linear-gradient(to right, transparent, ${relic.tierColor}50, transparent)` }} />
 
-    <div className="relative z-10 p-6 pt-9">
-      <div className="flex items-start justify-between mb-5">
-        <div
-          className="w-[52px] h-[52px] rounded-xl flex items-center justify-center flex-shrink-0 transition-all duration-300 group-hover:scale-105"
-          style={{ background: relic.pedestalColor, border: `1.5px solid ${relic.tierColor}30`, boxShadow: `0 0 14px 3px ${relic.tierGlow}` }}
-        >
-          <div className="scale-[0.8]">{relic.relicIcon}</div>
+    <div className="p-6 pt-6 flex-1 flex flex-col">
+      <div className="flex items-start gap-4 flex-1">
+        {/* Museum display pedestal */}
+        <div className="flex flex-col items-center gap-1.5 flex-shrink-0">
+          <div
+            className="w-[50px] h-[50px] rounded-lg flex items-center justify-center border border-[rgba(255,170,80,0.12)] bg-[rgba(255,170,80,0.02)] text-[#FFAA50] transition-all duration-300 group-hover:scale-105"
+          >
+            {relic.relicIcon}
+          </div>
+          <span className="font-serif text-[7.5px] italic text-[#C9B7A4]/70 text-center block max-w-[54px] truncate">
+            {relic.relicName}
+          </span>
         </div>
-        <span
-          className="font-mono text-[7.5px] tracking-[0.2em] uppercase px-2.5 py-1 rounded-lg ml-3"
-          style={{ color: relic.tierColor, background: `${relic.tierColor}12`, border: `1px solid ${relic.tierColor}28` }}
-        >
-          {relic.tier}
-        </span>
-      </div>
 
-      <h3 className="font-display text-[1rem] font-extrabold text-[#F5F1EB] tracking-tight mb-0.5">{relic.title}</h3>
-      <p className="font-mono text-[9.5px] uppercase tracking-wider mb-3" style={{ color: relic.tierColor }}>{relic.organization}</p>
-      <p className="font-sans text-[11.5px] text-[#C9B7A4]/68 leading-relaxed font-light">{relic.detail}</p>
+        {/* Labels & Notebook Entry */}
+        <div className="flex-1 min-w-0">
+          <h3 className="font-display text-base md:text-[17px] font-extrabold text-[#F5F1EB] tracking-tight leading-snug mb-0.5">
+            {relic.title}
+          </h3>
+          <span className="font-mono text-[7.5px] text-[#C9B7A4]/60 uppercase tracking-widest block mb-2.5">
+            RECOVERED FROM: <span className="text-[#FFAA50] font-bold">{relic.recoveredFrom}</span>
+          </span>
 
-      <div className="mt-5 pt-4 border-t border-[rgba(255,170,80,0.06)] flex items-center justify-between">
-        <span className="font-mono text-[8px] text-[#C9B7A4]/30 uppercase tracking-widest">{relic.date}</span>
-        <span className="font-mono text-[8px]" style={{ color: `${relic.tierColor}65` }}>✦ {relic.seal}</span>
+          <div className="space-y-2.5 font-sans text-[12px] text-[#C9B7A4]">
+            <div>
+              <span className="font-mono text-[7px] text-[#C9B7A4]/50 uppercase tracking-wider block mb-0.5">
+                Expedition Record
+              </span>
+              <p className="font-semibold leading-relaxed text-[#F5F1EB]">
+                {relic.expeditionRecord}
+              </p>
+            </div>
+            <div>
+              <span className="font-mono text-[7px] text-[#C9B7A4]/50 uppercase tracking-wider block mb-0.5">
+                Treasure Impact
+              </span>
+              <p className="leading-relaxed font-light">
+                {relic.impactDetail}
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
+    </div>
+
+    {/* Exhibit catalog footer */}
+    <div className="px-6 py-3 bg-[rgba(255,255,255,0.02)] border-t border-[rgba(255,170,80,0.08)] flex items-center justify-between">
+      <div className="flex items-center gap-1.5">
+        <div className="w-1.5 h-1.5 rounded-full bg-[#FFAA50]" />
+        <span className="font-mono text-[7px] text-[#C9B7A4]/50 uppercase tracking-widest">EXPEDITION SEAL SECURED</span>
+      </div>
+      <span className="font-mono text-[7px] px-2 py-0.5 rounded-[2px] border border-[rgba(255,170,80,0.15)] text-[#FFAA50] bg-[rgba(255,170,80,0.04)] font-bold">
+        {relic.seal}
+      </span>
     </div>
   </motion.div>
 );
 
 /* ══════════════════════════════════════════════
    MAIN ACHIEVEMENTS SECTION
-══════════════════════════════════════════════ */
+   ══════════════════════════════════════════════ */
 export default function Achievements() {
   return (
     <section
       id="achievements"
       className="relative overflow-hidden py-28"
       style={{
-        background: "linear-gradient(to bottom, #2A1C12 0%, #1F140D 45%, #17110D 100%)",
+        background: "linear-gradient(to bottom, #1D140E 0%, #150D08 50%, #0C0704 100%)",
       }}
     >
-      {/* Grain */}
+      {/* Paper grain overlay */}
       <div
-        className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay z-0"
+        className="absolute inset-0 opacity-[0.025] pointer-events-none mix-blend-overlay z-0"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`,
         }}
       />
 
-      {/* Hall decorations */}
-      <HallDecorations />
+      <RelicSpotlights />
+      <VaultDecorations />
+
+      {/* Left Hanging Forest Vine (matching About section exactly) */}
+      <motion.svg 
+        className="absolute left-[30px] top-0 w-[120px] h-[450px] pointer-events-none select-none hidden md:block z-20 opacity-85" 
+        viewBox="0 0 120 450" 
+        preserveAspectRatio="none"
+        animate={{ rotate: [-0.6, 0.6, -0.6] }}
+        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "top center", filter: "blur(0.3px)" }}
+      >
+        {/* Main Vine Stem */}
+        <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
+        <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#2E7D20" strokeWidth="0.75" fill="none" strokeLinecap="round" />
+
+        {/* Sub-branch 1 */}
+        <path d="M 17,120 C 35,140 40,180 23,210" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 17,120 C 35,140 40,180 23,210" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+
+        {/* Sub-branch 2 */}
+        <path d="M 22,260 C 38,280 36,320 20,350" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 22,260 C 38,280 36,320 20,350" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+
+        {leftVineLeaves.map((leaf, idx) => (
+          <g key={idx} transform={`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotate}) scale(${leaf.scale})`}>
+            <path 
+              d="M0 0 C 8 -12, 22 -8, 25 0 C 22 8, 8 12, 0 0 Z" 
+              fill={leaf.color} 
+              stroke="#123016" 
+              strokeWidth="0.75" 
+              style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))" }}
+            />
+            <path d="M0 0 Q 12.5 -2 22 0" fill="none" stroke="#5CAF38" strokeWidth="0.5" />
+          </g>
+        ))}
+      </motion.svg>
+
+      {/* Right Hanging Forest Vine (matching About section exactly) */}
+      <motion.svg 
+        className="absolute right-[35px] top-0 w-[120px] h-[450px] pointer-events-none select-none hidden md:block z-20 opacity-85" 
+        viewBox="0 0 120 450" 
+        preserveAspectRatio="none"
+        animate={{ rotate: [0.6, -0.6, 0.6] }}
+        transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
+        style={{ transformOrigin: "top center", filter: "blur(0.3px)" }}
+      >
+        {/* Main Vine Stem */}
+        <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
+        <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#2E7D20" strokeWidth="0.75" fill="none" strokeLinecap="round" />
+
+        {/* Sub-branch 1 */}
+        <path d="M 73,120 C 55,140 50,180 67,210" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 73,120 C 55,140 50,180 67,210" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+
+        {/* Sub-branch 2 */}
+        <path d="M 68,260 C 52,280 54,320 70,350" stroke="#1C5A13" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+        <path d="M 68,260 C 52,280 54,320 70,350" stroke="#2E7D20" strokeWidth="0.5" fill="none" strokeLinecap="round" />
+
+        {rightVineLeaves.map((leaf, idx) => (
+          <g key={idx} transform={`translate(${leaf.x}, ${leaf.y}) rotate(${leaf.rotate}) scale(${leaf.scale})`}>
+            <path 
+              d="M0 0 C 8 -12, 22 -8, 25 0 C 22 8, 8 12, 0 0 Z" 
+              fill={leaf.color} 
+              stroke="#123016" 
+              strokeWidth="0.75" 
+              style={{ filter: "drop-shadow(0 2px 4px rgba(0,0,0,0.4))" }}
+            />
+            <path d="M0 0 Q 12.5 -2 22 0" fill="none" stroke="#5CAF38" strokeWidth="0.5" />
+          </g>
+        ))}
+      </motion.svg>
+
+      {/* Floating Amber/Gold Dust Particles */}
+      {dustParticles.map((p, idx) => (
+        <motion.div
+          key={idx}
+          className="absolute bg-[#FFAA50]/40 rounded-full pointer-events-none z-0"
+          style={{
+            left: `${p.x}%`,
+            top: `${p.y}%`,
+            width: p.size,
+            height: p.size,
+            opacity: 0.12,
+          }}
+          animate={{
+            y: [0, -60, 0],
+            x: [0, 8, 0],
+            opacity: [0.03, 0.18, 0.03],
+          }}
+          transition={{
+            duration: p.duration,
+            repeat: Infinity,
+            delay: p.delay,
+            ease: "easeInOut",
+          }}
+        />
+      ))}
 
       <div className="max-w-[1100px] mx-auto px-6 md:px-10 relative z-10">
 
+        {/* Story Transition Entry from Skills */}
+        <div className="flex flex-col items-center justify-center mb-16 select-none">
+          <div className="flex items-center gap-3 mb-2">
+            <div className="h-0.5 w-8 bg-gradient-to-r from-transparent to-[#C9B7A4]/30" />
+            <span className="font-serif text-[10px] italic text-[#C9B7A4]/80 tracking-widest uppercase">
+              The expedition reaches the treasure vault.
+            </span>
+            <div className="h-0.5 w-8 bg-gradient-to-l from-transparent to-[#C9B7A4]/30" />
+          </div>
+          <span className="font-mono text-[9px] uppercase tracking-[0.3em] text-[#C9B7A4]/40">
+            [ Recovered Artifacts Room ]
+          </span>
+        </div>
+
         {/* Section Header */}
         <motion.div
-          initial={{ opacity: 0, y: 30 }}
+          initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
           className="text-center mb-16 select-none"
         >
-          <span className="font-mono text-[10px] tracking-[8px] uppercase block mb-3" style={{ color: "rgba(255,170,80,0.6)" }}>
-            04 / HALL OF LEGENDS
+          <span className="font-mono text-[10px] tracking-[6px] uppercase block mb-3 text-[#C9B7A4]/60">
+            04 / HISTORICAL ARTIFACTS
           </span>
-          <h2 className="font-display text-2xl sm:text-3xl md:text-[2.6rem] font-extrabold text-[#F5F1EB] tracking-tight leading-tight mb-4">
-            Legendary Relics of the Expedition
+          <h2 className="font-display text-2xl sm:text-3xl md:text-[2.5rem] font-extrabold text-[#FDFAF5] tracking-tight leading-tight mb-4">
+            Treasures Recovered From the Route
           </h2>
-          <p className="font-sans text-[15px] text-[#C9B7A4]/65 max-w-[500px] mx-auto leading-relaxed">
-            Each victory sealed in ancient stone — a permanent mark on the explorer&apos;s chronicle of discovery.
+          <p className="font-sans text-[15px] text-[#C9B7A4]/80 max-w-[530px] mx-auto leading-relaxed">
+            A secured showcase of accolades and relics claimed across hacking sprints and data science trials.
           </p>
-          <div className="flex items-center justify-center gap-4 mt-6">
-            <div className="h-px w-16 bg-gradient-to-r from-transparent to-[rgba(255,170,80,0.28)]" />
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="#FFAA50" opacity="0.5">
-              <path d="M12 2L15 9L22 12L15 15L12 22L9 15L2 12L9 9Z" />
-            </svg>
-            <div className="h-px w-16 bg-gradient-to-l from-transparent to-[rgba(255,170,80,0.28)]" />
-          </div>
         </motion.div>
 
-        {/* Featured Pedestals — 2 col */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-          {relics.filter((r) => r.featured).map((relic, i) => (
-            <FeaturedPedestal key={relic.id} relic={relic} delay={i * 0.12} />
-          ))}
+        {/* GRAND VAULT ALCOVE FRAME */}
+        <div className="relative max-w-[1100px] mx-auto mt-6">
+          <TorchGlow className="left-[-41px] top-[188px]" />
+          <Torch className="left-[-56px] top-[170px]" />
+          <TorchGlow className="right-[-41px] top-[188px]" />
+          <Torch className="right-[-56px] top-[170px]" />
+
+          <div className="absolute inset-0 pointer-events-none rounded-[28px]"
+            style={{
+              boxShadow: "inset 0 0 100px rgba(0,0,0,0.85), 0 0 80px rgba(255,140,66,0.02)"
+            }}
+          />
+
+          <motion.div
+            className="rounded-[28px] border overflow-hidden w-full p-8 md:p-12 relative"
+            initial={{ opacity: 0, y: 40, scale: 0.98 }}
+            whileInView={{ opacity: 1, y: 0, scale: 1 }}
+            viewport={{ once: true, margin: "-100px" }}
+            transition={{ duration: 0.95, ease: [0.22, 1, 0.36, 1] }}
+            style={{
+              background: "rgba(28, 22, 20, 0.92)",
+              border: "1px solid rgba(255, 170, 80, 0.10)",
+              boxShadow: "0 20px 80px rgba(0,0,0,0.4), 0 0 60px rgba(255,120,40,0.04)"
+            }}
+          >
+            <IronCorner position="top-left" />
+            <IronCorner position="top-right" />
+            <IronCorner position="bottom-left" />
+            <IronCorner position="bottom-right" />
+
+            {/* Subdued chamber header detail */}
+            <div className="w-full flex items-center justify-between mb-8 border-b border-[rgba(255,170,80,0.1)] pb-4 font-mono text-[9px] text-[#C9B7A4]/50 tracking-[0.2em] uppercase">
+              <span>[ CHAMBER: RELICS_VAULT_04 ]</span>
+              <span>[ ARCHIVE RECORDS: ALL_ACTIVE ]</span>
+            </div>
+
+            {/* Relic Exhibits Grid */}
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
+              {relics.slice(0, 2).map((relic, i) => (
+                <ExhibitCase key={relic.id} relic={relic} delay={i * 0.08} />
+              ))}
+            </div>
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+              {relics.slice(2).map((relic, i) => (
+                <ExhibitCase key={relic.id} relic={relic} delay={(i + 2) * 0.08} />
+              ))}
+            </div>
+          </motion.div>
         </div>
 
-        {/* Standard Pedestals — 2 col */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {relics.filter((r) => !r.featured).map((relic, i) => (
-            <StandardPedestal key={relic.id} relic={relic} delay={i * 0.1} />
-          ))}
-        </div>
-
-        {/* Hall motto */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.2, delay: 0.4 }}
-          className="text-center mt-16 select-none"
-        >
-          <div className="h-px w-28 bg-gradient-to-r from-transparent via-[rgba(255,170,80,0.18)] to-transparent mx-auto mb-4" />
-          <p className="font-mono text-[8.5px] text-[#C9B7A4]/28 uppercase tracking-[0.4em]">
+        {/* Story Transition Exit to Contact */}
+        <div className="flex flex-col items-center justify-center mt-20 select-none">
+          <div className="h-px w-28 bg-gradient-to-r from-transparent via-[#C9B7A4]/15 to-transparent mb-5" />
+          <p className="font-mono text-[8px] text-[#C9B7A4]/40 uppercase tracking-[0.35em] mb-2 text-center">
             Every relic a story · Every story a lesson · Every lesson a stepping stone
           </p>
-        </motion.div>
+          <div className="flex items-center gap-2 mt-4 opacity-40">
+            <span className="font-serif text-[9.5px] italic text-[#C9B7A4]">
+              Beginning final descent back to base camp...
+            </span>
+          </div>
+        </div>
 
       </div>
 
-      {/* Bottom transition → Contact */}
+      {/* Bottom transition → Contact Section */}
       <div
         className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, transparent 0%, #17110D 100%)" }}
+        style={{
+          background: "linear-gradient(to bottom, transparent 0%, #1C140E 100%)",
+        }}
       />
     </section>
   );
