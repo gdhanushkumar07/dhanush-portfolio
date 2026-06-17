@@ -135,7 +135,6 @@ export default function Contact() {
         className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[300px] pointer-events-none z-0"
         style={{
           background: "radial-gradient(circle, rgba(184,138,44,0.02) 0%, transparent 70%)",
-          filter: "blur(40px)",
         }}
       />
 

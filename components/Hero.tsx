@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, useMemo } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion, useScroll, useTransform, useReducedMotion } from 'framer-motion';
 import { ChevronDown } from 'lucide-react';
 
 interface HeroProps {
@@ -50,56 +50,76 @@ const StarField = () => {
 
   return (
     <div className="absolute inset-0 pointer-events-none z-[1]">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @keyframes twinkle-star {
+          0%, 100% { opacity: var(--star-base-opacity); }
+          50% { opacity: calc(var(--star-base-opacity) * 0.2); }
+        }
+        @keyframes twinkle-bright {
+          0%, 100% { opacity: var(--star-base-opacity); transform: scale(1); }
+          50% { opacity: calc(var(--star-base-opacity) * 0.15); transform: scale(0.92); }
+          75% { transform: scale(1.12); }
+        }
+        .animate-twinkle-star {
+          animation: twinkle-star var(--star-duration) ease-in-out infinite;
+          animation-delay: var(--star-delay);
+        }
+        .animate-twinkle-bright {
+          animation: twinkle-bright var(--star-duration) ease-in-out infinite;
+          animation-delay: var(--star-delay);
+        }
+      `}} />
+      
       {/* Small stars layer */}
       {layers.smallStars.map((s) => (
-        <motion.div
+        <div
           key={s.id}
-          className="absolute rounded-full bg-white"
+          className="absolute rounded-full bg-white animate-twinkle-star"
           style={{
-            width: s.size,
-            height: s.size,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
             top: `${s.top}%`,
             left: `${s.left}%`,
             opacity: s.opacity,
+            ['--star-base-opacity' as any]: s.opacity,
+            ['--star-duration' as any]: `${s.dur}s`,
+            ['--star-delay' as any]: `${s.delay}s`,
           }}
-          animate={{ opacity: [s.opacity, s.opacity * 0.25, s.opacity * 0.85, s.opacity] }}
-          transition={{ duration: s.dur, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
         />
       ))}
       {/* Medium stars layer */}
       {layers.medStars.map((s) => (
-        <motion.div
+        <div
           key={s.id}
-          className="absolute rounded-full bg-white"
+          className="absolute rounded-full bg-white animate-twinkle-star"
           style={{
-            width: s.size,
-            height: s.size,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
             top: `${s.top}%`,
             left: `${s.left}%`,
             opacity: s.opacity,
+            ['--star-base-opacity' as any]: s.opacity,
+            ['--star-duration' as any]: `${s.dur}s`,
+            ['--star-delay' as any]: `${s.delay}s`,
           }}
-          animate={{ opacity: [s.opacity, s.opacity * 0.2, s.opacity * 0.9, s.opacity] }}
-          transition={{ duration: s.dur, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
         />
       ))}
       {/* Bright stars layer */}
       {layers.brightStars.map((s) => (
-        <motion.div
+        <div
           key={s.id}
-          className="absolute rounded-full bg-white"
+          className="absolute rounded-full bg-white animate-twinkle-bright"
           style={{
-            width: s.size,
-            height: s.size,
+            width: `${s.size}px`,
+            height: `${s.size}px`,
             top: `${s.top}%`,
             left: `${s.left}%`,
             opacity: s.opacity,
             boxShadow: "0 0 3px 0.5px rgba(255,255,255,0.35)",
+            ['--star-base-opacity' as any]: s.opacity,
+            ['--star-duration' as any]: `${s.dur}s`,
+            ['--star-delay' as any]: `${s.delay}s`,
           }}
-          animate={{ 
-            opacity: [s.opacity, s.opacity * 0.15, s.opacity * 0.95, s.opacity],
-            scale: [1, 1.12, 0.92, 1]
-          }}
-          transition={{ duration: s.dur, repeat: Infinity, ease: "easeInOut", delay: s.delay }}
         />
       ))}
     </div>
@@ -163,9 +183,16 @@ const Moon = () => (
    ══════════════════════════════════════════════ */
 const ShootingStars = () => {
   const shooters = [
-    { top: "9%", left: "8%", delay: 1.5, dur: 1.45, rotate: 23, length: 230, dx: 420, dy: 165, rep: 9 },
-    { top: "18%", left: "47%", delay: 5.2, dur: 1.25, rotate: 20, length: 190, dx: 360, dy: 140, rep: 12 },
-    { top: "6%", left: "28%", delay: 9.8, dur: 1.65, rotate: 27, length: 250, dx: 460, dy: 185, rep: 15 },
+    // Existing elegant ones (adjusted heights/glow sizes dynamically)
+    { top: "9%", left: "8%", delay: 1.5, dur: 1.45, rotate: 23, length: 230, dx: 420, dy: 165, rep: 9, h: 2.2, dot: 6, glow: 14 },
+    { top: "18%", left: "47%", delay: 5.2, dur: 1.25, rotate: 20, length: 190, dx: 360, dy: 140, rep: 12, h: 2.2, dot: 6, glow: 14 },
+    { top: "6%", left: "28%", delay: 9.8, dur: 1.65, rotate: 27, length: 250, dx: 460, dy: 185, rep: 15, h: 2.2, dot: 6, glow: 14 },
+    
+    // New small, quick ones
+    { top: "12%", left: "15%", delay: 3.5, dur: 0.85, rotate: 22, length: 80, dx: 180, dy: 72, rep: 6, h: 1.2, dot: 3, glow: 6 },
+    { top: "4%", left: "62%", delay: 7.2, dur: 0.75, rotate: 25, length: 70, dx: 160, dy: 75, rep: 9, h: 1.2, dot: 3, glow: 6 },
+    { top: "22%", left: "32%", delay: 11.5, dur: 0.95, rotate: 20, length: 90, dx: 210, dy: 78, rep: 11, h: 1.2, dot: 3, glow: 6 },
+    { top: "15%", left: "75%", delay: 1.2, dur: 0.8, rotate: 26, length: 75, dx: 170, dy: 83, rep: 8, h: 1.2, dot: 3, glow: 6 },
   ];
 
   return (
@@ -174,7 +201,7 @@ const ShootingStars = () => {
         <motion.div
           key={i}
           className="absolute"
-          style={{ top: s.top, left: s.left }}
+          style={{ top: s.top, left: s.left, willChange: "transform, opacity" }}
           initial={{ opacity: 0, x: 0, y: 0 }}
           animate={{
             opacity: [0, 0.25, 1, 0.8, 0],
@@ -193,9 +220,10 @@ const ShootingStars = () => {
             style={{
               position: "relative",
               width: s.length,
-              height: 3,
+              height: s.h,
               rotate: s.rotate,
               transformOrigin: "left center",
+              willChange: "transform, opacity",
             }}
             animate={{
               scaleX: [0.35, 1, 1, 0.95],
@@ -222,12 +250,12 @@ const ShootingStars = () => {
                 position: "absolute",
                 right: -4,
                 top: "50%",
-                width: 7,
-                height: 7,
+                width: s.dot,
+                height: s.dot,
                 borderRadius: "50%",
                 transform: "translateY(-50%)",
                 background: "#F8FDFF",
-                boxShadow: "0 0 10px 4px rgba(220,245,255,0.75), 0 0 22px 8px rgba(180,225,255,0.35)",
+                boxShadow: `0 0 10px 4px rgba(220,245,255,0.75), 0 0 22px 8px rgba(180,225,255,0.35)`,
               }}
             />
             <motion.div
@@ -235,12 +263,13 @@ const ShootingStars = () => {
                 position: "absolute",
                 right: -9,
                 top: "50%",
-                width: 16,
-                height: 16,
+                width: s.glow,
+                height: s.glow,
                 borderRadius: "50%",
                 transform: "translateY(-50%)",
                 background: "radial-gradient(circle, rgba(230,248,255,0.45) 0%, rgba(180,225,255,0.18) 45%, transparent 75%)",
                 filter: "blur(1.4px)",
+                willChange: "transform, opacity",
               }}
               animate={{ scale: [0.85, 1.18, 0.92], opacity: [0.6, 1, 0.7] }}
               transition={{ duration: 0.22, repeat: Infinity, ease: "easeInOut" }}
@@ -287,6 +316,7 @@ const Fireflies = () => {
             top: `${f.top}%`,
             background: "#F5A623",
             boxShadow: `0 0 ${f.size * 3}px ${f.size}px rgba(245,166,35,0.45)`,
+            willChange: "transform, opacity",
           }}
           animate={{
             y: [0, f.dy, f.dy * 1.25],
@@ -317,7 +347,7 @@ const RootVineTransition = ({ scrollY }: { scrollY: any }) => {
 
   return (
     <motion.div
-      style={{ opacity, y, height: "220px" }}
+      style={{ opacity, y, height: "220px", willChange: "transform, opacity" }}
       className="absolute bottom-0 left-0 right-0 z-[20] pointer-events-none select-none"
     >
       <svg
@@ -650,10 +680,24 @@ const HeroContent = ({ onOpenCodex }: { onOpenCodex: () => void }) => {
    LANDSCAPE LAYERS — cinematic depth
    ══════════════════════════════════════════════ */
 const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
-  const y1 = useTransform(scrollY, [0, 600], [0, -18]);
-  const y2 = useTransform(scrollY, [0, 600], [0, -10]);
-  const y3 = useTransform(scrollY, [0, 600], [0, -5]);
-  const y4 = useTransform(scrollY, [0, 600], [0, -2]);
+  const shouldReduceMotion = useReducedMotion();
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  const disableParallax = shouldReduceMotion || isMobile;
+
+  const y1 = useTransform(scrollY, [0, 600], [0, disableParallax ? 0 : -18]);
+  const y2 = useTransform(scrollY, [0, 600], [0, disableParallax ? 0 : -10]);
+  const y3 = useTransform(scrollY, [0, 600], [0, disableParallax ? 0 : -5]);
+  const y4 = useTransform(scrollY, [0, 600], [0, disableParallax ? 0 : -2]);
   const y5 = useTransform(scrollY, [0, 600], [0, 0]);
 
   return (
@@ -673,7 +717,7 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
 
       {/* Layer 1 — Distant mountains, deep blue-grey */}
       <motion.svg
-        style={{ y: y1 }}
+        style={{ y: y1, willChange: "transform" }}
         className="absolute inset-0 w-full h-full z-[4]"
         viewBox="0 0 1440 380"
         preserveAspectRatio="xMidYMax meet"
@@ -686,7 +730,7 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
 
       {/* Layer 2 — Far hills, dark forest green */}
       <motion.svg
-        style={{ y: y2 }}
+        style={{ y: y2, willChange: "transform" }}
         className="absolute inset-0 w-full h-full z-[5]"
         viewBox="0 0 1440 380"
         preserveAspectRatio="xMidYMax meet"
@@ -699,7 +743,7 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
 
       {/* Layer 3 — Mid forest with tree silhouettes */}
       <motion.svg
-        style={{ y: y3 }}
+        style={{ y: y3, willChange: "transform" }}
         className="absolute inset-0 w-full h-full z-[6]"
         viewBox="0 0 1440 380"
         preserveAspectRatio="xMidYMax meet"
@@ -733,7 +777,7 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
 
       {/* Layer 4 — Near dark ground with foreground trees */}
       <motion.svg
-        style={{ y: y4 }}
+        style={{ y: y4, willChange: "transform" }}
         className="absolute inset-0 w-full h-full z-[7]"
         viewBox="0 0 1440 380"
         preserveAspectRatio="xMidYMax meet"
@@ -754,7 +798,7 @@ const LandscapeLayers = ({ scrollY }: { scrollY: any }) => {
 
       {/* Layer 5 — Foreground ground (darkest) */}
       <motion.svg
-        style={{ y: y5 }}
+        style={{ y: y5, willChange: "transform" }}
         className="absolute inset-0 w-full h-full z-[8]"
         viewBox="0 0 1440 380"
         preserveAspectRatio="xMidYMax meet"
@@ -784,6 +828,7 @@ const CampfireWrapper = ({ scrollY }: { scrollY: any }) => {
         left: "50%",
         transform: "translateX(-50%) scale(1.28)",
         transformOrigin: "center bottom",
+        willChange: "transform, opacity",
       }}
       className="absolute z-[16] pointer-events-none select-none"
     >
@@ -815,7 +860,6 @@ const CampfireWrapper = ({ scrollY }: { scrollY: any }) => {
             left: "50%",
             transform: "translateX(-50%)",
             background: "radial-gradient(ellipse at center bottom, rgba(245,140,30,0.13) 0%, rgba(200,90,10,0.06) 42%, transparent 72%)",
-            filter: "blur(28px)",
           }}
         />
 
@@ -986,6 +1030,7 @@ const CampfireWrapper = ({ scrollY }: { scrollY: any }) => {
               boxShadow: `0 0 ${e.size * 3}px ${e.size}px rgba(255,140,30,0.7)`,
               bottom: 6,
               left: `calc(50% + ${e.dx}px)`,
+              willChange: "transform, opacity",
             }}
             animate={{
               y: [0, -60 - i * 7],
@@ -1056,7 +1101,6 @@ export default function Hero({ onOpenCodex }: HeroProps) {
           left: "50%",
           transform: "translateX(-50%)",
           background: "radial-gradient(ellipse, rgba(200,220,255,0.025) 0%, transparent 70%)",
-          filter: "blur(40px)",
         }}
       />
 

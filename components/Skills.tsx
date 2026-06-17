@@ -331,8 +331,68 @@ const BrassCorner = ({ position }: { position: 'top-left' | 'top-right' | 'botto
 };
 
 /* Workshop Torch — matches About section Torch exactly */
+const TorchStyles = () => (
+  <style dangerouslySetInnerHTML={{ __html: `
+    @keyframes torchFlame {
+      0%, 100% {
+        transform: scale(1, 1) rotate(0deg) translateY(0px);
+        opacity: 0.95;
+      }
+      25% {
+        transform: scale(0.98, 1.03) rotate(0.5deg) translateY(-0.5px);
+        opacity: 1;
+      }
+      50% {
+        transform: scale(1.02, 0.98) rotate(-0.5deg) translateY(0px);
+        opacity: 0.97;
+      }
+      75% {
+        transform: scale(0.99, 1.02) rotate(0.2deg) translateY(0.2px);
+        opacity: 1;
+      }
+    }
+    @keyframes torchEmber0 {
+      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translate(-3px, -50px) scale(0.4); opacity: 0; }
+    }
+    @keyframes torchEmber1 {
+      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translate(0px, -50px) scale(0.4); opacity: 0; }
+    }
+    @keyframes torchEmber2 {
+      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
+      10% { opacity: 0.8; }
+      90% { opacity: 0.8; }
+      100% { transform: translate(3px, -50px) scale(0.4); opacity: 0; }
+    }
+    .animate-torch-flame {
+      animation: torchFlame 1.8s infinite ease-in-out;
+      transform-origin: 15px 30px;
+      will-change: transform, opacity;
+    }
+    .animate-torch-ember-0 {
+      animation: torchEmber0 2.2s infinite ease-out;
+      will-change: transform, opacity;
+    }
+    .animate-torch-ember-1 {
+      animation: torchEmber1 2.2s infinite ease-out;
+      animation-delay: 0.7s;
+      will-change: transform, opacity;
+    }
+    .animate-torch-ember-2 {
+      animation: torchEmber2 2.2s infinite ease-out;
+      animation-delay: 1.4s;
+      will-change: transform, opacity;
+    }
+  ` }} />
+);
+
 const WorkshopTorchGlow = ({ className }: { className?: string }) => (
-  <div className={`absolute pointer-events-none select-none z-10 hidden md:block ${className}`}>
+  <div className={`absolute pointer-events-none select-none z-10 hidden md:block ${className}`} style={{ willChange: "transform" }}>
     <div 
       className="w-[1px] h-[1px] rounded-full"
       style={{
@@ -350,24 +410,14 @@ const WorkshopTorch = ({ className }: { className?: string }) => (
     <div className="relative w-[30px] h-[80px]">
       <svg width="30" height="80" viewBox="0 0 30 80" fill="none" xmlns="http://www.w3.org/2000/svg">
         {/* Flame (Animated teardrop shape) */}
-        <motion.g
-          animate={{ 
-            scaleY: [1, 1.03, 0.98, 1.02, 1], 
-            scaleX: [1, 0.98, 1.02, 0.99, 1],
-            opacity: [0.95, 1, 0.97, 1, 0.95],
-            rotate: [0, 0.5, -0.5, 0.2, 0],
-            y: [0, -0.5, 0.2, 0]
-          }}
-          transition={{ duration: 1.8, repeat: Infinity, ease: "easeInOut" }}
-          style={{ originX: "15px", originY: "30px" }}
-        >
+        <g className="animate-torch-flame">
           {/* Outer Flame (#FF8C42) */}
           <path d="M 15,5 C 9,15 8,25 15,32 C 22,25 21,15 15,5 Z" fill="#FF8C42" />
           {/* Middle Flame (#FFB347) */}
           <path d="M 15,12 C 11,18 10,25 15,32 C 20,25 19,18 15,12 Z" fill="#FFB347" />
           {/* Inner Flame Core (#FFD166) */}
           <path d="M 15,18 C 12,22 12,27 15,32 C 18,27 18,22 15,18 Z" fill="#FFD166" />
-        </motion.g>
+        </g>
 
         {/* Metal Cup / Torch Head */}
         <path d="M 10,32 H 20 L 18,36 H 12 Z" fill="#3D3025" stroke="#251C15" strokeWidth="0.75" />
@@ -381,25 +431,9 @@ const WorkshopTorch = ({ className }: { className?: string }) => (
       </svg>
 
       {/* Floating embers rising from flame */}
-      {Array.from({ length: 3 }).map((_, i) => (
-        <motion.div
-          key={i}
-          className="absolute w-1 h-1 rounded-full bg-[#FFAA50]"
-          style={{ left: "14px", bottom: "45px", opacity: 0 }}
-          animate={{
-            y: [-10, -50],
-            x: [0, (i - 1) * 6, (i - 1) * 3],
-            opacity: [0, 0.8, 0],
-            scale: [0.8, 1.2, 0.4]
-          }}
-          transition={{
-            duration: 2.2,
-            repeat: Infinity,
-            delay: i * 0.7,
-            ease: "easeOut"
-          }}
-        />
-      ))}
+      <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-0" style={{ left: "14px", bottom: "45px" }} />
+      <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-1" style={{ left: "14px", bottom: "45px" }} />
+      <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-2" style={{ left: "14px", bottom: "45px" }} />
     </div>
   </div>
 );
@@ -420,7 +454,6 @@ const WorkshopBackground = () => (
       className="absolute top-0 left-1/2 -translate-x-1/2 w-[120%] h-[700px]"
       style={{
         background: "radial-gradient(circle at top center, rgba(225, 138, 66, 0.12) 0%, rgba(225, 138, 66, 0.03) 50%, transparent 80%)",
-        filter: "blur(50px)",
       }}
     />
 
@@ -429,7 +462,6 @@ const WorkshopBackground = () => (
       className="absolute top-[35%] left-1/2 -translate-x-1/2 w-[80%] h-[600px]"
       style={{
         background: "radial-gradient(circle, rgba(225, 138, 66, 0.05) 0%, rgba(139, 90, 43, 0.02) 60%, transparent 100%)",
-        filter: "blur(70px)",
       }}
     />
 
@@ -555,6 +587,7 @@ export default function Skills() {
         background: "linear-gradient(to bottom, #17110D 0%, #1B120D 30%, #21160E 70%, #26180F 100%)",
       }}
     >
+      <TorchStyles />
       {/* Grain texture overlay — identical to About section */}
       <div
         className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay z-0"
@@ -572,7 +605,7 @@ export default function Skills() {
         preserveAspectRatio="none"
         animate={{ rotate: [-0.6, 0.6, -0.6] }}
         transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "top center", filter: "blur(0.3px)" }}
+        style={{ transformOrigin: "top center", filter: "blur(0.3px)", willChange: "transform" }}
       >
         {/* Main Vine Stem */}
         <path d="M 15,0 C 30,80 5,160 20,240 C 35,320 15,380 25,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
@@ -607,7 +640,7 @@ export default function Skills() {
         preserveAspectRatio="none"
         animate={{ rotate: [0.6, -0.6, 0.6] }}
         transition={{ duration: 11, repeat: Infinity, ease: "easeInOut" }}
-        style={{ transformOrigin: "top center", filter: "blur(0.3px)" }}
+        style={{ transformOrigin: "top center", filter: "blur(0.3px)", willChange: "transform" }}
       >
         {/* Main Vine Stem */}
         <path d="M 75,0 C 60,80 85,160 70,240 C 55,320 75,380 65,440" stroke="#1C5A13" strokeWidth="3.0" fill="none" strokeLinecap="round" />
@@ -672,10 +705,10 @@ export default function Skills() {
 
         {/* LARGE WORKBENCH FRAMED CONTAINER */}
         <div className="relative max-w-[1100px] mx-auto mt-6">
-          <WorkshopTorchGlow className="left-[-41px] top-[168px]" />
-          <WorkshopTorch className="left-[-56px] top-[150px]" />
-          <WorkshopTorchGlow className="right-[-41px] top-[168px]" />
-          <WorkshopTorch className="right-[-56px] top-[150px]" />
+          <WorkshopTorchGlow className="left-[-41px] top-[168px] hidden xl:block" />
+          <WorkshopTorch className="left-[-56px] top-[150px] hidden xl:block" />
+          <WorkshopTorchGlow className="right-[-41px] top-[168px] hidden xl:block" />
+          <WorkshopTorch className="right-[-56px] top-[150px] hidden xl:block" />
 
           <motion.div
             className="rounded-[24px] border overflow-hidden w-full p-6 md:p-10 transition-all duration-500 hover:border-[#FFAA50]/25 relative"

@@ -23,30 +23,46 @@ export default function Navbar() {
   ];
 
   useEffect(() => {
+    let ticking = false;
     const handleScroll = () => {
-      // Show floating navigation after 15% to 20% viewport scroll
-      const threshold = window.innerHeight * 0.16;
-      setShowFloatingNav(window.scrollY > threshold);
-
-      // Section intersection tracker
-      const scrollPosition = window.scrollY + 120;
-      const sections = ['hero', 'about', 'projects', 'skills', 'achievements', 'contact'];
-      
-      for (const section of sections) {
-        const el = document.getElementById(section);
-        if (el) {
-          const top = el.offsetTop;
-          const height = el.offsetHeight;
-          if (scrollPosition >= top && scrollPosition < top + height) {
-            setActiveSection(section);
-          }
-        }
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const threshold = window.innerHeight * 0.16;
+          setShowFloatingNav(window.scrollY > threshold);
+          ticking = false;
+        });
+        ticking = true;
       }
     };
 
-    window.addEventListener('scroll', handleScroll);
+    window.addEventListener('scroll', handleScroll, { passive: true });
     handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
+
+    const sections = ['hero', 'about', 'projects', 'skills', 'achievements', 'contact'];
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-25% 0px -65% 0px",
+        threshold: 0,
+      }
+    );
+
+    sections.forEach((id) => {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    });
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      observer.disconnect();
+    };
   }, []);
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -110,7 +126,7 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     onClick={(e) => handleScrollTo(e, item.href)}
-                    className={`px-2.5 sm:px-3 py-1.5 text-[11px] sm:text-xs font-semibold tracking-wider transition-colors duration-200 block relative uppercase ${
+                    className={`px-1.5 sm:px-3 py-1.5 text-[9.5px] sm:text-xs font-semibold tracking-wider transition-colors duration-200 block relative uppercase ${
                       isActive ? 'text-amber-800' : 'text-slate-500 hover:text-slate-900'
                     }`}
                     id={`floating-nav-item-${item.id}`}

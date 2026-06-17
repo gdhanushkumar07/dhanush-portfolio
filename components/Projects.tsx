@@ -560,20 +560,52 @@ export default function Projects() {
   const rAFRef = useRef<number | null>(null);
   const progressRef = useRef({ current: 0.06, target: 0.06 });
   const activeIndexRef = useRef(0);
+  const pathLengthRef = useRef<number>(0);
+  const metricsRef = useRef({ topFirst: 0, totalDistance: 0 });
 
   /* Scroll tracking — continuous scroll progress mapped to route path */
   useEffect(() => {
+    // 1. Cache the total length of the SVG path once on mount
+    const pathEl = pathRef.current;
+    if (pathEl) {
+      pathLengthRef.current = pathEl.getTotalLength();
+    }
+
+    // 2. Cache coordinates of cards on load/resize
+    const updateMetrics = () => {
+      const elFirst = cardRefs[0].current;
+      const elLast = cardRefs[2].current;
+      if (elFirst && elLast) {
+        const rectFirst = elFirst.getBoundingClientRect();
+        const rectLast = elLast.getBoundingClientRect();
+        
+        const scrollY = window.scrollY;
+        const pageTopFirst = rectFirst.top + scrollY;
+        const pageTopLast = rectLast.top + scrollY;
+        
+        metricsRef.current = {
+          topFirst: pageTopFirst,
+          totalDistance: pageTopLast - pageTopFirst,
+        };
+      }
+    };
+
+    updateMetrics();
+    window.addEventListener("resize", updateMetrics);
+    const initialMetricsTimeout = setTimeout(updateMetrics, 500);
+
+    // 3. Easing animation handler using cached path length
     const animate = () => {
       const p = progressRef.current;
       const diff = p.target - p.current;
+      const len = pathLengthRef.current;
 
-      if (Math.abs(diff) > 0.0002) {
+      if (Math.abs(diff) > 0.0002 && len > 0) {
         p.current += diff * 0.12; // Easing (lerp) for smooth glide
 
         const pathEl = pathRef.current;
         const markerEl = markerRef.current;
         if (pathEl && markerEl) {
-          const len = pathEl.getTotalLength();
           const pt = pathEl.getPointAtLength(p.current * len);
           markerEl.setAttribute("transform", `translate(${pt.x}, ${pt.y})`);
 
@@ -587,8 +619,7 @@ export default function Projects() {
         p.current = p.target;
         const pathEl = pathRef.current;
         const markerEl = markerRef.current;
-        if (pathEl && markerEl) {
-          const len = pathEl.getTotalLength();
+        if (pathEl && markerEl && len > 0) {
           const pt = pathEl.getPointAtLength(p.current * len);
           markerEl.setAttribute("transform", `translate(${pt.x}, ${pt.y})`);
 
@@ -600,19 +631,15 @@ export default function Projects() {
       }
     };
 
+    // 4. Mathematical scroll tracking (100% layout-free)
     const handleScroll = () => {
-      const elFirst = cardRefs[0].current;
-      const elLast = cardRefs[2].current;
-      if (!elFirst || !elLast) return;
+      const { topFirst, totalDistance } = metricsRef.current;
+      if (totalDistance <= 0) return;
 
-      const rectFirst = elFirst.getBoundingClientRect();
-      const rectLast = elLast.getBoundingClientRect();
+      const scrollY = window.scrollY;
+      const currentDistance = -(topFirst - scrollY) + window.innerHeight * 0.45;
 
-      const totalDistance = rectLast.top - rectFirst.top;
-      // Calculate current offset matching center viewport intersection
-      const currentDistance = -rectFirst.top + window.innerHeight * 0.45;
-
-      const progress = totalDistance > 0 ? currentDistance / totalDistance : 0;
+      const progress = currentDistance / totalDistance;
       const clampedProgress = Math.max(0, Math.min(1, progress));
 
       // Map progress [0, 1] to path values [0.06, 0.97]
@@ -622,37 +649,72 @@ export default function Projects() {
       if (!rAFRef.current) {
         rAFRef.current = requestAnimationFrame(animate);
       }
+    };
 
-      // Viewport-center proximity check to find active project index
-      let bestIndex = 0;
-      let minDiff = Infinity;
-      cardRefs.forEach((ref, idx) => {
-        const cardEl = ref.current;
-        if (cardEl) {
-          const rect = cardEl.getBoundingClientRect();
-          const cardCenter = rect.top + rect.height / 2;
-          const viewportCenter = window.innerHeight / 2;
-          const diff = Math.abs(cardCenter - viewportCenter);
-          if (diff < minDiff) {
-            minDiff = diff;
-            bestIndex = idx;
-          }
-        }
-      });
-
-      if (bestIndex !== activeIndexRef.current) {
-        activeIndexRef.current = bestIndex;
-        setActiveIndex(bestIndex);
+    // 5. Section visibility observer. Activate scroll listener ONLY when visible
+    let isListening = false;
+    const registerScroll = () => {
+      if (!isListening) {
+        window.addEventListener("scroll", handleScroll, { passive: true });
+        isListening = true;
+        handleScroll();
+      }
+    };
+    const unregisterScroll = () => {
+      if (isListening) {
+        window.removeEventListener("scroll", handleScroll);
+        isListening = false;
       }
     };
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
-    // Run after a short delay on mount to align initial position
-    const timeoutId = setTimeout(handleScroll, 100);
+    const sectionEl = sectionRef.current;
+    const sectionObserver = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          registerScroll();
+        } else {
+          unregisterScroll();
+        }
+      },
+      { root: null, rootMargin: "10% 0px 10% 0px", threshold: 0 }
+    );
+
+    if (sectionEl) {
+      sectionObserver.observe(sectionEl);
+    }
+
+    // 6. IntersectionObserver on cards to detect active card index (no DOM layout calls)
+    const cardObserver = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const cardEl = entry.target as HTMLDivElement;
+            const idx = cardRefs.findIndex(ref => ref.current === cardEl);
+            if (idx !== -1 && idx !== activeIndexRef.current) {
+              activeIndexRef.current = idx;
+              setActiveIndex(idx);
+            }
+          }
+        });
+      },
+      {
+        root: null,
+        rootMargin: "-25% 0px -40% 0px",
+        threshold: 0.1,
+      }
+    );
+
+    cardRefs.forEach((ref) => {
+      if (ref.current) cardObserver.observe(ref.current);
+    });
 
     return () => {
-      window.removeEventListener("scroll", handleScroll);
-      clearTimeout(timeoutId);
+      unregisterScroll();
+      window.removeEventListener("resize", updateMetrics);
+      clearTimeout(initialMetricsTimeout);
+      if (sectionEl) sectionObserver.unobserve(sectionEl);
+      sectionObserver.disconnect();
+      cardObserver.disconnect();
       if (rAFRef.current) {
         cancelAnimationFrame(rAFRef.current);
       }
@@ -716,11 +778,13 @@ export default function Projects() {
               </p>
             </div>
 
-            <MapPanel
-              pathRef={pathRef}
-              markerRef={markerRef}
-              activeIndex={activeIndex}
-            />
+            <div className="hidden lg:block">
+              <MapPanel
+                pathRef={pathRef}
+                markerRef={markerRef}
+                activeIndex={activeIndex}
+              />
+            </div>
           </div>
 
           {/* RIGHT COLUMN — EXPEDITION DISCOVERY CARDS */}
