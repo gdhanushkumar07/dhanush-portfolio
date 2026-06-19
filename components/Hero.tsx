@@ -188,6 +188,11 @@ const ShootingStars = () => {
     { top: "18%", left: "47%", delay: 5.2, dur: 1.25, rotate: 20, length: 190, dx: 360, dy: 140, rep: 12, h: 2.2, dot: 6, glow: 14 },
     { top: "6%", left: "28%", delay: 9.8, dur: 1.65, rotate: 27, length: 250, dx: 460, dy: 185, rep: 15, h: 2.2, dot: 6, glow: 14 },
     
+    // Additional elegant ones
+    { top: "14%", left: "22%", delay: 3.8, dur: 1.35, rotate: 21, length: 210, dx: 390, dy: 150, rep: 11, h: 2.2, dot: 6, glow: 14 },
+    { top: "8%", left: "55%", delay: 7.8, dur: 1.55, rotate: 24, length: 240, dx: 440, dy: 175, rep: 13, h: 2.2, dot: 6, glow: 14 },
+    { top: "20%", left: "10%", delay: 12.2, dur: 1.15, rotate: 18, length: 180, dx: 340, dy: 125, rep: 10, h: 2.2, dot: 6, glow: 14 },
+
     // New small, quick ones
     { top: "12%", left: "15%", delay: 3.5, dur: 0.85, rotate: 22, length: 80, dx: 180, dy: 72, rep: 6, h: 1.2, dot: 3, glow: 6 },
     { top: "4%", left: "62%", delay: 7.2, dur: 0.75, rotate: 25, length: 70, dx: 160, dy: 75, rep: 9, h: 1.2, dot: 3, glow: 6 },

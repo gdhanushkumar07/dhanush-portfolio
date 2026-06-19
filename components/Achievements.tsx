@@ -50,6 +50,7 @@ interface Relic {
   expeditionRecord: string;
   impactDetail: string;
   seal: string;
+  link?: string;
 }
 
 const relics: Relic[] = [
@@ -73,6 +74,7 @@ const relics: Relic[] = [
     expeditionRecord: "Secured All-India Rank 36 among hundreds of professional engineering teams.",
     impactDetail: "Wielded algorithmic optimization strategies and data architectures during a high-stakes competitive speed coding calculation sprint at IIT Hyderabad.",
     seal: "AIR 36 VALIDATED",
+    link: "https://drive.google.com/file/d/1xQa88hhu0H8VCFSDbixAyPD1Z1uhP9Vd/view?usp=drive_link",
   },
   {
     id: 2,
@@ -87,13 +89,14 @@ const relics: Relic[] = [
         <path d="M50 28 L36 31 L32 28 L36 25 Z" fill="currentColor" opacity="0.3" />
       </svg>
     ),
-    title: "AI For Bharat — Winner",
+    title: "AI For Bharat — Finalist",
     recoveredFrom: "National AWS Proving Grounds",
-    discoveryDate: "Mar 2026",
+    discoveryDate: "Apr 2026",
     classification: "Cognitive Intelligence Catalyst",
-    expeditionRecord: "Awarded First Place nationally for building ContentIQ media engine.",
+    expeditionRecord: "Shortlisted as national finalist for designing the ContentIQ media engine.",
     impactDetail: "Engineered serverless pipelines using AWS Bedrock and Lambda triggers to automatically analyze inputs and compile them into media scripts.",
-    seal: "CHAMPIONSHIP GOLD",
+    seal: "NATIONAL FINALIST",
+    link: "https://github.com/gdhanushkumar07/ContentIQ.git",
   },
   {
     id: 3,
@@ -112,6 +115,7 @@ const relics: Relic[] = [
     expeditionRecord: "Certified in analytical modeling and statistical transformations.",
     impactDetail: "Decoded multi-dimensional charts, plotted arrays, and established statistical models using NumPy, Pandas, and data visualization tools.",
     seal: "RESEARCHER CERTIFIED",
+    link: "https://drive.google.com/file/d/1m7LY0K-gX74PgjN0vcvRbrXbbBx60hGo/view?usp=drive_link",
   },
   {
     id: 4,
@@ -131,6 +135,7 @@ const relics: Relic[] = [
     expeditionRecord: "Constructed a multi-client shared vector sync whiteboard.",
     impactDetail: "Designed dynamic synchronization protocols allowing team explorers to map ideas concurrently on a canvas with minimal data latency.",
     seal: "EXPEDITION ENTRY",
+    link: "https://drive.google.com/file/d/1Mi4Fxrm6fkcZ7HmBNAx31oc8nr8YCe__/view?usp=drive_link",
   },
 ];
 
@@ -201,46 +206,29 @@ const dustParticles = [
 /* Cinematic Torch & Glow - matches About section exactly */
 const TorchStyles = () => (
   <style dangerouslySetInnerHTML={{ __html: `
-    @keyframes torchFlame {
-      0%, 100% {
-        transform: scale(1, 1) rotate(0deg) translateY(0px);
-        opacity: 0.95;
-      }
-      25% {
-        transform: scale(0.98, 1.03) rotate(0.5deg) translateY(-0.5px);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.02, 0.98) rotate(-0.5deg) translateY(0px);
-        opacity: 0.97;
-      }
-      75% {
-        transform: scale(0.99, 1.02) rotate(0.2deg) translateY(0.2px);
-        opacity: 1;
-      }
-    }
     @keyframes torchEmber0 {
-      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translate(-3px, -50px) scale(0.4); opacity: 0; }
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(-8px, -70px) scale(0.3); opacity: 0; }
     }
     @keyframes torchEmber1 {
-      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translate(0px, -50px) scale(0.4); opacity: 0; }
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(6px, -85px) scale(0.3); opacity: 0; }
     }
     @keyframes torchEmber2 {
-      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translate(3px, -50px) scale(0.4); opacity: 0; }
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(-4px, -60px) scale(0.3); opacity: 0; }
     }
-    .animate-torch-flame {
-      animation: torchFlame 1.8s infinite ease-in-out;
-      transform-origin: 15px 30px;
-      will-change: transform, opacity;
+    @keyframes torchEmber3 {
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(8px, -75px) scale(0.3); opacity: 0; }
     }
     .animate-torch-ember-0 {
       animation: torchEmber0 2.2s infinite ease-out;
@@ -248,12 +236,17 @@ const TorchStyles = () => (
     }
     .animate-torch-ember-1 {
       animation: torchEmber1 2.2s infinite ease-out;
-      animation-delay: 0.7s;
+      animation-delay: 0.6s;
       will-change: transform, opacity;
     }
     .animate-torch-ember-2 {
       animation: torchEmber2 2.2s infinite ease-out;
-      animation-delay: 1.4s;
+      animation-delay: 1.2s;
+      will-change: transform, opacity;
+    }
+    .animate-torch-ember-3 {
+      animation: torchEmber3 2.2s infinite ease-out;
+      animation-delay: 1.8s;
       will-change: transform, opacity;
     }
   ` }} />
@@ -265,8 +258,9 @@ const TorchGlow = ({ className }: { className?: string }) => (
       className="w-[1px] h-[1px] rounded-full"
       style={{
         boxShadow: `
-          0 0 120px 55px rgba(255,140,66,0.32),
-          0 0 200px 95px rgba(255,110,40,0.15)
+          0 0 140px 65px rgba(255,140,66,0.35),
+          0 0 240px 115px rgba(255,110,40,0.18),
+          0 0 40px 15px rgba(255,200,100,0.2)
         `
       }}
     />
@@ -277,15 +271,49 @@ const Torch = ({ className }: { className?: string }) => (
   <div className={`absolute pointer-events-none select-none z-30 hidden md:block ${className}`}>
     <div className="relative w-[30px] h-[80px]">
       <svg width="30" height="80" viewBox="0 0 30 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Flame (Animated teardrop shape) */}
-        <g className="animate-torch-flame">
-          {/* Outer Flame (#FF8C42) */}
-          <path d="M 15,5 C 9,15 8,25 15,32 C 22,25 21,15 15,5 Z" fill="#FF8C42" />
-          {/* Middle Flame (#FFB347) */}
-          <path d="M 15,12 C 11,18 10,25 15,32 C 20,25 19,18 15,12 Z" fill="#FFB347" />
-          {/* Inner Flame Core (#FFD166) */}
-          <path d="M 15,18 C 12,22 12,27 15,32 C 18,27 18,22 15,18 Z" fill="#FFD166" />
-        </g>
+        {/* Flame (Organic layered paths matching hero section style) */}
+        {/* Outer Flame */}
+        <motion.path
+          d="M 15,32 C 7,27 4,18 9,10 C 11,8 13,11 15,7 C 17,4 16,1 17,0 C 21,7 23,13 21,18 C 24,14 26,9 24,5 C 28,11 28,18 25,24 C 27,20 29,15 27,10 C 31,17 29,24 23,29 Z"
+          fill="#D85808"
+          animate={{
+            scaleX: [1, 1.15, 0.9, 1.1, 1],
+            scaleY: [1, 1.12, 0.88, 1.08, 1],
+            opacity: [0.9, 1, 0.85, 0.98, 0.9],
+          }}
+          style={{ transformOrigin: "15px 32px" }}
+          transition={{ duration: 0.78, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* Mid Flame */}
+        <motion.path
+          d="M 15,32 C 10,28 8,21 11,15 C 12,13 13,15 15,12 C 16,9 15,7 16,5 C 19,10 20,15 19,19 C 21,16 22,12 20,9 C 23,14 23,19 21,24 C 22,21 23,17 22,14 C 25,19 23,24 19,28 Z"
+          fill="#F58F18"
+          animate={{
+            scaleY: [1, 1.18, 0.88, 1.12, 1],
+            opacity: [0.85, 1, 0.8, 0.95, 0.85],
+          }}
+          style={{ transformOrigin: "15px 32px" }}
+          transition={{ duration: 0.62, repeat: Infinity, ease: "easeInOut", delay: 0.08 }}
+        />
+        {/* Inner Flame */}
+        <motion.path
+          d="M 15,32 C 12,29 11,24 13,20 C 13,18 14,19 15,17 C 16,15 15,13 16,11 C 18,15 18,19 17,22 C 18,19 19,16 18,14 C 20,18 20,22 18,25 Z"
+          fill="#FFC038"
+          animate={{
+            scaleY: [1, 1.2, 0.85, 1.14, 1],
+            opacity: [0.8, 1, 0.76, 0.93, 0.8],
+          }}
+          style={{ transformOrigin: "15px 32px" }}
+          transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.18 }}
+        />
+        {/* Core Flame */}
+        <motion.ellipse
+          cx="15" cy="26" rx="2.2" ry="4.2"
+          fill="#FFF3C0"
+          animate={{ scaleY: [1, 1.25, 0.82, 1.15, 1], opacity: [0.78, 1, 0.72, 0.92, 0.78] }}
+          style={{ transformOrigin: "15px 26px" }}
+          transition={{ duration: 0.44, repeat: Infinity, ease: "easeInOut", delay: 0.12 }}
+        />
 
         {/* Metal Cup / Torch Head */}
         <path d="M 10,32 H 20 L 18,36 H 12 Z" fill="#3D3025" stroke="#251C15" strokeWidth="0.75" />
@@ -302,6 +330,7 @@ const Torch = ({ className }: { className?: string }) => (
       <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-0" style={{ left: "14px", bottom: "45px" }} />
       <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-1" style={{ left: "14px", bottom: "45px" }} />
       <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-2" style={{ left: "14px", bottom: "45px" }} />
+      <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-3" style={{ left: "14px", bottom: "45px" }} />
     </div>
   </div>
 );
@@ -454,8 +483,15 @@ const ExhibitCase = ({ relic, delay }: { relic: Relic; delay: number }) => (
 
         {/* Labels & Notebook Entry */}
         <div className="flex-1 min-w-0">
-          <h3 className="font-display text-base md:text-[17px] font-extrabold text-[#F5F1EB] tracking-tight leading-snug mb-0.5">
-            {relic.title}
+          <h3 className="font-display text-base md:text-[17px] font-extrabold text-[#F5F1EB] tracking-tight leading-snug mb-0.5 hover:text-[#FFAA50] transition-colors">
+            {relic.link ? (
+              <a href={relic.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:underline">
+                {relic.title}
+                <svg className="w-3.5 h-3.5 inline-block opacity-65 group-hover:opacity-100 transition-opacity" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="2">
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
+                </svg>
+              </a>
+            ) : relic.title}
           </h3>
           <span className="font-mono text-[7.5px] text-[#C9B7A4]/60 uppercase tracking-widest block mb-2.5">
             RECOVERED FROM: <span className="text-[#FFAA50] font-bold">{relic.recoveredFrom}</span>

@@ -44,18 +44,17 @@ const discoveries: Discovery[] = [
     level: "Lv. 21",
     title: "ContentIQ",
     subtitle: "AI Media Creation & Distribution Platform",
-    badge: "current",
-    summary: "Flagship AI media platform built for high-concurrency processing. Serverless workflows with AWS Bedrock and Lambda for real-time video intelligence at production scale.",
+    badge: "completed",
+    summary: "Engineered an AI-powered platform that analyzes video and audio content to produce scene-level insights, scripts, and engagement predictions.",
     notes: [
-      "Scene-level intelligence for media analysis",
-      "Automated script generation pipeline",
-      "Multilingual voice cloning & dubbing",
-      "Serverless automation at production scale",
+      "Developed during AI for Bharat Hackathon",
+      "Integrated multimodal media analysis and automated content optimization using AWS services including S3, Lambda, Bedrock, and Transcribe",
+      "Implemented capabilities such as video intelligence, script generation, multilingual dubbing, background music recommendation, and automated social media distribution",
     ],
-    tools: ["React", "TypeScript", "AWS Bedrock", "Lambda", "S3"],
-    reward: "AI For Bharat 2026 — National Winner",
-    github: "https://github.com/",
-    demo: "https://github.com/",
+    tools: ["React", "TypeScript", "AWS"],
+    reward: "AI For Bharat 2026 — National Finalist",
+    github: "https://github.com/gdhanushkumar07/ContentIQ",
+    demo: "http://98.89.43.72:3000",
   },
   {
     id: 1,
@@ -63,19 +62,18 @@ const discoveries: Discovery[] = [
     region: "Valley of Healing",
     coords: "17°22′N · 78°28′E",
     level: "Lv. 20",
-    title: "Arogya",
-    subtitle: "Rural Healthcare Accessibility Platform",
+    title: "Arogya Sarathi",
+    subtitle: "Rural Healthcare Communication Platform",
     badge: "completed",
-    summary: "Telemedicine system engineered for extreme low-signal clinics. Progressive service workers queue transactions offline and sync when connectivity is restored.",
+    summary: "Created a low-bandwidth healthcare web platform enabling rural patients to share symptoms, images, and voice notes with doctors asynchronously.",
     notes: [
-      "Offline-first sync queue for rural clinics",
-      "AI-powered medical prescription parsing",
-      "Sub-50kbps low-bandwidth telemetry",
-      "Diagnostic assistance for remote doctors",
+      "Designed an offline-first architecture using browser local storage, client-side compression, and Base64 encoding to support unstable network environments",
+      "Implemented a full-stack system using React (TypeScript), Node.js, and Express.js to enable reliable medical communication in remote regions",
+      "Hackathon Project – Healthcare Accessibility Solution",
     ],
-    tools: ["React", "Next.JS", "Flask", "Python", "MongoDB"],
+    tools: ["React", "Node.js", "Express"],
     reward: "Healthcare Track — Outstanding Merit",
-    github: "https://github.com/",
+    github: "https://github.com/gdhanushkumar07/Arogya-Sarathi-final-",
     demo: "",
   },
   {
@@ -84,10 +82,10 @@ const discoveries: Discovery[] = [
     region: "Merchant's Crossing",
     coords: "17°17′N · 78°33′E",
     level: "Lv. 19",
-    title: "Trade Route",
-    subtitle: "Large-Scale E-Commerce Platform",
+    title: "E-Commerce Platform",
+    subtitle: "Trade Route",
     badge: "completed",
-    summary: "Modern commerce platform engineered for product discovery, online ordering, interactive customer experiences, and conversion-focused storefront performance.",
+    summary: "A modern e-commerce website featuring premium product showcases, interactive menu browsing, customer reviews, location integration, and seamless online ordering experience.",
     notes: [
       "Interactive product showcase",
       "Responsive commerce experience",
@@ -96,8 +94,8 @@ const discoveries: Discovery[] = [
     ],
     tools: ["React", "TypeScript", "Vite", "Node.js", "Tailwind"],
     reward: "Live Deployment — Production Ready",
-    github: "https://github.com/",
-    demo: "https://github.com/",
+    github: "https://github.com/gdhanushkumar07",
+    demo: "",
   },
 ];
 
@@ -177,7 +175,7 @@ function ExpeditionMarker({
           fontFamily="monospace"
           fill="#7A6548"
         >
-          {activeProj.id === 0 ? "Jul 2025 — Present" : "2026"}
+          {activeProj.id === 0 ? "Jul 2025 — Apr 2026" : "2026"}
         </text>
         <text
           x="0"
@@ -493,7 +491,7 @@ function ProjectCard({
             {disc.subtitle}
           </h4>
           <span className="font-sans text-[12px] text-[#7a6548]/80 block mt-0.5">
-            {disc.id === 0 ? "Jul 2025 — Present" : disc.id === 1 ? "Jan 2026 — Mar 2026" : "May 2026 — Present"}
+            {disc.id === 0 ? "Jul 2025 — Apr 2026" : disc.id === 1 ? "Jan 2026 — Mar 2026" : "May 2026 — Present"}
           </span>
         </div>
 

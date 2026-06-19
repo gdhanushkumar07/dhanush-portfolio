@@ -57,30 +57,30 @@ export const personalInfo: PersonalInfo = {
   title: "Building high-performance full-stack applications with intelligent architectures.",
   subtitle: "Computer Science Undergrad at CBIT, Hyderabad · Full-Stack Developer",
   university: "Chaitanya Bharathi Institute of Technology (CBIT), Hyderabad",
-  cgpa: "9.55 / 10",
+  cgpa: "9.60 / 10",
   batch: "Class of 2028 (2024 - 2028)",
   location: "Hyderabad, India",
-  bio: "Currently pursuing Computer Science at CBIT Hyderabad with an outstanding 9.55 CGPA. I believe software engineering is a continuous climb of exploration and high-impact shipping. I have developed AI-powered streaming platforms, designed rural telemedicine solutions, and actively solve complex computational challenges daily. My core motivation is to refine full-stack workflows, master cloud services, and build tools that solve genuine problems."
+  bio: "Currently pursuing Computer Science at CBIT Hyderabad with an outstanding 9.60 CGPA. I believe software engineering is a continuous climb of exploration and high-impact shipping. I have developed AI-powered streaming platforms, designed rural telemedicine solutions, and actively solve complex computational challenges daily. My core motivation is to refine full-stack workflows, master cloud services, and build tools that solve genuine problems."
 };
 
 export const socialLinks: SocialLink[] = [
   {
     name: "GitHub",
-    url: "https://github.com/",
+    url: "https://github.com/gdhanushkumar07",
     icon: "github",
-    userNameOrLabel: "github.com/dhanush"
+    userNameOrLabel: "github.com/gdhanushkumar07"
   },
   {
     name: "LinkedIn",
-    url: "https://linkedin.com/",
+    url: "https://www.linkedin.com/in/g-dhanush-kumar-8b4b48334",
     icon: "linkedin",
-    userNameOrLabel: "linkedin.com/in/dhanush"
+    userNameOrLabel: "linkedin.com/in/g-dhanush-kumar"
   },
   {
     name: "LeetCode",
-    url: "https://leetcode.com/",
+    url: "https://leetcode.com/u/GDhanush_07/",
     icon: "code",
-    userNameOrLabel: "leetcode.com/gdhanushkumar"
+    userNameOrLabel: "leetcode.com/u/GDhanush_07"
   },
   {
     name: "Email",
@@ -117,38 +117,36 @@ export const projectsData: Project[] = [
   {
     id: "contentiq",
     title: "ContentIQ",
-    subtitle: "AI Video Intelligence & Distribution System",
-    timelineLabel: "AI for Bharat Hackathon Winner Project",
+    subtitle: "AI Media Creation & Distribution Platform",
+    timelineLabel: "AI for Bharat Hackathon Shortlisted Project",
     date: "March 2026",
-    description: "An advanced, high-performance media processing and evaluation dashboard built to analyze multi-modal engagement parameters using cloud serverless constructs.",
+    description: "Engineered an AI-powered platform that analyzes video and audio content to produce scene-level insights, scripts, and engagement predictions.",
     features: [
-      "Engineered multi-modal asset evaluation pipeline using AWS Bedrock large models",
-      "Created sub-second transcription and linguistic sync using AWS Transcribe workflows",
-      "Pioneered secure, decoupled storage flow using AWS S3 upload events triggering automated multi-stage AWS Lambdas",
-      "Designed a professional high-fidelity dashboard visualizer tracing retention forecasts and dynamic script alternates"
+      "Developed during AI for Bharat Hackathon",
+      "Integrated multimodal media analysis and automated content optimization using AWS services including S3, Lambda, Bedrock, and Transcribe",
+      "Implemented capabilities such as video intelligence, script generation, multilingual dubbing, background music recommendation, and automated social media distribution"
     ],
-    tags: ["React", "TypeScript", "AWS S3", "AWS Lambda", "AWS Bedrock", "AWS Transcribe", "Tailwind CSS"],
+    tags: ["React", "TypeScript", "AWS"],
     isFeatured: true,
-    github: "https://github.com/",
-    demo: "https://github.com/"
+    github: "https://github.com/gdhanushkumar07/ContentIQ",
+    demo: "http://98.89.43.72:3000"
   },
   {
     id: "arogyasarathi",
     title: "Arogya Sarathi",
-    subtitle: "Rural Low-Bandwidth Telemedicine Interface",
+    subtitle: "Rural Healthcare Communication Platform",
     timelineLabel: "Healthcare Innovation Hackathon Milestone",
     date: "January 2026",
-    description: "An offline-first patient triage and live specialist consult portal tailored for extreme low-signal healthcare clinics in remote rural hubs.",
+    description: "Created a low-bandwidth healthcare web platform enabling rural patients to share symptoms, images, and voice notes with doctors asynchronously.",
     features: [
-      "Optimized payload compression matrices and light socket triggers to function below 50kbps",
-      "Developed secure client-side database caching using persistent service-worker synchronizers",
-      "Built structured offline queues that auto-reconcile with cloud instances upon network verification",
-      "Created highly accessible vernacular interfaces featuring voice translation assist badges"
+      "Designed an offline-first architecture using browser local storage, client-side compression, and Base64 encoding to support unstable network environments",
+      "Implemented a full-stack system using React (TypeScript), Node.js, and Express.js to enable reliable medical communication in remote regions",
+      "Hackathon Project – Healthcare Accessibility Solution"
     ],
-    tags: ["React", "Node.js", "Express.js", "TypeScript", "MongoDB", "Tailwind CSS"],
+    tags: ["React", "Node.js", "Express"],
     isFeatured: false,
-    github: "https://github.com/",
-    demo: "https://github.com/"
+    github: "https://github.com/gdhanushkumar07/Arogya-Sarathi-final-",
+    demo: ""
   }
 ];
 
@@ -161,11 +159,11 @@ export const accoladesData: Accolade[] = [
     detail: "Secured Outstanding All-India Rank 36 among hundreds of professional engineering and university teams during a high-stakes algorithmic sprint."
   },
   {
-    title: "Top Integration Award winner",
+    title: "Shortlisted in AI for Bharat",
     organization: "AI for Bharat Hackathon",
-    date: "Mar 2026",
+    date: "Apr 2026",
     type: "achievement",
-    detail: "Earned national recognition and commercial-tier cloud deployment support for designing ContentIQ's serverless media pipeline."
+    detail: "Selected as national finalist and shortlisted among top teams for designing ContentIQ's serverless media pipeline."
   },
   {
     title: "Data Science Foundation",
@@ -185,9 +183,9 @@ export const accoladesData: Accolade[] = [
 
 export const timelineMilestones: Milestone[] = [
   {
-    year: "Present",
-    title: "AI Media Platform Pioneer",
-    description: "Won AI for Bharat Hackathon. Active on campus developing next-generation intelligent full-stack applications.",
+    year: "Early 2026",
+    title: "AI Media Platform Finalist",
+    description: "Shortlisted for AI for Bharat Hackathon. Developed ContentIQ media intelligence engine until April 2026.",
     category: "innovation",
     isLatest: true
   },
@@ -206,7 +204,7 @@ export const timelineMilestones: Milestone[] = [
   {
     year: "Mid 2025",
     title: "Distinction Track",
-    description: "Maintained a continuous 9.55 CGPA at CBIT Hyderabad, placing in top tier of the computer engineering batch.",
+    description: "Maintained a continuous 9.60 CGPA at CBIT Hyderabad, placing in top tier of the computer engineering batch.",
     category: "academic"
   },
   {

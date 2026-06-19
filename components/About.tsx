@@ -55,46 +55,29 @@ const backgroundParticles = [
 
 const TorchStyles = () => (
   <style dangerouslySetInnerHTML={{ __html: `
-    @keyframes torchFlame {
-      0%, 100% {
-        transform: scale(1, 1) rotate(0deg) translateY(0px);
-        opacity: 0.95;
-      }
-      25% {
-        transform: scale(0.98, 1.03) rotate(0.5deg) translateY(-0.5px);
-        opacity: 1;
-      }
-      50% {
-        transform: scale(1.02, 0.98) rotate(-0.5deg) translateY(0px);
-        opacity: 0.97;
-      }
-      75% {
-        transform: scale(0.99, 1.02) rotate(0.2deg) translateY(0.2px);
-        opacity: 1;
-      }
-    }
     @keyframes torchEmber0 {
-      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translate(-3px, -50px) scale(0.4); opacity: 0; }
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(-8px, -70px) scale(0.3); opacity: 0; }
     }
     @keyframes torchEmber1 {
-      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translate(0px, -50px) scale(0.4); opacity: 0; }
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(6px, -85px) scale(0.3); opacity: 0; }
     }
     @keyframes torchEmber2 {
-      0% { transform: translate(0px, -10px) scale(0.8); opacity: 0; }
-      10% { opacity: 0.8; }
-      90% { opacity: 0.8; }
-      100% { transform: translate(3px, -50px) scale(0.4); opacity: 0; }
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(-4px, -60px) scale(0.3); opacity: 0; }
     }
-    .animate-torch-flame {
-      animation: torchFlame 1.8s infinite ease-in-out;
-      transform-origin: 15px 30px;
-      will-change: transform, opacity;
+    @keyframes torchEmber3 {
+      0% { transform: translate(0px, -5px) scale(1); opacity: 0; }
+      15% { opacity: 0.9; }
+      85% { opacity: 0.9; }
+      100% { transform: translate(8px, -75px) scale(0.3); opacity: 0; }
     }
     .animate-torch-ember-0 {
       animation: torchEmber0 2.2s infinite ease-out;
@@ -102,12 +85,17 @@ const TorchStyles = () => (
     }
     .animate-torch-ember-1 {
       animation: torchEmber1 2.2s infinite ease-out;
-      animation-delay: 0.7s;
+      animation-delay: 0.6s;
       will-change: transform, opacity;
     }
     .animate-torch-ember-2 {
       animation: torchEmber2 2.2s infinite ease-out;
-      animation-delay: 1.4s;
+      animation-delay: 1.2s;
+      will-change: transform, opacity;
+    }
+    .animate-torch-ember-3 {
+      animation: torchEmber3 2.2s infinite ease-out;
+      animation-delay: 1.8s;
       will-change: transform, opacity;
     }
   ` }} />
@@ -119,8 +107,9 @@ const TorchGlow = ({ className }: { className?: string }) => (
       className="w-[1px] h-[1px] rounded-full"
       style={{
         boxShadow: `
-          0 0 120px 55px rgba(255,140,66,0.32),
-          0 0 200px 95px rgba(255,110,40,0.15)
+          0 0 140px 65px rgba(255,140,66,0.35),
+          0 0 240px 115px rgba(255,110,40,0.18),
+          0 0 40px 15px rgba(255,200,100,0.2)
         `
       }}
     />
@@ -131,15 +120,49 @@ const Torch = ({ className }: { className?: string }) => (
   <div className={`absolute pointer-events-none select-none z-30 hidden md:block ${className}`}>
     <div className="relative w-[30px] h-[80px]">
       <svg width="30" height="80" viewBox="0 0 30 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-        {/* Flame (Animated teardrop shape) */}
-        <g className="animate-torch-flame">
-          {/* Outer Flame (#FF8C42) */}
-          <path d="M 15,5 C 9,15 8,25 15,32 C 22,25 21,15 15,5 Z" fill="#FF8C42" />
-          {/* Middle Flame (#FFB347) */}
-          <path d="M 15,12 C 11,18 10,25 15,32 C 20,25 19,18 15,12 Z" fill="#FFB347" />
-          {/* Inner Flame Core (#FFD166) */}
-          <path d="M 15,18 C 12,22 12,27 15,32 C 18,27 18,22 15,18 Z" fill="#FFD166" />
-        </g>
+        {/* Flame (Organic layered paths matching hero section style) */}
+        {/* Outer Flame */}
+        <motion.path
+          d="M 15,32 C 7,27 4,18 9,10 C 11,8 13,11 15,7 C 17,4 16,1 17,0 C 21,7 23,13 21,18 C 24,14 26,9 24,5 C 28,11 28,18 25,24 C 27,20 29,15 27,10 C 31,17 29,24 23,29 Z"
+          fill="#D85808"
+          animate={{
+            scaleX: [1, 1.15, 0.9, 1.1, 1],
+            scaleY: [1, 1.12, 0.88, 1.08, 1],
+            opacity: [0.9, 1, 0.85, 0.98, 0.9],
+          }}
+          style={{ transformOrigin: "15px 32px" }}
+          transition={{ duration: 0.78, repeat: Infinity, ease: "easeInOut" }}
+        />
+        {/* Mid Flame */}
+        <motion.path
+          d="M 15,32 C 10,28 8,21 11,15 C 12,13 13,15 15,12 C 16,9 15,7 16,5 C 19,10 20,15 19,19 C 21,16 22,12 20,9 C 23,14 23,19 21,24 C 22,21 23,17 22,14 C 25,19 23,24 19,28 Z"
+          fill="#F58F18"
+          animate={{
+            scaleY: [1, 1.18, 0.88, 1.12, 1],
+            opacity: [0.85, 1, 0.8, 0.95, 0.85],
+          }}
+          style={{ transformOrigin: "15px 32px" }}
+          transition={{ duration: 0.62, repeat: Infinity, ease: "easeInOut", delay: 0.08 }}
+        />
+        {/* Inner Flame */}
+        <motion.path
+          d="M 15,32 C 12,29 11,24 13,20 C 13,18 14,19 15,17 C 16,15 15,13 16,11 C 18,15 18,19 17,22 C 18,19 19,16 18,14 C 20,18 20,22 18,25 Z"
+          fill="#FFC038"
+          animate={{
+            scaleY: [1, 1.2, 0.85, 1.14, 1],
+            opacity: [0.8, 1, 0.76, 0.93, 0.8],
+          }}
+          style={{ transformOrigin: "15px 32px" }}
+          transition={{ duration: 0.5, repeat: Infinity, ease: "easeInOut", delay: 0.18 }}
+        />
+        {/* Core Flame */}
+        <motion.ellipse
+          cx="15" cy="26" rx="2.2" ry="4.2"
+          fill="#FFF3C0"
+          animate={{ scaleY: [1, 1.25, 0.82, 1.15, 1], opacity: [0.78, 1, 0.72, 0.92, 0.78] }}
+          style={{ transformOrigin: "15px 26px" }}
+          transition={{ duration: 0.44, repeat: Infinity, ease: "easeInOut", delay: 0.12 }}
+        />
 
         {/* Metal Cup / Torch Head (Dark bronze holder) */}
         <path d="M 10,32 H 20 L 18,36 H 12 Z" fill="#3D3025" stroke="#251C15" strokeWidth="0.75" />
@@ -156,16 +179,12 @@ const Torch = ({ className }: { className?: string }) => (
       <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-0" style={{ left: "14px", bottom: "45px" }} />
       <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-1" style={{ left: "14px", bottom: "45px" }} />
       <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-2" style={{ left: "14px", bottom: "45px" }} />
+      <div className="absolute w-1 h-1 rounded-full bg-[#FFAA50] animate-torch-ember-3" style={{ left: "14px", bottom: "45px" }} />
     </div>
   </div>
 );
 
 export default function About() {
-  const handleResumeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    alert("Interactive Resume PDF Download Simulation.");
-  };
-
   const easeCurve: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
   // Motion variants
@@ -522,7 +541,7 @@ export default function About() {
                       TOOLKIT MASTERED
                     </h4>
                     <div className="flex flex-wrap gap-2 mt-4">
-                      {['Java', 'Spring Boot', 'React', 'Next.js', 'Node.js', 'PostgreSQL', 'MongoDB', 'AWS', 'Docker', 'TypeScript'].map((skill) => (
+                      {['C++', 'Python', 'Java', 'JavaScript', 'React.js', 'Node.js', 'Express.js', 'MySQL', 'MongoDB', 'Git'].map((skill) => (
                         <span
                           key={skill}
                           className="font-sans text-xs h-[42px] px-[18px] flex items-center bg-[rgba(255,255,255,0.03)] text-[#C9B7A4]/90 rounded-lg cursor-default border hover:border-[#FFAA50]/30 hover:text-[#F5F1EB] hover:-translate-y-[2px] hover:shadow-[0_8px_20px_rgba(255,170,80,0.08)] transition-all duration-300"
@@ -542,7 +561,7 @@ export default function About() {
                     <div className="flex flex-wrap gap-4 items-center mt-4">
                       <div className="flex gap-3">
                         <a
-                          href="https://github.com/"
+                          href="https://github.com/gdhanushkumar07"
                           target="_blank"
                           rel="noreferrer"
                           className="w-10 h-10 rounded-full border border-[#C9B7A4]/15 bg-[#C9B7A4]/[0.02] hover:bg-[#E18A42]/5 hover:border-[#E18A42]/50 flex items-center justify-center text-[#C9B7A4]/60 hover:text-[#E18A42] transition-all duration-300 shadow-sm"
@@ -551,7 +570,7 @@ export default function About() {
                           <Github className="w-4.5 h-4.5" />
                         </a>
                         <a
-                          href="https://linkedin.com/"
+                          href="https://www.linkedin.com/in/g-dhanush-kumar-8b4b48334"
                           target="_blank"
                           rel="noreferrer"
                           className="w-10 h-10 rounded-full border border-[#C9B7A4]/15 bg-[#C9B7A4]/[0.02] hover:bg-[#E18A42]/5 hover:border-[#E18A42]/50 flex items-center justify-center text-[#C9B7A4]/60 hover:text-[#E18A42] transition-all duration-300 shadow-sm"
@@ -567,13 +586,15 @@ export default function About() {
                           <Mail className="w-4.5 h-4.5" />
                         </a>
                       </div>
-                      <button
-                        onClick={handleResumeClick}
+                      <a
+                        href="/Dhanush-resume.pdf"
+                        target="_blank"
+                        rel="noreferrer"
                         className="cursor-pointer border border-[#E18A42]/30 bg-[#E18A42]/5 hover:bg-[#E18A42]/10 hover:border-[#E18A42]/60 px-5 py-2.5 rounded-xl text-xs font-mono text-[#E18A42] uppercase tracking-wider flex items-center gap-2 transition-all duration-300"
                       >
                         <FileText className="w-3.5 h-3.5" />
                         <span>Resume</span>
-                      </button>
+                      </a>
                     </div>
                   </div>
                 </div>
@@ -603,10 +624,10 @@ export default function About() {
           </span>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 items-stretch justify-center">
             {[
-              { badge: "🏆", title: "AI For Bharat Winner", desc: "National Hackathon" },
+              { badge: "🎖️", title: "AI For Bharat Finalist", desc: "National Hackathon" },
               { badge: "🥈", title: "Adobe India Hackathon", desc: "Whiteboard Sync Project" },
               { badge: "💻", title: "200+ LeetCode Problems", desc: "Algorithmic Ascent" },
-              { badge: "🎯", title: "9.55 CGPA CSE", desc: "CBIT Batch Distinction" }
+              { badge: "🎯", title: "9.60 CGPA CSE", desc: "CBIT Batch Distinction" }
             ].map((ach, idx) => (
               <div 
                 key={idx} 
