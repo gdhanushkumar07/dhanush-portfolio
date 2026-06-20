@@ -55,7 +55,7 @@ const discoveries: Discovery[] = [
     tools: ["React", "TypeScript", "AWS"],
     reward: "AI For Bharat 2026 — National Finalist",
     github: "https://github.com/gdhanushkumar07/ContentIQ",
-    demo: "http://98.89.43.72:3000",
+    demo: "",
   },
   {
     id: 1,
@@ -97,7 +97,7 @@ const discoveries: Discovery[] = [
     ],
     tools: ["React", "TypeScript", "Vite", "Node.js", "Tailwind"],
     reward: "Live Deployment — Production Ready",
-    github: "https://github.com/gdhanushkumar07",
+    github: "https://github.com/gdhanushkumar07/dynosaur-website",
     demo: "",
   },
 ];
