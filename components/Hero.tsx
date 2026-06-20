@@ -13,6 +13,12 @@ interface HeroProps {
    STAR FIELD — three layers of depth, elegant, twinkling
    ══════════════════════════════════════════════ */
 const StarField = () => {
+  const [mounted, setMounted] = React.useState(false);
+
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const layers = useMemo(() => {
     // 3 layers: small, medium, bright
     const smallStars = Array.from({ length: 55 }, (_, i) => ({
@@ -47,6 +53,8 @@ const StarField = () => {
 
     return { smallStars, medStars, brightStars };
   }, []);
+
+  if (!mounted) return null;
 
   return (
     <div className="absolute inset-0 pointer-events-none z-[1]">

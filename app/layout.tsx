@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Golconda Dhanush Kumar | Portfolio",
+  title: "Dhanush-portfolio",
   description: "Computer Science Undergrad at CBIT Hyderabad · Full-Stack Developer building high-performance full-stack applications with intelligent architectures.",
   keywords: [
     "Golconda Dhanush Kumar",

@@ -414,7 +414,7 @@ export default function About() {
           <span className="font-mono text-[12px] tracking-[8px] uppercase block text-[rgba(255,170,80,0.9)]">
             ABOUT
           </span>
-          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#F5F1EB] tracking-tight leading-tight max-w-none whitespace-nowrap">
+          <h2 className="font-display text-xl sm:text-2xl md:text-3xl lg:text-4xl font-extrabold text-[#F5F1EB] tracking-tight leading-tight max-w-none">
             The Builder Behind The Journey
           </h2>
           <p className="font-sans text-[16px] md:text-[18px] leading-[1.6] text-[rgba(245,241,235,0.78)] font-light max-w-[600px] mx-auto">
@@ -451,8 +451,7 @@ export default function About() {
               
               {/* LEFT COLUMN: Clean Identity Plaque (38%) */}
               <motion.div 
-                className="space-y-8 pb-10 lg:pb-0 lg:pr-12 flex flex-col justify-between"
-                style={{ borderRight: "1px solid rgba(255,170,80,0.08)" }}
+                className="space-y-8 pb-10 lg:pb-0 lg:pr-12 flex flex-col justify-between border-b lg:border-b-0 lg:border-r border-dashed border-[rgba(255,170,80,0.08)]"
                 variants={fadeUp}
               >
                 <div className="flex flex-col justify-between h-full p-6 md:p-8 rounded-2xl border border-[rgba(255,170,80,0.06)] bg-[rgba(255,255,255,0.01)] relative overflow-hidden">

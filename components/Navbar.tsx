@@ -1,8 +1,8 @@
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import { Compass } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { Compass, Menu, X } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
 
 interface NavItem {
   id: string;
@@ -13,6 +13,7 @@ interface NavItem {
 export default function Navbar() {
   const [showFloatingNav, setShowFloatingNav] = useState(false);
   const [activeSection, setActiveSection] = useState('hero');
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems: NavItem[] = [
     { id: 'hero', label: 'Home', href: '#hero' },
@@ -22,6 +23,18 @@ export default function Navbar() {
     { id: 'achievements', label: 'Achievements', href: '#achievements' },
     { id: 'contact', label: 'Connect', href: '#contact' },
   ];
+
+  // Prevent scroll when mobile menu is open
+  useEffect(() => {
+    if (mobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [mobileMenuOpen]);
 
   useEffect(() => {
     let ticking = false;
@@ -68,6 +81,7 @@ export default function Navbar() {
 
   const handleScrollTo = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
+    setMobileMenuOpen(false);
     const target = document.querySelector(href);
     if (target) {
       target.scrollIntoView({ behavior: 'smooth' });
@@ -93,10 +107,20 @@ export default function Navbar() {
               Dhanush<span className="text-accent-amber">.</span>
             </span>
           </a>
+
+          {/* Desktop/Tablet Direct Items (Optional fallback if not scrolled) */}
+          <button
+            onClick={() => setMobileMenuOpen(true)}
+            className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-slate-900/60 border border-white/10 text-text-primary hover:bg-slate-800 transition-colors pointer-events-auto"
+            aria-label="Open Navigation Menu"
+            style={{ minHeight: "44px", minWidth: "44px" }}
+          >
+            <Menu className="w-5 h-5" />
+          </button>
         </div>
       </header>
 
-      {/* 2. Scroll-Activated Floating Navigation (White Pill) */}
+      {/* 2. Scroll-Activated Floating Navigation (Pill Navigation for Desktop) */}
       <motion.div
         initial={{ opacity: 0, y: -20, x: "-50%" }}
         animate={{
@@ -106,7 +130,7 @@ export default function Navbar() {
           pointerEvents: showFloatingNav ? "auto" : "none"
         }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
-        className="fixed top-6 left-1/2 z-50 select-none"
+        className="fixed top-6 left-1/2 z-50 select-none hidden md:block"
       >
         <nav
           className="flex items-center px-4 sm:px-6 py-2 bg-white/92 backdrop-blur-xl border border-white/60 shadow-[0_10px_40px_rgba(0,0,0,0.12)] rounded-full"
@@ -127,9 +151,10 @@ export default function Navbar() {
                   <a
                     href={item.href}
                     onClick={(e) => handleScrollTo(e, item.href)}
-                    className={`px-1.5 sm:px-3 py-1.5 text-[9.5px] sm:text-xs font-semibold tracking-wider transition-colors duration-200 block relative uppercase ${
+                    className={`px-3 py-2 text-xs font-semibold tracking-wider transition-colors duration-200 block relative uppercase ${
                       isActive ? 'text-amber-800' : 'text-slate-500 hover:text-slate-900'
                     }`}
+                    style={{ minHeight: "44px", display: "flex", alignItems: "center" }}
                     id={`floating-nav-item-${item.id}`}
                   >
                     <span className="relative z-10">{item.label}</span>
@@ -147,6 +172,99 @@ export default function Navbar() {
           </ul>
         </nav>
       </motion.div>
+
+      {/* Mobile Floating Menu Button (Shows only on scroll on mobile) */}
+      <div className="fixed bottom-6 right-6 z-50 md:hidden pointer-events-auto">
+        <motion.button
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{
+            scale: showFloatingNav ? 1 : 0,
+            opacity: showFloatingNav ? 1 : 0
+          }}
+          onClick={() => setMobileMenuOpen(true)}
+          className="w-12 h-12 rounded-full bg-white text-slate-900 shadow-xl border border-slate-200 flex items-center justify-center hover:bg-slate-100 transition-transform active:scale-95"
+          style={{ minHeight: "44px", minWidth: "44px" }}
+          aria-label="Open menu button"
+        >
+          <Menu className="w-6 h-6" />
+        </motion.button>
+      </div>
+
+      {/* 3. Fully Responsive Mobile Hamburger Menu Drawer */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            {/* Backdrop Overlay */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 0.6 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="fixed inset-0 bg-black z-50 md:hidden cursor-pointer"
+            />
+
+            {/* Slide-out Drawer Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ type: "spring", damping: 25, stiffness: 200 }}
+              className="fixed top-0 right-0 bottom-0 w-[80vw] max-w-[320px] bg-[#120a06] border-l border-amber-900/20 z-50 shadow-2xl md:hidden flex flex-col p-6 pointer-events-auto select-none"
+            >
+              {/* Header inside drawer */}
+              <div className="flex justify-between items-center mb-10 pb-4 border-b border-amber-950/20">
+                <span className="font-mono text-xs uppercase tracking-widest text-[#C58B2A] font-extrabold">
+                  CHAPTER INDEX
+                </span>
+                <button
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-10 h-10 flex items-center justify-center rounded-full bg-amber-950/10 text-text-primary hover:bg-amber-950/30"
+                  aria-label="Close menu drawer"
+                  style={{ minHeight: "44px", minWidth: "44px" }}
+                >
+                  <X className="w-5 h-5 text-[#FDFAF5]" />
+                </button>
+              </div>
+
+              {/* Navigation Links inside drawer */}
+              <nav className="flex-grow">
+                <ul className="flex flex-col gap-3">
+                  {navItems.map((item, idx) => {
+                    const isActive = activeSection === item.id;
+                    return (
+                      <motion.li
+                        key={item.id}
+                        initial={{ opacity: 0, y: 15 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: idx * 0.05 }}
+                      >
+                        <a
+                          href={item.href}
+                          onClick={(e) => handleScrollTo(e, item.href)}
+                          className={`flex items-center gap-3 w-full py-3.5 px-4 rounded-xl font-sans text-sm font-bold uppercase tracking-wider transition-all duration-200 border ${
+                            isActive
+                              ? 'bg-[#F1E7D4] text-[#211711] border-[#C58B2A]/30 shadow-md'
+                              : 'bg-transparent text-[#C9B7A4]/80 border-transparent hover:text-white hover:bg-amber-950/10'
+                          }`}
+                          style={{ minHeight: "44px" }}
+                        >
+                          <span className="font-mono text-[9px] text-[#C58B2A] font-bold">0{idx + 1}</span>
+                          <span>{item.label}</span>
+                        </a>
+                      </motion.li>
+                    );
+                  })}
+                </ul>
+              </nav>
+
+              {/* Drawer footer details */}
+              <div className="mt-auto pt-6 border-t border-amber-950/20 text-center font-mono text-[8px] text-[#C9B7A4]/30 uppercase tracking-[0.25em]">
+                <span>EXPEDITION LIVE RECORD</span>
+              </div>
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
     </>
   );
 }

@@ -110,14 +110,14 @@ export default function Contact() {
         <div className="max-w-[1020px] mx-auto relative z-10 w-full flex flex-col items-center gap-14">
           
           {/* HEADER SECTION */}
-          <div className="flex flex-col items-center text-center select-none max-w-[600px] mx-auto">
-            <span className="font-mono text-[9.5px] uppercase tracking-[0.4em] text-[#b59c77] mb-3 block">
+          <div className="flex flex-col items-center text-center select-none max-w-[600px] mx-auto px-4">
+            <span className="font-mono text-[9px] uppercase tracking-[0.4em] text-[#b59c77] mb-3 block">
               TREASURE FOUND
             </span>
-            <h2 className="font-serif text-3xl sm:text-4.5xl font-extrabold text-[#1B4314] tracking-tight mb-4">
+            <h2 className="font-serif text-2xl sm:text-3.5xl md:text-4.5xl font-extrabold text-[#1B4314] tracking-tight mb-4 leading-tight">
               Let&apos;s Connect
             </h2>
-            <p className="font-sans text-[13px] sm:text-[14px] leading-relaxed text-[#8FA282] tracking-wide font-medium">
+            <p className="font-sans text-[12px] sm:text-[14px] leading-relaxed text-[#8FA282] tracking-wide font-medium">
               take what you need, adventurer.
             </p>
           </div>

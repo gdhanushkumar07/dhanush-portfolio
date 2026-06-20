@@ -211,7 +211,7 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
   return (
     <div
       ref={container}
-      className="h-[85vh] sm:h-screen flex items-center justify-center sticky top-0 z-20"
+      className="min-h-[90vh] sm:min-h-screen py-10 md:py-0 flex items-center justify-center sticky top-0 z-20"
     >
       <motion.div
         style={{
@@ -221,7 +221,7 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
           border: "1px solid rgba(197, 139, 42, 0.25)",
           boxShadow: "0 25px 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(197, 139, 42, 0.04)",
         }}
-        className="flex flex-col h-[520px] sm:h-[480px] w-[90%] max-w-[960px] rounded-[28px] p-1.5 origin-top relative overflow-hidden group hover:border-[#C58B2A]/60 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(197,139,42,0.08)] transition-all duration-500"
+        className="flex flex-col h-auto min-h-[520px] md:h-[480px] lg:h-[520px] w-[90%] max-w-[960px] rounded-[28px] p-1.5 origin-top relative overflow-hidden group hover:border-[#C58B2A]/60 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(197,139,42,0.08)] transition-all duration-500"
       >
         {/* Corner Brass Brackets */}
         <BrassCorner position="top-left" />
@@ -234,7 +234,7 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
           
           {/* LEFT PANEL: Parchment Expedition Journal Page (5 cols) */}
           <div 
-            className="md:col-span-5 flex flex-col justify-between p-6 sm:p-9 h-full relative"
+            className="col-span-1 md:col-span-5 flex flex-col justify-between p-6 sm:p-9 min-h-[240px] md:h-full relative"
             style={{
               background: "#F1E7D4",
               backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E\")"
@@ -271,7 +271,7 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
 
           {/* CENTER PANEL: Technical Skills Panel (4 cols) */}
           <div 
-            className="md:col-span-4 flex flex-col justify-center p-6 sm:p-9 h-full gap-2 border-r border-l border-dashed border-[#C58B2A]/25"
+            className="col-span-1 md:col-span-4 flex flex-col justify-center p-6 sm:p-9 min-h-[200px] md:h-full gap-2 border-t md:border-t-0 md:border-r md:border-l border-dashed border-[#C58B2A]/25"
             style={{ background: "#17100D" }}
           >
             <span className="font-mono text-[8px] text-[#C58B2A]/80 tracking-[0.25em] uppercase block mb-3 font-bold">
@@ -292,7 +292,7 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
 
           {/* RIGHT PANEL: Blueprint Panel (3 cols) */}
           <div 
-            className="md:col-span-3 flex flex-col justify-center items-center p-6 h-full min-h-0 relative"
+            className="col-span-1 md:col-span-3 flex flex-col justify-center items-center p-6 min-h-[180px] md:h-full relative border-t md:border-t-0 border-dashed border-[#C58B2A]/25"
             style={{ background: "#0D1218" }}
           >
             {/* Grid overlay */}
