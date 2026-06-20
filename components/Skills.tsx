@@ -12,13 +12,13 @@ const BrassCorner = ({ position }: { position: 'top-left' | 'top-right' | 'botto
   }[position];
 
   return (
-    <div className={`absolute w-8 h-8 pointer-events-none select-none text-[#8B6914]/40 ${rotation}`}>
+    <div className={`absolute w-8 h-8 pointer-events-none select-none text-[#d49a3b]/60 drop-shadow-[0_0_3px_rgba(212,154,59,0.3)] ${rotation}`}>
       <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" fill="currentColor" opacity="0.25" />
-        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" stroke="currentColor" strokeWidth="1.2" />
-        <circle cx="5" cy="5" r="2.2" fill="#A88120" stroke="#4A3B1F" strokeWidth="0.5" />
-        <circle cx="20" cy="5" r="1.8" fill="#8B6914" stroke="#4A3B1F" strokeWidth="0.5" />
-        <circle cx="5" cy="20" r="1.8" fill="#8B6914" stroke="#4A3B1F" strokeWidth="0.5" />
+        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" fill="currentColor" opacity="0.3" />
+        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" stroke="currentColor" strokeWidth="1.5" />
+        <circle cx="5" cy="5" r="2.2" fill="#E5A93B" stroke="#5E431B" strokeWidth="0.5" />
+        <circle cx="20" cy="5" r="1.8" fill="#d49a3b" stroke="#5E431B" strokeWidth="0.5" />
+        <circle cx="5" cy="20" r="1.8" fill="#d49a3b" stroke="#5E431B" strokeWidth="0.5" />
       </svg>
     </div>
   );
@@ -217,86 +217,114 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
         style={{
           scale,
           top: `calc(10vh + ${i * 25}px)`,
-          background: "rgba(12, 8, 6, 0.92)",
-          backdropFilter: "blur(24px)",
-          border: "1px solid rgba(255, 180, 80, 0.14)",
-          boxShadow: "0 30px 70px rgba(0,0,0,0.9), inset 0 0 30px rgba(255,140,66,0.03)",
+          background: "#211711",
+          border: "1px solid rgba(197, 139, 42, 0.25)",
+          boxShadow: "0 25px 60px rgba(0,0,0,0.8), inset 0 0 40px rgba(197, 139, 42, 0.04)",
         }}
-        className="flex flex-col h-[520px] sm:h-[480px] w-[90%] max-w-[960px] rounded-[28px] p-6 sm:p-10 origin-top relative overflow-hidden group hover:border-amber-500/40 transition-colors duration-500"
+        className="flex flex-col h-[520px] sm:h-[480px] w-[90%] max-w-[960px] rounded-[28px] p-1.5 origin-top relative overflow-hidden group hover:border-[#C58B2A]/60 hover:-translate-y-1 hover:shadow-[0_25px_70px_rgba(197,139,42,0.08)] transition-all duration-500"
       >
-        {/* Top gold highlight line */}
-        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-500/45 to-transparent" />
-        
         {/* Corner Brass Brackets */}
         <BrassCorner position="top-left" />
         <BrassCorner position="top-right" />
         <BrassCorner position="bottom-left" />
         <BrassCorner position="bottom-right" />
 
-        {/* Ambient card edge light */}
-        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-amber-500/[0.02] via-transparent to-amber-500/[0.04]" />
-
         {/* THREE-COLUMN BENTO CONTENT LAYOUT */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 h-full relative z-10 items-center">
+        <div className="grid grid-cols-1 md:grid-cols-12 h-full w-full rounded-[26px] overflow-hidden gap-0 relative z-10">
           
-          {/* LEFT COLUMN: Narrative & Info (5 cols) */}
-          <div className="md:col-span-5 flex flex-col justify-between h-[85%] border-r border-dashed border-amber-950/20 pr-4">
+          {/* LEFT PANEL: Parchment Expedition Journal Page (5 cols) */}
+          <div 
+            className="md:col-span-5 flex flex-col justify-between p-6 sm:p-9 h-full relative"
+            style={{
+              background: "#F1E7D4",
+              backgroundImage: "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E\")"
+            }}
+          >
             <div>
-              <span className="font-mono text-[8px] text-amber-500/60 tracking-[0.4em] uppercase block mb-2 font-bold">
+              <span className="font-mono text-[8.5px] text-[#C58B2A] tracking-[0.4em] uppercase block mb-3 font-extrabold">
                 {card.chapter}
               </span>
-              <h2 className="font-serif text-xl sm:text-2xl font-extrabold text-[#FDFAF5] tracking-tight mb-3">
+              <h2 className="font-serif text-xl sm:text-2xl font-black text-[#211711] tracking-tight mb-4">
                 {card.title}
               </h2>
-              <p className="font-sans text-[12.5px] text-[#C9B7A4]/80 leading-relaxed mb-4">
+              <p className="font-sans text-[12.5px] text-[#4A3C31] leading-relaxed mb-6 font-medium">
                 {card.description}
               </p>
-              <div className="bg-[#120E0C]/40 border border-amber-950/30 rounded-xl p-3.5 relative overflow-hidden">
-                <div className="absolute top-0 left-0 bottom-0 w-0.5 bg-amber-500/40" />
-                <p className="font-sans text-[11px] text-[#C9B7A4]/50 leading-relaxed font-light italic pl-1.5">
+              <div 
+                className="rounded-xl p-4 relative overflow-hidden"
+                style={{
+                  background: "rgba(33, 23, 17, 0.05)",
+                  border: "1px solid rgba(33, 23, 17, 0.1)"
+                }}
+              >
+                <div className="absolute top-0 left-0 bottom-0 w-[3px] bg-[#C58B2A]" />
+                <p className="font-sans text-[11px] text-[#5C4A3C] leading-relaxed font-semibold italic pl-2.5">
                   {card.narrative}
                 </p>
               </div>
             </div>
             
-            <div className="hidden md:flex items-center gap-2 font-mono text-[7px] text-[#C9B7A4]/35 uppercase tracking-widest mt-4">
+            <div className="hidden md:flex items-center gap-2 font-mono text-[7px] text-[#5C4A3C]/60 uppercase tracking-widest mt-4 font-bold">
               <span>EXPLORER LOG BOOK // CHAPTER.0{i + 1}</span>
             </div>
           </div>
 
-          {/* MIDDLE COLUMN: Skills Boxes (4 cols) */}
-          <div className="md:col-span-4 flex flex-col justify-center h-[85%] gap-2 border-r border-dashed border-amber-950/20 pr-4">
-            <span className="font-mono text-[8px] text-amber-500/50 tracking-[0.25em] uppercase block mb-2 font-bold">
+          {/* CENTER PANEL: Technical Skills Panel (4 cols) */}
+          <div 
+            className="md:col-span-4 flex flex-col justify-center p-6 sm:p-9 h-full gap-2 border-r border-l border-dashed border-[#C58B2A]/25"
+            style={{ background: "#17100D" }}
+          >
+            <span className="font-mono text-[8px] text-[#C58B2A]/80 tracking-[0.25em] uppercase block mb-3 font-bold">
               UNLOCKED CAPABILITIES
             </span>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2.5">
               {card.skills.map((skill) => (
                 <div
                   key={skill}
-                  className="font-mono text-[10.5px] font-bold text-[#F5F1EB] bg-[#140F0D]/90 border border-amber-950/70 rounded-xl px-4 py-2.5 hover:border-amber-500/40 hover:translate-x-1 hover:shadow-[0_4px_12px_rgba(212,175,55,0.06)] hover:text-amber-400 transition-all duration-300 select-none cursor-default flex items-center gap-2.5"
+                  className="font-mono text-[10.5px] font-bold text-[#F6F2EA] bg-[#211711]/60 border border-[#C58B2A]/30 rounded-xl px-4 py-2.5 hover:border-[#C58B2A] hover:bg-[#211711] hover:translate-x-1 hover:shadow-[0_4px_12px_rgba(197,139,42,0.15)] hover:text-[#F6F2EA] transition-all duration-300 select-none cursor-default flex items-center gap-2.5"
                 >
-                  <span className="w-1 h-1 rounded-full bg-amber-500/50 group-hover:bg-amber-400" />
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#C58B2A] animate-pulse" />
                   <span>{skill}</span>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* RIGHT COLUMN: Visual representation (3 cols) */}
-          <div className="md:col-span-3 flex flex-col justify-center items-center h-[85%] min-h-0 pl-2">
-            <div className="w-full h-full rounded-xl border border-amber-950/50 bg-[#120E0C]/60 p-4 relative overflow-hidden flex flex-col items-center justify-between min-h-[140px] max-h-[220px] shadow-inner">
-              {/* Technical Blueprint labels */}
-              <div className="w-full flex justify-between font-mono text-[6.5px] text-amber-500/40 tracking-wider mb-2">
+          {/* RIGHT PANEL: Blueprint Panel (3 cols) */}
+          <div 
+            className="md:col-span-3 flex flex-col justify-center items-center p-6 h-full min-h-0 relative"
+            style={{ background: "#0D1218" }}
+          >
+            {/* Grid overlay */}
+            <div 
+              className="absolute inset-0 opacity-[0.08]"
+              style={{
+                backgroundImage: `
+                  linear-gradient(to right, #C58B2A 1px, transparent 1px),
+                  linear-gradient(to bottom, #C58B2A 1px, transparent 1px)
+                `,
+                backgroundSize: "12px 12px"
+              }}
+            />
+            {/* Blueprint lines & Compass outline */}
+            <div className="absolute inset-4 border border-[#C58B2A]/10 pointer-events-none rounded-lg" />
+            
+            <div className="w-full h-full relative z-10 flex flex-col items-center justify-between min-h-[140px] py-2">
+              <div className="w-full flex justify-between font-mono text-[6.5px] text-[#C58B2A]/50 tracking-wider">
                 <span>[ SCHEMA_V1.0 ]</span>
                 <span>[ GRID_LOCK ]</span>
               </div>
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(253,250,245,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(253,250,245,0.015)_1px,transparent_1px)] bg-[size:10px_10px]" />
+              
               <motion.div 
                 style={{ scale: imageScale }} 
-                className="flex-1 w-full h-full flex items-center justify-center relative z-10 opacity-75 group-hover:opacity-95 transition-opacity duration-300"
+                className="flex-1 w-full h-full flex items-center justify-center relative opacity-85 group-hover:opacity-100 transition-opacity duration-300"
               >
                 {card.visual}
               </motion.div>
+              
+              <div className="w-full flex justify-center font-mono text-[6px] text-[#C58B2A]/40 tracking-widest uppercase">
+                <span>// BLUEPRINT DRAUGHT //</span>
+              </div>
             </div>
           </div>
 
@@ -333,7 +361,7 @@ export default function Skills() {
   const cards: SkillCardData[] = [
     {
       chapter: "CHAPTER 01 / FOUNDATION",
-      title: "Foundation Instruments",
+      title: "Programming Fundamentals",
       description: "The first tools used to understand programming logic, algorithms, and structured problem solving.",
       narrative: "Deep in the codebase core, these mathematical relics forged my understanding of structures, recursion dynamics, and database logic.",
       skills: ["Object-Oriented Java", "C++ Algorithms", "Python Scripting", "Relational SQL Queries"],
@@ -355,7 +383,7 @@ export default function Skills() {
     },
     {
       chapter: "CHAPTER 02 / FRONTEND ENGINEERING",
-      title: "Interface Workshop",
+      title: "Frontend Development",
       description: "Tools used to design responsive interfaces and create interactive digital experiences.",
       narrative: "Translating mockups into modular, declarative React layouts, using state mechanisms to map fluid interfaces.",
       skills: ["Semantic HTML5 / CSS3", "Modern JavaScript (ES6+)", "TypeScript Integration", "React.js Architecture", "Next.js SSR & Routing"],
@@ -377,7 +405,7 @@ export default function Skills() {
     },
     {
       chapter: "CHAPTER 03 / BACKEND ENGINEERING",
-      title: "Systems Forge",
+      title: "Backend Development",
       description: "Technologies used to build APIs, services, and scalable application architectures.",
       narrative: "Forging routes and handlers, handling asynchronous queries, and securing communication pipelines.",
       skills: ["Node.js Runtime", "Express REST APIs", "Spring Boot Services", "RESTful Web Architectures"],
@@ -402,7 +430,7 @@ export default function Skills() {
     },
     {
       chapter: "CHAPTER 04 / CLOUD & DATABASES",
-      title: "Infrastructure Vault",
+      title: "Cloud & Databases",
       description: "Tools used for deployment, storage, and scalable cloud systems.",
       narrative: "Deploying secure, serverless database pipelines, orchestrating cloud networks, and preserving transactional consistency.",
       skills: ["MongoDB Document DB", "PostgreSQL Relational DB", "AWS Serverless (S3/Lambda)", "Docker Containerization"],
@@ -421,7 +449,7 @@ export default function Skills() {
     },
     {
       chapter: "CHAPTER 05 / BUILDER TOOLKIT",
-      title: "Explorer Utility Pack",
+      title: "Tools & Workflow",
       description: "Supporting tools used during development, collaboration, debugging, and deployment.",
       narrative: "Versioning my progress through Git vaults, executing requests with Postman utilities, and orchestrating layouts on shared whiteboard canvases.",
       skills: ["Git Version Control", "GitHub Code Collaboration", "Postman API Testing", "Vercel Deployments", "Figma Interface Design"],

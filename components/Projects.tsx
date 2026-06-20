@@ -1,8 +1,8 @@
 "use client";
 
-import React, { useState, useEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react';
+import React, { useState, useEffect, useRef } from "react";
+import { motion } from "framer-motion";
+import { Github, ExternalLink } from "lucide-react";
 
 /* ══════════════════════════════════════════════
    CONSTANTS — SVG PATH
@@ -13,9 +13,9 @@ const ROUTE_PATH =
   "M 170 80 C 200 110 240 140 220 180 C 200 220 140 240 130 290 C 120 340 160 370 170 420 C 180 470 150 500 130 550 C 110 600 140 640 160 700 C 180 760 170 800 165 840";
 
 const NODE_POSITIONS = [
-  { x: 170, y: 80 },   // ContentIQ — top
-  { x: 130, y: 550 },  // Arogya — mid-lower
-  { x: 165, y: 840 },  // Trade Route — bottom
+  { x: 170, y: 80 }, // ContentIQ — top
+  { x: 130, y: 550 }, // Arogya — mid-lower
+  { x: 165, y: 840 }, // Trade Route — bottom
 ];
 
 interface Discovery {
@@ -45,7 +45,8 @@ const discoveries: Discovery[] = [
     title: "ContentIQ",
     subtitle: "AI Media Creation & Distribution Platform",
     badge: "completed",
-    summary: "Engineered an AI-powered platform that analyzes video and audio content to produce scene-level insights, scripts, and engagement predictions.",
+    summary:
+      "Engineered an AI-powered platform that analyzes video and audio content to produce scene-level insights, scripts, and engagement predictions.",
     notes: [
       "Developed during AI for Bharat Hackathon",
       "Integrated multimodal media analysis and automated content optimization using AWS services including S3, Lambda, Bedrock, and Transcribe",
@@ -65,7 +66,8 @@ const discoveries: Discovery[] = [
     title: "Arogya Sarathi",
     subtitle: "Rural Healthcare Communication Platform",
     badge: "completed",
-    summary: "Created a low-bandwidth healthcare web platform enabling rural patients to share symptoms, images, and voice notes with doctors asynchronously.",
+    summary:
+      "Created a low-bandwidth healthcare web platform enabling rural patients to share symptoms, images, and voice notes with doctors asynchronously.",
     notes: [
       "Designed an offline-first architecture using browser local storage, client-side compression, and Base64 encoding to support unstable network environments",
       "Implemented a full-stack system using React (TypeScript), Node.js, and Express.js to enable reliable medical communication in remote regions",
@@ -83,9 +85,10 @@ const discoveries: Discovery[] = [
     coords: "17°17′N · 78°33′E",
     level: "Lv. 19",
     title: "E-Commerce Platform",
-    subtitle: "Trade Route",
+    subtitle: "Booking-Platform",
     badge: "completed",
-    summary: "A modern e-commerce website featuring premium product showcases, interactive menu browsing, customer reviews, location integration, and seamless online ordering experience.",
+    summary:
+      "A modern e-commerce website featuring premium product showcases, interactive menu browsing, customer reviews, location integration, and seamless online ordering experience.",
     notes: [
       "Interactive product showcase",
       "Responsive commerce experience",
@@ -175,7 +178,7 @@ function ExpeditionMarker({
           fontFamily="monospace"
           fill="#7A6548"
         >
-          {activeProj.id === 0 ? "Jul 2025 — Apr 2026" : "2026"}
+          {activeProj.id === 0 ? "Feb 2026 — Apr 2026" : "2026"}
         </text>
         <text
           x="0"
@@ -206,7 +209,10 @@ function MapPanel({
   activeIndex: number;
 }) {
   return (
-    <div className="w-full max-w-[420px] mx-auto relative select-none" style={{ aspectRatio: "340 / 900" }}>
+    <div
+      className="w-full max-w-[420px] mx-auto relative select-none"
+      style={{ aspectRatio: "340 / 900" }}
+    >
       <svg
         className="w-full h-full"
         viewBox="0 0 340 900"
@@ -214,37 +220,148 @@ function MapPanel({
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
-          <pattern id="cartGrid" width="34" height="34" patternUnits="userSpaceOnUse">
-            <path d="M34 0 L0 0 0 34" fill="none" stroke="#7a6548" strokeWidth="0.5"/>
+          <pattern
+            id="cartGrid"
+            width="34"
+            height="34"
+            patternUnits="userSpaceOnUse"
+          >
+            <path
+              d="M34 0 L0 0 0 34"
+              fill="none"
+              stroke="#7a6548"
+              strokeWidth="0.5"
+            />
           </pattern>
         </defs>
 
-        <rect width="340" height="900" fill="url(#cartGrid)" opacity="0.1"/>
+        <rect width="340" height="900" fill="url(#cartGrid)" opacity="0.1" />
 
         {/* ── Coordinate edge tick marks ── */}
-        {[0,1,2,3,4,5,6,7,8,9].map(i => (
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
           <React.Fragment key={`tick-h${i}`}>
-            <line x1={30+i*32} y1={0} x2={30+i*32} y2={5} stroke="#7a6548" strokeWidth="0.7" opacity="0.25"/>
-            <line x1={30+i*32} y1={895} x2={30+i*32} y2={900} stroke="#7a6548" strokeWidth="0.7" opacity="0.25"/>
+            <line
+              x1={30 + i * 32}
+              y1={0}
+              x2={30 + i * 32}
+              y2={5}
+              stroke="#7a6548"
+              strokeWidth="0.7"
+              opacity="0.25"
+            />
+            <line
+              x1={30 + i * 32}
+              y1={895}
+              x2={30 + i * 32}
+              y2={900}
+              stroke="#7a6548"
+              strokeWidth="0.7"
+              opacity="0.25"
+            />
           </React.Fragment>
         ))}
-        {[0,1,2,3,4,5,6,7,8,9].map(i => (
+        {[0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map((i) => (
           <React.Fragment key={`tick-v${i}`}>
-            <line x1={0} y1={50+i*88} x2={5} y2={50+i*88} stroke="#7a6548" strokeWidth="0.7" opacity="0.25"/>
-            <line x1={335} y1={50+i*88} x2={340} y2={50+i*88} stroke="#7a6548" strokeWidth="0.7" opacity="0.25"/>
+            <line
+              x1={0}
+              y1={50 + i * 88}
+              x2={5}
+              y2={50 + i * 88}
+              stroke="#7a6548"
+              strokeWidth="0.7"
+              opacity="0.25"
+            />
+            <line
+              x1={335}
+              y1={50 + i * 88}
+              x2={340}
+              y2={50 + i * 88}
+              stroke="#7a6548"
+              strokeWidth="0.7"
+              opacity="0.25"
+            />
           </React.Fragment>
         ))}
 
         {/* ── Coordinate text labels ── */}
-        <text x="170" y="11" textAnchor="middle" fontSize="7" fill="#7a6548" opacity="0.35" fontFamily="monospace">17°24′N</text>
-        <text x="170" y="893" textAnchor="middle" fontSize="7" fill="#7a6548" opacity="0.35" fontFamily="monospace">17°17′N</text>
-        <text x="6" y="450" textAnchor="middle" fontSize="7" fill="#7a6548" opacity="0.35" fontFamily="monospace" transform="rotate(-90 6 450)">78°25′E</text>
-        <text x="334" y="450" textAnchor="middle" fontSize="7" fill="#7a6548" opacity="0.35" fontFamily="monospace" transform="rotate(90 334 450)">78°34′E</text>
+        <text
+          x="170"
+          y="11"
+          textAnchor="middle"
+          fontSize="7"
+          fill="#7a6548"
+          opacity="0.35"
+          fontFamily="monospace"
+        >
+          17°24′N
+        </text>
+        <text
+          x="170"
+          y="893"
+          textAnchor="middle"
+          fontSize="7"
+          fill="#7a6548"
+          opacity="0.35"
+          fontFamily="monospace"
+        >
+          17°17′N
+        </text>
+        <text
+          x="6"
+          y="450"
+          textAnchor="middle"
+          fontSize="7"
+          fill="#7a6548"
+          opacity="0.35"
+          fontFamily="monospace"
+          transform="rotate(-90 6 450)"
+        >
+          78°25′E
+        </text>
+        <text
+          x="334"
+          y="450"
+          textAnchor="middle"
+          fontSize="7"
+          fill="#7a6548"
+          opacity="0.35"
+          fontFamily="monospace"
+          transform="rotate(90 334 450)"
+        >
+          78°34′E
+        </text>
 
         {/* ── Survey contour circles ── */}
-        <circle cx="170" cy="80"  r="42" fill="none" stroke="#7a6548" strokeWidth="0.8" strokeDasharray="3,7" opacity="0.3"/>
-        <circle cx="130" cy="550" r="48" fill="none" stroke="#7a6548" strokeWidth="0.8" strokeDasharray="3,7" opacity="0.25"/>
-        <circle cx="165" cy="840" r="44" fill="none" stroke="#7a6548" strokeWidth="0.8" strokeDasharray="3,7" opacity="0.28"/>
+        <circle
+          cx="170"
+          cy="80"
+          r="42"
+          fill="none"
+          stroke="#7a6548"
+          strokeWidth="0.8"
+          strokeDasharray="3,7"
+          opacity="0.3"
+        />
+        <circle
+          cx="130"
+          cy="550"
+          r="48"
+          fill="none"
+          stroke="#7a6548"
+          strokeWidth="0.8"
+          strokeDasharray="3,7"
+          opacity="0.25"
+        />
+        <circle
+          cx="165"
+          cy="840"
+          r="44"
+          fill="none"
+          stroke="#7a6548"
+          strokeWidth="0.8"
+          strokeDasharray="3,7"
+          opacity="0.28"
+        />
 
         {/* ── TOPOLOGY (Flat Mountain Triangles as in reference) ── */}
         <g fill="#BBA588" opacity="0.5" stroke="#5C4A3C" strokeWidth="0.6">
@@ -339,9 +456,23 @@ function MapPanel({
               {/* Completed Node */}
               {isCompleted && (
                 <>
-                  <circle cx={pos.x} cy={pos.y} r="8" fill="#7a6548" stroke="#7a6548" strokeWidth="1.2" />
-                  <g stroke="#FDFAF5" strokeWidth="1.2" strokeLinecap="round" fill="none">
-                    <path d={`M ${pos.x - 2.5} ${pos.y} L ${pos.x - 0.5} ${pos.y + 2} L ${pos.x + 3} ${pos.y - 2}`} />
+                  <circle
+                    cx={pos.x}
+                    cy={pos.y}
+                    r="8"
+                    fill="#7a6548"
+                    stroke="#7a6548"
+                    strokeWidth="1.2"
+                  />
+                  <g
+                    stroke="#FDFAF5"
+                    strokeWidth="1.2"
+                    strokeLinecap="round"
+                    fill="none"
+                  >
+                    <path
+                      d={`M ${pos.x - 2.5} ${pos.y} L ${pos.x - 0.5} ${pos.y + 2} L ${pos.x + 3} ${pos.y - 2}`}
+                    />
                   </g>
                 </>
               )}
@@ -350,8 +481,24 @@ function MapPanel({
               {isFuture && (
                 <g>
                   {/* Red X marker */}
-                  <line x1={pos.x - 6} y1={pos.y - 6} x2={pos.x + 6} y2={pos.y + 6} stroke="#A63A3A" strokeWidth="2.2" strokeLinecap="round" />
-                  <line x1={pos.x + 6} y1={pos.y - 6} x2={pos.x - 6} y2={pos.y + 6} stroke="#A63A3A" strokeWidth="2.2" strokeLinecap="round" />
+                  <line
+                    x1={pos.x - 6}
+                    y1={pos.y - 6}
+                    x2={pos.x + 6}
+                    y2={pos.y + 6}
+                    stroke="#A63A3A"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                  />
+                  <line
+                    x1={pos.x + 6}
+                    y1={pos.y - 6}
+                    x2={pos.x - 6}
+                    y2={pos.y + 6}
+                    stroke="#A63A3A"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                  />
                   <text
                     x={pos.x}
                     y={pos.y + 16}
@@ -372,7 +519,14 @@ function MapPanel({
         {/* Sailboat sailing near the route */}
         <g transform="translate(152, 310)" opacity="0.95">
           <path d="M -8 2 L -6 6 H 6 L 8 2 Z" fill="#4E3E30" />
-          <line x1="0" y1="2" x2="0" y2="-8" stroke="#4E3E30" strokeWidth="1.5" />
+          <line
+            x1="0"
+            y1="2"
+            x2="0"
+            y2="-8"
+            stroke="#4E3E30"
+            strokeWidth="1.5"
+          />
           <path d="M 0 -8 L 6 0 H 0 Z" fill="#998064" />
           <path d="M 0 -8 L -5 -1 H 0 Z" fill="#8A7356" opacity="0.85" />
         </g>
@@ -388,15 +542,39 @@ function MapPanel({
         />
 
         {/* Compass Rose Wind Star */}
-        <g transform="translate(280, 720)" opacity="0.55" stroke="#4E3E30" strokeWidth="1.0" fill="none">
+        <g
+          transform="translate(280, 720)"
+          opacity="0.55"
+          stroke="#4E3E30"
+          strokeWidth="1.0"
+          fill="none"
+        >
           <circle cx="0" cy="0" r="15" strokeDasharray="2,2" />
           <line x1="-22" y1="0" x2="22" y2="0" />
           <line x1="0" y1="-22" x2="0" y2="22" />
-          <polygon points="0,-22 4,-6 0,0 -4,-6" fill="#4E3E30" opacity="0.65" />
+          <polygon
+            points="0,-22 4,-6 0,0 -4,-6"
+            fill="#4E3E30"
+            opacity="0.65"
+          />
           <polygon points="0,22 4,6 0,0 -4,6" fill="#4E3E30" opacity="0.65" />
-          <polygon points="-22,0 -6,-4 0,0 -6,4" fill="#4E3E30" opacity="0.65" />
+          <polygon
+            points="-22,0 -6,-4 0,0 -6,4"
+            fill="#4E3E30"
+            opacity="0.65"
+          />
           <polygon points="22,0 6,-4 0,0 6,4" fill="#4E3E30" opacity="0.65" />
-          <text x="0" y="-25" textAnchor="middle" fontSize="6.5" fontWeight="bold" fill="#4E3E30" fontFamily="monospace">N</text>
+          <text
+            x="0"
+            y="-25"
+            textAnchor="middle"
+            fontSize="6.5"
+            fontWeight="bold"
+            fill="#4E3E30"
+            fontFamily="monospace"
+          >
+            N
+          </text>
         </g>
 
         {/* ── TRAVELING EXPEDITION MARKER ── */}
@@ -478,9 +656,7 @@ function ProjectCard({
             </div>
           </div>
           {/* Level Pill */}
-          <span
-            className="font-mono text-[9.5px] font-bold px-2.5 py-0.5 rounded bg-[#F4ECE1] border border-[#E6DCD0] text-[#7a6548]"
-          >
+          <span className="font-mono text-[9.5px] font-bold px-2.5 py-0.5 rounded bg-[#F4ECE1] border border-[#E6DCD0] text-[#7a6548]">
             {disc.level}
           </span>
         </div>
@@ -491,7 +667,11 @@ function ProjectCard({
             {disc.subtitle}
           </h4>
           <span className="font-sans text-[12px] text-[#7a6548]/80 block mt-0.5">
-            {disc.id === 0 ? "Jul 2025 — Apr 2026" : disc.id === 1 ? "Jan 2026 — Mar 2026" : "May 2026 — Present"}
+            {disc.id === 0
+              ? "Jul 2025 — Apr 2026"
+              : disc.id === 1
+                ? "Jan 2026 — Mar 2026"
+                : "May 2026 — Present"}
           </span>
         </div>
 
@@ -576,11 +756,11 @@ export default function Projects() {
       if (elFirst && elLast) {
         const rectFirst = elFirst.getBoundingClientRect();
         const rectLast = elLast.getBoundingClientRect();
-        
+
         const scrollY = window.scrollY;
         const pageTopFirst = rectFirst.top + scrollY;
         const pageTopLast = rectLast.top + scrollY;
-        
+
         metricsRef.current = {
           topFirst: pageTopFirst,
           totalDistance: pageTopLast - pageTopFirst,
@@ -610,7 +790,10 @@ export default function Projects() {
           // Update path line drawing
           const completedDash = p.current * len;
           const remainingDash = len - completedDash;
-          pathEl.setAttribute("stroke-dasharray", `${completedDash} ${remainingDash + 1}`);
+          pathEl.setAttribute(
+            "stroke-dasharray",
+            `${completedDash} ${remainingDash + 1}`,
+          );
         }
         rAFRef.current = requestAnimationFrame(animate);
       } else {
@@ -623,7 +806,10 @@ export default function Projects() {
 
           const completedDash = p.current * len;
           const remainingDash = len - completedDash;
-          pathEl.setAttribute("stroke-dasharray", `${completedDash} ${remainingDash + 1}`);
+          pathEl.setAttribute(
+            "stroke-dasharray",
+            `${completedDash} ${remainingDash + 1}`,
+          );
         }
         rAFRef.current = null;
       }
@@ -642,7 +828,7 @@ export default function Projects() {
 
       // Map progress [0, 1] to path values [0.06, 0.97]
       const pathProgress = 0.06 + clampedProgress * (0.97 - 0.06);
-      
+
       progressRef.current.target = pathProgress;
       if (!rAFRef.current) {
         rAFRef.current = requestAnimationFrame(animate);
@@ -674,7 +860,7 @@ export default function Projects() {
           unregisterScroll();
         }
       },
-      { root: null, rootMargin: "10% 0px 10% 0px", threshold: 0 }
+      { root: null, rootMargin: "10% 0px 10% 0px", threshold: 0 },
     );
 
     if (sectionEl) {
@@ -687,7 +873,7 @@ export default function Projects() {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
             const cardEl = entry.target as HTMLDivElement;
-            const idx = cardRefs.findIndex(ref => ref.current === cardEl);
+            const idx = cardRefs.findIndex((ref) => ref.current === cardEl);
             if (idx !== -1 && idx !== activeIndexRef.current) {
               activeIndexRef.current = idx;
               setActiveIndex(idx);
@@ -699,7 +885,7 @@ export default function Projects() {
         root: null,
         rootMargin: "-25% 0px -40% 0px",
         threshold: 0.1,
-      }
+      },
     );
 
     cardRefs.forEach((ref) => {
@@ -725,7 +911,8 @@ export default function Projects() {
       ref={sectionRef}
       className="relative overflow-hidden optimize-section-projects"
       style={{
-        background: "radial-gradient(circle at 35% 50%, #C6B59C 0%, #C0AF95 40%, #A8957A 75%, #7A6B58 100%)",
+        background:
+          "radial-gradient(circle at 35% 50%, #C6B59C 0%, #C0AF95 40%, #A8957A 75%, #7A6B58 100%)",
         borderTop: "2px solid #2B1E13",
       }}
     >
@@ -747,18 +934,14 @@ export default function Projects() {
         }}
       />
 
-
       <div className="max-w-[1400px] mx-auto px-6 sm:px-10 py-24 relative z-10">
         {/* ── TWO-COLUMN EXPEDITION LAYOUT ── */}
         <div className="grid grid-cols-1 lg:grid-cols-[45%_55%] gap-8 lg:gap-14 items-start">
-          
           {/* LEFT COLUMN — HEADER & STICKY MAP WORLD */}
           <div className="space-y-6 lg:sticky lg:top-24">
             {/* Left Header matching reference screenshot style */}
             <div className="select-none pl-2">
-              <span
-                className="font-sans text-[11px] tracking-[0.25em] uppercase block mb-2 text-[#5C4A3C] font-bold"
-              >
+              <span className="font-sans text-[11px] tracking-[0.25em] uppercase block mb-2 text-[#5C4A3C] font-bold">
                 JOURNEY SO FAR
               </span>
               <h2
@@ -769,9 +952,7 @@ export default function Projects() {
               >
                 Expedition Log
               </h2>
-              <p
-                className="font-sans text-xs leading-relaxed text-[#5C4A3C]/80"
-              >
+              <p className="font-sans text-xs leading-relaxed text-[#5C4A3C]/80">
                 Every stop, a story. Every project, a relic.
               </p>
             </div>
@@ -788,9 +969,7 @@ export default function Projects() {
           {/* RIGHT COLUMN — EXPEDITION DISCOVERY CARDS */}
           <div className="space-y-8">
             <div className="select-none lg:mt-6 pl-1">
-              <span
-                className="font-sans text-[10px] tracking-[0.2em] uppercase block text-[#5C4A3C] font-bold"
-              >
+              <span className="font-sans text-[10px] tracking-[0.2em] uppercase block text-[#5C4A3C] font-bold">
                 CAMPSITES ALONG THE TRAIL
               </span>
             </div>
@@ -812,7 +991,10 @@ export default function Projects() {
       {/* Bottom fade */}
       <div
         className="absolute bottom-0 left-0 right-0 h-24 pointer-events-none z-10"
-        style={{ background: "linear-gradient(to bottom, transparent, rgba(198,181,156,0.3))" }}
+        style={{
+          background:
+            "linear-gradient(to bottom, transparent, rgba(198,181,156,0.3))",
+        }}
       />
     </section>
   );
