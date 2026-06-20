@@ -15,6 +15,7 @@ export default function Navbar() {
   const [activeSection, setActiveSection] = useState('hero');
 
   const navItems: NavItem[] = [
+    { id: 'hero', label: 'Home', href: '#hero' },
     { id: 'about', label: 'About', href: '#about' },
     { id: 'projects', label: 'Projects', href: '#projects' },
     { id: 'skills', label: 'Skills', href: '#skills' },

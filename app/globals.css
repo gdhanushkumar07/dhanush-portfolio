@@ -82,3 +82,38 @@
   border-color: #38BDF8;
   box-shadow: 0 0 15px rgba(56, 189, 248, 0.15);
 }
+
+/* Off-screen Content Rendering Optimizations */
+.optimize-section-about {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 900px;
+}
+
+.optimize-section-projects {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1200px;
+}
+
+.optimize-section-skills {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1500px;
+}
+
+.optimize-section-achievements {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 1000px;
+}
+
+.optimize-section-contact {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 800px;
+}
+
+/* GPU Acceleration utility for heavy animations/transitions */
+.gpu-accelerated {
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+  will-change: transform, opacity;
+}
+

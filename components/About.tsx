@@ -210,7 +210,7 @@ export default function About() {
   return (
     <section 
       id="about" 
-      className="pt-32 pb-40 px-6 md:px-20 relative overflow-hidden"
+      className="pt-32 pb-40 px-6 md:px-20 relative overflow-hidden optimize-section-about"
       style={{
         background: "linear-gradient(to bottom, #17110D 0%, #1B120D 30%, #21160E 70%, #26180F 100%)"
       }}
@@ -285,6 +285,8 @@ export default function About() {
             width: p.size,
             height: p.size,
             opacity: 0.15,
+            willChange: "transform, opacity",
+            transform: "translate3d(0, 0, 0)"
           }}
           animate={{
             y: [0, -35, 0],

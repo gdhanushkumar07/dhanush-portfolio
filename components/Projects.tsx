@@ -723,7 +723,7 @@ export default function Projects() {
     <section
       id="projects"
       ref={sectionRef}
-      className="relative overflow-hidden"
+      className="relative overflow-hidden optimize-section-projects"
       style={{
         background: "radial-gradient(circle at 35% 50%, #C6B59C 0%, #C0AF95 40%, #A8957A 75%, #7A6B58 100%)",
         borderTop: "2px solid #2B1E13",

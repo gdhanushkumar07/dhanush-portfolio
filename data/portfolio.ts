@@ -163,7 +163,8 @@ export const accoladesData: Accolade[] = [
     organization: "AI for Bharat Hackathon",
     date: "Apr 2026",
     type: "achievement",
-    detail: "Selected as national finalist and shortlisted among top teams for designing ContentIQ's serverless media pipeline."
+    detail: "Selected as national finalist and shortlisted among top teams for designing ContentIQ's serverless media pipeline.",
+    link: "https://drive.google.com/file/d/1aGkI_t6KQ2gy1kypku6YJR-cfUjkqHTB/view?usp=drive_link"
   },
   {
     title: "Data Science Foundation",

@@ -96,7 +96,7 @@ const relics: Relic[] = [
     expeditionRecord: "Shortlisted as national finalist for designing the ContentIQ media engine.",
     impactDetail: "Engineered serverless pipelines using AWS Bedrock and Lambda triggers to automatically analyze inputs and compile them into media scripts.",
     seal: "NATIONAL FINALIST",
-    link: "https://github.com/gdhanushkumar07/ContentIQ.git",
+    link: "https://drive.google.com/file/d/1aGkI_t6KQ2gy1kypku6YJR-cfUjkqHTB/view?usp=drive_link",
   },
   {
     id: 3,
@@ -539,7 +539,7 @@ export default function Achievements() {
   return (
     <section
       id="achievements"
-      className="relative overflow-hidden py-28"
+      className="relative overflow-hidden py-28 optimize-section-achievements"
       style={{
         background: "linear-gradient(to bottom, #1D140E 0%, #150D08 50%, #0C0704 100%)",
       }}
@@ -637,6 +637,8 @@ export default function Achievements() {
             width: p.size,
             height: p.size,
             opacity: 0.12,
+            willChange: "transform, opacity",
+            transform: "translate3d(0, 0, 0)"
           }}
           animate={{
             y: [0, -60, 0],

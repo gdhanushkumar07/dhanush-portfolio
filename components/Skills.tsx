@@ -3,6 +3,27 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useScroll, useTransform, MotionValue } from 'framer-motion';
 
+const BrassCorner = ({ position }: { position: 'top-left' | 'top-right' | 'bottom-left' | 'bottom-right' }) => {
+  const rotation = {
+    'top-left': 'rotate-0 top-2.5 left-2.5',
+    'top-right': 'rotate-90 top-2.5 right-2.5',
+    'bottom-left': 'rotate-270 bottom-2.5 left-2.5',
+    'bottom-right': 'rotate-180 bottom-2.5 right-2.5',
+  }[position];
+
+  return (
+    <div className={`absolute w-8 h-8 pointer-events-none select-none text-[#8B6914]/40 ${rotation}`}>
+      <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" fill="currentColor" opacity="0.25" />
+        <path d="M 2 2 H 30 V 8 H 8 V 30 H 2 Z" stroke="currentColor" strokeWidth="1.2" />
+        <circle cx="5" cy="5" r="2.2" fill="#A88120" stroke="#4A3B1F" strokeWidth="0.5" />
+        <circle cx="20" cy="5" r="1.8" fill="#8B6914" stroke="#4A3B1F" strokeWidth="0.5" />
+        <circle cx="5" cy="20" r="1.8" fill="#8B6914" stroke="#4A3B1F" strokeWidth="0.5" />
+      </svg>
+    </div>
+  );
+};
+
 /* ══════════════════════════════════════════════
    TYPES & INTERFACES
    ══════════════════════════════════════════════ */
@@ -196,58 +217,86 @@ const Card = ({ i, card, progress, range, targetScale }: CardProps) => {
         style={{
           scale,
           top: `calc(10vh + ${i * 25}px)`,
-          background: "rgba(15, 10, 8, 0.88)",
-          backdropFilter: "blur(20px)",
-          border: "1px solid rgba(255, 180, 80, 0.12)",
-          boxShadow: "0 25px 60px rgba(0,0,0,0.85), inset 0 0 25px rgba(255,140,66,0.02)",
+          background: "rgba(12, 8, 6, 0.92)",
+          backdropFilter: "blur(24px)",
+          border: "1px solid rgba(255, 180, 80, 0.14)",
+          boxShadow: "0 30px 70px rgba(0,0,0,0.9), inset 0 0 30px rgba(255,140,66,0.03)",
         }}
-        className="flex flex-col h-[520px] sm:h-[480px] w-[90%] max-w-[960px] rounded-[28px] p-6 sm:p-10 origin-top relative overflow-hidden group hover:border-amber-500/25 transition-colors duration-500"
+        className="flex flex-col h-[520px] sm:h-[480px] w-[90%] max-w-[960px] rounded-[28px] p-6 sm:p-10 origin-top relative overflow-hidden group hover:border-amber-500/40 transition-colors duration-500"
       >
-        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-amber-500/[0.015] via-transparent to-amber-500/[0.035]" />
+        {/* Top gold highlight line */}
+        <div className="absolute top-0 left-0 right-0 h-[1.5px] bg-gradient-to-r from-transparent via-amber-500/45 to-transparent" />
+        
+        {/* Corner Brass Brackets */}
+        <BrassCorner position="top-left" />
+        <BrassCorner position="top-right" />
+        <BrassCorner position="bottom-left" />
+        <BrassCorner position="bottom-right" />
 
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-10 h-full relative z-10">
+        {/* Ambient card edge light */}
+        <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700 bg-gradient-to-br from-amber-500/[0.02] via-transparent to-amber-500/[0.04]" />
+
+        {/* THREE-COLUMN BENTO CONTENT LAYOUT */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-6 sm:gap-8 h-full relative z-10 items-center">
           
-          <div className="md:col-span-6 flex flex-col justify-between h-full">
+          {/* LEFT COLUMN: Narrative & Info (5 cols) */}
+          <div className="md:col-span-5 flex flex-col justify-between h-[85%] border-r border-dashed border-amber-950/20 pr-4">
             <div>
-              <span className="font-mono text-[9px] text-amber-500/60 tracking-[0.35em] uppercase block mb-2">
+              <span className="font-mono text-[8px] text-amber-500/60 tracking-[0.4em] uppercase block mb-2 font-bold">
                 {card.chapter}
               </span>
-              <h2 className="font-serif text-2xl sm:text-3xl font-extrabold text-[#FDFAF5] tracking-tight mb-3">
+              <h2 className="font-serif text-xl sm:text-2xl font-extrabold text-[#FDFAF5] tracking-tight mb-3">
                 {card.title}
               </h2>
-              <p className="font-sans text-[13px] text-[#C9B7A4] leading-relaxed mb-4">
+              <p className="font-sans text-[12.5px] text-[#C9B7A4]/80 leading-relaxed mb-4">
                 {card.description}
               </p>
-              <p className="font-sans text-[12px] text-[#C9B7A4]/50 leading-relaxed font-light italic border-l border-amber-500/20 pl-3">
-                {card.narrative}
-              </p>
+              <div className="bg-[#120E0C]/40 border border-amber-950/30 rounded-xl p-3.5 relative overflow-hidden">
+                <div className="absolute top-0 left-0 bottom-0 w-0.5 bg-amber-500/40" />
+                <p className="font-sans text-[11px] text-[#C9B7A4]/50 leading-relaxed font-light italic pl-1.5">
+                  {card.narrative}
+                </p>
+              </div>
             </div>
             
-            <div className="hidden md:flex items-center gap-2 font-mono text-[7.5px] text-[#C9B7A4]/30 uppercase tracking-widest">
+            <div className="hidden md:flex items-center gap-2 font-mono text-[7px] text-[#C9B7A4]/35 uppercase tracking-widest mt-4">
               <span>EXPLORER LOG BOOK // CHAPTER.0{i + 1}</span>
             </div>
           </div>
 
-          <div className="md:col-span-6 flex flex-col justify-between h-full min-h-0">
-            <div className="flex-1 rounded-xl border border-amber-950/40 bg-[#120E0C]/40 p-4 relative overflow-hidden flex items-center justify-center min-h-[160px] max-h-[220px]">
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(253,250,245,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(253,250,245,0.015)_1px,transparent_1px)] bg-[size:16px_16px]" />
-              <motion.div 
-                style={{ scale: imageScale }} 
-                className="w-full h-full flex items-center justify-center relative z-10 opacity-70 group-hover:opacity-90 transition-opacity duration-300"
-              >
-                {card.visual}
-              </motion.div>
-            </div>
-
-            <div className="mt-4 flex flex-wrap gap-2 justify-start md:justify-end">
+          {/* MIDDLE COLUMN: Skills Boxes (4 cols) */}
+          <div className="md:col-span-4 flex flex-col justify-center h-[85%] gap-2 border-r border-dashed border-amber-950/20 pr-4">
+            <span className="font-mono text-[8px] text-amber-500/50 tracking-[0.25em] uppercase block mb-2 font-bold">
+              UNLOCKED CAPABILITIES
+            </span>
+            <div className="flex flex-col gap-2">
               {card.skills.map((skill) => (
                 <div
                   key={skill}
-                  className="font-mono text-[10.5px] font-bold text-[#F5F1EB] bg-[#140F0D]/90 border border-amber-950/60 px-3.5 py-2 rounded-lg hover:border-amber-500/35 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(212,175,55,0.05)] hover:text-amber-400 transition-all duration-300 select-none cursor-default"
+                  className="font-mono text-[10.5px] font-bold text-[#F5F1EB] bg-[#140F0D]/90 border border-amber-950/70 rounded-xl px-4 py-2.5 hover:border-amber-500/40 hover:translate-x-1 hover:shadow-[0_4px_12px_rgba(212,175,55,0.06)] hover:text-amber-400 transition-all duration-300 select-none cursor-default flex items-center gap-2.5"
                 >
-                  {skill}
+                  <span className="w-1 h-1 rounded-full bg-amber-500/50 group-hover:bg-amber-400" />
+                  <span>{skill}</span>
                 </div>
               ))}
+            </div>
+          </div>
+
+          {/* RIGHT COLUMN: Visual representation (3 cols) */}
+          <div className="md:col-span-3 flex flex-col justify-center items-center h-[85%] min-h-0 pl-2">
+            <div className="w-full h-full rounded-xl border border-amber-950/50 bg-[#120E0C]/60 p-4 relative overflow-hidden flex flex-col items-center justify-between min-h-[140px] max-h-[220px] shadow-inner">
+              {/* Technical Blueprint labels */}
+              <div className="w-full flex justify-between font-mono text-[6.5px] text-amber-500/40 tracking-wider mb-2">
+                <span>[ SCHEMA_V1.0 ]</span>
+                <span>[ GRID_LOCK ]</span>
+              </div>
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(253,250,245,0.015)_1px,transparent_1px),linear-gradient(to_bottom,rgba(253,250,245,0.015)_1px,transparent_1px)] bg-[size:10px_10px]" />
+              <motion.div 
+                style={{ scale: imageScale }} 
+                className="flex-1 w-full h-full flex items-center justify-center relative z-10 opacity-75 group-hover:opacity-95 transition-opacity duration-300"
+              >
+                {card.visual}
+              </motion.div>
             </div>
           </div>
 
@@ -287,7 +336,7 @@ export default function Skills() {
       title: "Foundation Instruments",
       description: "The first tools used to understand programming logic, algorithms, and structured problem solving.",
       narrative: "Deep in the codebase core, these mathematical relics forged my understanding of structures, recursion dynamics, and database logic.",
-      skills: ["Java", "C++", "Python", "SQL"],
+      skills: ["Object-Oriented Java", "C++ Algorithms", "Python Scripting", "Relational SQL Queries"],
       color: "rgba(15, 10, 8, 0.88)",
       visual: (
         <svg viewBox="0 0 200 200" fill="none" stroke="#FFAA50" strokeWidth="0.45" className="w-48 h-48">
@@ -309,7 +358,7 @@ export default function Skills() {
       title: "Interface Workshop",
       description: "Tools used to design responsive interfaces and create interactive digital experiences.",
       narrative: "Translating mockups into modular, declarative React layouts, using state mechanisms to map fluid interfaces.",
-      skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js"],
+      skills: ["Semantic HTML5 / CSS3", "Modern JavaScript (ES6+)", "TypeScript Integration", "React.js Architecture", "Next.js SSR & Routing"],
       color: "rgba(15, 10, 8, 0.88)",
       visual: (
         <svg viewBox="0 0 200 200" fill="none" stroke="#FFAA50" strokeWidth="0.45" className="w-48 h-48">
@@ -331,7 +380,7 @@ export default function Skills() {
       title: "Systems Forge",
       description: "Technologies used to build APIs, services, and scalable application architectures.",
       narrative: "Forging routes and handlers, handling asynchronous queries, and securing communication pipelines.",
-      skills: ["Node.js", "Express", "Spring Boot", "REST APIs"],
+      skills: ["Node.js Runtime", "Express REST APIs", "Spring Boot Services", "RESTful Web Architectures"],
       color: "rgba(15, 10, 8, 0.88)",
       visual: (
         <svg viewBox="0 0 200 200" fill="none" stroke="#FFAA50" strokeWidth="0.45" className="w-48 h-48">
@@ -356,7 +405,7 @@ export default function Skills() {
       title: "Infrastructure Vault",
       description: "Tools used for deployment, storage, and scalable cloud systems.",
       narrative: "Deploying secure, serverless database pipelines, orchestrating cloud networks, and preserving transactional consistency.",
-      skills: ["MongoDB", "PostgreSQL", "AWS", "Docker"],
+      skills: ["MongoDB Document DB", "PostgreSQL Relational DB", "AWS Serverless (S3/Lambda)", "Docker Containerization"],
       color: "rgba(15, 10, 8, 0.88)",
       visual: (
         <svg viewBox="0 0 200 200" fill="none" stroke="#FFAA50" strokeWidth="0.45" className="w-48 h-48">
@@ -375,7 +424,7 @@ export default function Skills() {
       title: "Explorer Utility Pack",
       description: "Supporting tools used during development, collaboration, debugging, and deployment.",
       narrative: "Versioning my progress through Git vaults, executing requests with Postman utilities, and orchestrating layouts on shared whiteboard canvases.",
-      skills: ["Git", "GitHub", "Postman", "Vercel", "Figma"],
+      skills: ["Git Version Control", "GitHub Code Collaboration", "Postman API Testing", "Vercel Deployments", "Figma Interface Design"],
       color: "rgba(15, 10, 8, 0.88)",
       visual: (
         <svg viewBox="0 0 200 200" fill="none" stroke="#FFAA50" strokeWidth="0.45" className="w-48 h-48">
@@ -398,7 +447,7 @@ export default function Skills() {
     <section
       ref={container}
       id="skills"
-      className="relative w-full bg-slate-950"
+      className="relative w-full bg-slate-950 optimize-section-skills"
       style={{
         background: "linear-gradient(to bottom, #110E0B 0%, #15110E 50%, #0D0A08 100%)",
       }}
@@ -427,7 +476,7 @@ export default function Skills() {
         </svg>
       </div>
 
-      {/* ── BACKGROUND ORNAMENTS & DECORATIONS (Matching About & Achievements exactly) ── */}
+      {/* ── BACKGROUND ORNAMENTS & DECORATIONS ── */}
       
       {/* Left Hanging Forest Vine */}
       <motion.svg 
@@ -500,6 +549,8 @@ export default function Skills() {
             width: p.size,
             height: p.size,
             opacity: 0.12,
+            willChange: "transform, opacity",
+            transform: "translate3d(0, 0, 0)"
           }}
           animate={{
             y: [0, -60, 0],
